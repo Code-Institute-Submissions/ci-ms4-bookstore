@@ -1,0 +1,26 @@
+/* Font imports, Cinzel for headers and 'Crimson Text' for other text */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;900&family=Crimson+Text:ital@0;1&display=swap');
+
+/* REM standard setup */
+
+html{
+    font-size: 14px;
+
+}
+
+h1, h2, h3, h4, h5, h6{
+    font-family: 'Cinzel', serif;
+}
+
+a, p{
+    font-family: 'Crimson Text', serif;
+}
+
+#home-jumbotron-bg{
+    margin-top: 60px;
+    color: #ffffff;
+    background: url('../img/bookstore-jumbotron.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
