@@ -13,4 +13,4 @@ class NewsPost(models.Model):
     title = models.CharField(max_length=255)
     post = models.CharField(max_length=2500)
     time = models.DateField(auto_now=True)
-    author = models.OneToOneField(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)

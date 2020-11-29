@@ -3,15 +3,40 @@
 
 {% block content %}
 <div class="row">
-    <div class="container-fluid">
-<div class="jumbotron" id="home-jumbotron-bg">
-    <h1 class="display-4">Bibliomania, the one-stop shop for fiction you love!</h1>
-    <p class="lead">Here  we'll have some links to products for sale</p>
-    <hr class="my-4">
-    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-    <a class="btn btn-outline-light btn-lg" href="#" role="button">This will link to the products, when there are products!</a>
+   <div class="container-fluid">
+      <div class="jumbotron" id="home-jumbotron-bg">
+          <h1 class="display-4">Bibliomania, the one-stop shop for fiction you love!</h1>
+          <p class="lead">Here  we'll have some links to products for sale</p>
+          <hr class="my-4">
+          <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+          <a class="btn btn-outline-light btn-lg" href="#" role="button">This will link to the products, when there are products!</a>
+        </div>
   </div>
 </div>
-</div>
+
+
+    <div class="accordion" id="accordionNews">      
+       {% for item in news %}
+        <div class="card">
+          <div class="card-header" id="{{item.pk}}-heading">
+            <h2 class="mb-0">
+              <a data-toggle="collapse" role="button" href="#{{item.pk}}-article" aria-expanded="false " aria-controls="{{item.pk}}-article">
+                {{item.title}}  <span class='text-right'>( {{item.time}} )</span>
+              </a>
+            </h2>
+          </div>
+          <div id="{{item.pk}}-article" class="collapse" aria-labelledby="{{item.pk}}-heading" data-parent="#accordionNews">
+            <div class="card-body">
+              {{item.post}}
+              <br>
+              <br>
+              <h6>Author: {{item.author}}</h6>
+              <br>
+              <h6>Date: {{item.time}}</h6>
+            </div>        
+          </div>
+        </div>  
+       {% endfor%}         
+    </div>               
 
 {% endblock %}
