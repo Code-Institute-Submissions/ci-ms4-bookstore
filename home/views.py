@@ -25,3 +25,5 @@ def archive(request):
     }
 
     return render(request, 'home/archive.html', context)
+
+    # API options for managing news below.
