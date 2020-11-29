@@ -13,4 +13,4 @@ class NewsPost(models.Model):
     title = models.CharField(max_length=255)
     post = models.CharField(max_length=2500)
     time = models.DateTimeField(auto_now=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL) # Changed to save all news-posts in case of staff changes
