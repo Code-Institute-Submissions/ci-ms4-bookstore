@@ -21,6 +21,24 @@ if path.exists('env.py'):
 # Directory structure
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Host for sending e-mail.
+EMAIL_HOST = os.environ['MAIL_SERVER']
+
+# Port for sending e-mail.
+EMAIL_PORT = os.environ['MAIL_PORT']
+
+# Optional SMTP authentication information for EMAIL_HOST.
+EMAIL_HOST_USER = os.environ['MAIL_USERNAME']
+EMAIL_HOST_PASSWORD = os.environ['MAIL_PASSWORD']
+EMAIL_USE_TLS = False
+
+#Sender
+#  
+DEFAULT_FROM_EMAIL = os.environ['MAIL_USERNAME']
+
+# Email settings, currently set for my personal host.
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -31,7 +49,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost'
+]
 
 
 # Application definition

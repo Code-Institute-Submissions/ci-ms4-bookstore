@@ -12,7 +12,6 @@ def index(request):
         'news': newsposts
     }
 
-
     return render(request, 'home/index.html', context)
 
 def archive(request):
@@ -27,3 +26,5 @@ def archive(request):
     return render(request, 'home/archive.html', context)
 
     # API options for managing news below.
+
+    

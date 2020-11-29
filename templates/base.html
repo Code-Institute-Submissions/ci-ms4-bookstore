@@ -21,10 +21,29 @@
 
     {% block extra_css %}
     {% endblock %}
-    <title>Placeholder title</title>
+    <title>Bibliomania</title> <!-- Add custom titles for each view later -->
   </head>
   <body>
     
+    <!-- Work on integrating the toasts and customizing them to look better.-->
+    {% if messages %}
+    <div class="message-container">
+        {% for message in messages %}
+            {% with message.level as level %}
+                {% if level == 40 %}
+                    {% include 'includes/toasts/toast_error.html' %}
+                {% elif level == 30 %}
+                    {% include 'includes/toasts/toast_warning.html' %}
+                {% elif level == 25 %}
+                    {% include 'includes/toasts/toast_success.html' %}
+                {% else %}
+                    {% include 'includes/toasts/toast_info.html' %}
+                {% endif %}
+            {% endwith %}
+        {% endfor %}
+    </div>
+{% endif %}
+
 <!-- I like this from the boilerplate,  keeping it commented out for reference if I want to have some ideas on working with includes.
     {% if messages %}
         <div class="message-container">
