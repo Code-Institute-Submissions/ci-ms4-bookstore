@@ -14,12 +14,49 @@
   </div>
 </div>
 
+{% if request.user.is_superuser %}
+<div class="row">
+  <div class="container-fluid text-justify">
+    <h2>News administration:</h2>
+    <br>
+    <a href="#newsPostModal" data-toggle="modal" data-target="#newsPostModal"><i class="fas fa-pen"></i></a>
+  </div>
+</div>
+
+<div class="modal fade" id="newsPostModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newsPostModalLabel">Add News:</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form class="form" action="{% url 'add_post' %}" method="POST">
+      <div class="modal-body">
+          {% csrf_token %}
+          {{ form.as_p }}                   
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" class="btn btn-secondary" data-dismiss="modal" value="Save">
+      </div>
+    </form> 
+  </div>
+    
+  </div>
+</div>
+
+{% endif %}
 
 <div class="accordion" id="accordionNews">      
    {% for item in news %}
       <div class="card">
         <div class="card-header" id="heading-{{item.pk}}">
           <h2 class="mb-0">
+            {% if request.user.is_superuser %}
+            <a href="{url 'delete_news'}/{{item.pk}}"><i class="fas fa-trash-alt"></i></a>
+            {% endif %}
             <button class="btn" type="button" data-toggle="collapse" role="button" data-target="#article-{{item.pk}}" aria-expanded="false " aria-controls="article-{{item.pk}}">
                 {{item.title}}  <span class='text-right'>( {{item.time}} )</span>
               </button>

@@ -12,9 +12,11 @@
 
     {% block extra_meta %}
     {% endblock %}
-
     {% block corecss %}
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <!-- Font Awesome CDN-->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+        <!-- Bootstrap CSS-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato&display=swap">
         <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% endblock %}
@@ -24,27 +26,8 @@
     <title>Bibliomania</title> <!-- Add custom titles for each view later -->
   </head>
   <body>
-    
-    <!-- Work on integrating the toasts and customizing them to look better.-->
-    {% if messages %}
-    <div class="message-container">
-        {% for message in messages %}
-            {% with message.level as level %}
-                {% if level == 40 %}
-                    {% include 'includes/toasts/toast_error.html' %}
-                {% elif level == 30 %}
-                    {% include 'includes/toasts/toast_warning.html' %}
-                {% elif level == 25 %}
-                    {% include 'includes/toasts/toast_success.html' %}
-                {% else %}
-                    {% include 'includes/toasts/toast_info.html' %}
-                {% endif %}
-            {% endwith %}
-        {% endfor %}
-    </div>
-{% endif %}
 
-<!-- I like this from the boilerplate,  keeping it commented out for reference if I want to have some ideas on working with includes.
+<!-- I like this from the boilerplate, going to be working with messages and the toasts, so I'll comment this out for now. -->
     {% if messages %}
         <div class="message-container">
             {% for message in messages %}
@@ -62,7 +45,7 @@
             {% endfor %}
         </div>
     {% endif %}
- -->
+ 
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="{% url 'home' %}">Bibliomania</a>
@@ -101,11 +84,7 @@
     {% block content %}
     {% endblock %}
 
-    {% block postloadjs %}
-    <script type="text/javascript">
-        $('.toast').toast('show');
-    </script>
-    {% endblock %}
+   
 
     {% block corejs %}
     
@@ -117,6 +96,12 @@
         <script src="https://js.stripe.com/v3/"></script>
          -->
 
+    {% endblock %}
+
+    {% block postloadjs %}
+    <script type="text/javascript">
+        $('.toast').toast('show');
+    </script>
     {% endblock %}
 
     {% block extra_js %}
