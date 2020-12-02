@@ -13,3 +13,4 @@ class NewsForm(ModelForm):
             'title': "Title",
             'post': 'Content'
         }
+    

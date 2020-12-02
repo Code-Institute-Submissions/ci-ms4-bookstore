@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import NewsPost
 from .forms import NewsForm
 
@@ -67,17 +67,19 @@ def add_post(request):
     # On get, return redirect to main page, with a message. 
     messages.warning(request, 'That URL is restricted!')
     return HttpResponseRedirect('/')
-"""
 
-Commented out until handlers are written
 
-def delete(request):
+# Handling deleting news items.
+
+@login_required
+def delete_post(request, news_id):
     # View for deleting news items
-
-    # if request.method == 'POST':
-    
-def edit(request):
-
-    # if request.method == 'POST':
-
-"""
+    news_item = NewsPost.objects.filter(pk=news_id)
+        
+    if request.user.is_superuser:    
+        news_item.delete()
+        messages.success(request, 'Your post has been deleted.')
+        return HttpResponseRedirect('/')
+    else:
+        messages.warning(request, 'This URL is restricted to Staff members, please login with your staff account.')
+        return HttpResponseRedirect('/')
