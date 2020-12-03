@@ -1,6 +1,6 @@
 # Forms for handling the news items on the main page
 
-from django.forms import ModelForm, Form
+from django.forms import ModelForm, widgets
 from .models import NewsPost
 
 
@@ -12,5 +12,9 @@ class NewsForm(ModelForm):
         labels = {
             'title': "Title",
             'post': 'Content'
+        }
+        widgets = {
+            'title': widgets.Textarea(attrs={'cols': 50, 'rows': 1, 'class': 'form-control'}),
+            'post': widgets.Textarea(attrs={'cols': 50, 'rows': 5, 'class': 'form-control'}),
         }
     

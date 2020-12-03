@@ -9,7 +9,7 @@ from .forms import NewsForm
 
 def index(request):
     form = NewsForm()
-    # News post sorted by date, newer at the top, limited to five total items
+    # News post sorted by date, newer at the top, limited to five total items for the index page.
     newsposts = NewsPost.objects.order_by('-time', 'title')[:5]
 
     context = {
@@ -20,27 +20,31 @@ def index(request):
     return render(request, 'home/index.html', context)
 
 def archive(request):
-    # Form for posting new items
-    form = NewsForm()
     # All items, sorted by date
     newsposts = NewsPost.objects.order_by('-time')
 
     context = {
         'news': newsposts,
-        'form': form
     }
 
     return render(request, 'home/archive.html', context)
 
 
-# API options for managing news below.
-
 """
 
-Add view.
+API options for managing news below.
 
-Login required to access, otherwise redirects to login.
+add_post view:
 
+Login required to access, otherwise redirects to login. 
+
+delete_post view:
+
+Login required, redirects on get and action only taken if request user is an admin.
+
+edit_post view:
+
+Editing current items already in the list.
 
 
 """
@@ -52,8 +56,7 @@ def add_post(request):
         form = NewsForm(request.POST)
         if form.is_valid():
 
-            #Instancing a new news-item
-
+            #Instancing a new news-item.
             instance = form.save(commit=False) 
             instance.author = request.user
             form.save()
@@ -61,7 +64,7 @@ def add_post(request):
             return HttpResponseRedirect('/')
 
         else:
-            messages.success(request, 'Invalid post, only staff can add news items!')
+            messages.success(request, 'Invalid post, please check your form for validation errors!')
             return HttpResponseRedirect('/')
 
     # On get, return redirect to main page, with a message. 
@@ -83,3 +86,36 @@ def delete_post(request, news_id):
     else:
         messages.warning(request, 'This URL is restricted to Staff members, please login with your staff account.')
         return HttpResponseRedirect('/')
+
+        
+
+# Handling editing news items.
+
+@login_required
+def edit_post(request, news_id):    
+    if request.method == 'POST':
+        instance = get_object_or_404(NewsPost, pk=news_id)
+        if request.user.is_superuser:
+            form = NewsForm(request.POST, instance=instance)
+            if form.is_valid():
+                #Instancing the edited news-item.
+                form.save()
+                
+                # A debug-print to be removed
+                print(instance)
+
+                messages.success(request, 'News item updated!')
+                return HttpResponseRedirect('/')
+            else:
+                messages.warning(request, 'Form invalid, please check for errors.')
+                return HttpResponseRedirect('/')
+
+        else:
+            messages.warning(request, 'This URL is restricted to Staff members, please login with your staff account.')
+            return HttpResponseRedirect('/')
+
+    else:
+        messages.warning(request, 'This URL is restricted to Staff members, please login with your staff account.')
+        return HttpResponseRedirect('/')
+
+  
