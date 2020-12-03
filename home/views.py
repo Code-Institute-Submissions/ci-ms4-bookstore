@@ -22,9 +22,11 @@ def index(request):
 def archive(request):
     # All items, sorted by date
     newsposts = NewsPost.objects.order_by('-time')
+    form = NewsForm
 
     context = {
         'news': newsposts,
+        'form': form
     }
 
     return render(request, 'home/archive.html', context)
