@@ -11,6 +11,6 @@ from django.dispatch import receiver
 class NewsPost(models.Model):
 
     title = models.CharField(max_length=255)
-    post = models.CharField(max_length=2500)
+    post = models.CharField(max_length=500)
     time = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL) # Changed to save all news-posts in case of staff changes
