@@ -34,7 +34,9 @@ class Author(models.Model):
 
 class Product(models.Model):
     title = models.CharField(max_length=255)
-    text = models.CharField(max_length=500)
+    description = models.CharField(max_length=500)
+    cover = models.ImageField(upload_to='covers', null=True, blank=True) 
     author = models.ForeignKey(Author, null=True, blank=True, on_delete=models.SET_NULL)
     series = models.ForeignKey(Series, null=True, blank=True, on_delete=models.SET_NULL)
     genre = models.ForeignKey(Genre, null=True, blank=True, on_delete=models.SET_NULL)
+    featured = models.BooleanField(default=False)

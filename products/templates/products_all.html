@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="row">
+  <div class="container-fluid">
+    {% for product in products%}
+      {{product.title}}
+      <img src='{{product.cover.url}}'>
+    {% endfor %}
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="container-fluid">
+    <section class="tile-wrapper">
+      <article class="tile-item">
+        <img class="" src="{% static 'img/default_cover.png' %}" alt="#">     
+      </article>
+      <div class="tile-details">
+        <summary class="tile-name">
+          This is this tiles title.
+        </summary>
+      </div>
+    </section>    
+  </div>
+</div>
+{% endblock %}
