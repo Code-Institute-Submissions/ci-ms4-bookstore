@@ -2,16 +2,46 @@
 {% load static %}
 {% block content %}
 <div class="row">
-  <div class="container-fluid">
-    {% for product in products%}
-      {{product.title}}
-      <img src='{{product.cover.url}}'>
-    {% endfor %}
+  <div class="container">
+    <h1 class="text-justify">Featured books!</h1>
+  </div>
+</div>
+
+<div class="row">
+ <div class="container">
+          <div class="col-md-12">
+            <div id="featured-carousel" class="carousel slide" data-ride="carousel" align="center">
+             <div class="carousel-inner">
+              {% for product in feature %}
+             <div class="carousel-item active"> <img src="{{product.cover.url}}" alt="{{product.title}}"></div>
+             {% endfor %}
+           </div>                   
+            <!-- Carousel controller-->
+            <a class="carousel-control-prev" href="#featured-carousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#featured-carousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+            </a>
+            <!-- Thumbnails -->
+           <ol class="carousel-indicators list-inline">
+            {% for product in feature %}
+             <li class="list-inline-item active"> <a id="carousel-selector-0" class="selected" data-slide-to="0" data-target="#featured-carousel"> <img src="{{product.cover.url}}" class="img-fluid"> </a> </li>
+             {% endfor %}
+           </ol>
+        </div>
+    </div>
+</div>
+
   </div>
 </div>
 <hr>
 <div class="row">
   <div class="container-fluid">
+    {% for product in products %}
+    <div class="col-lg-3 col-md-4 col-sm-6">
     <section class="tile-wrapper">
       <article class="tile-item">
         <img class="" src="{% static 'img/default_cover.png' %}" alt="#">     
@@ -22,6 +52,8 @@
         </summary>
       </div>
     </section>    
+    </div>
+    {% endfor %}
   </div>
 </div>
 {% endblock %}

@@ -7,7 +7,7 @@ from django.dispatch import receiver
 # Create your models here.
 
 
-# A simple reference model, which users can use to query for specific books
+# The following models will help users and admins organize the collections of books.
 
 class Genre(models.Model):
     title = models.CharField(max_length=200, default="Genre title")
@@ -18,7 +18,6 @@ class Genre(models.Model):
 class Series(models.Model):
     title = models.CharField(max_length=200)
     summary = models.CharField(max_length=200)
-
 
 # Specific authors can be tagged with multiple genres and multiple series.
 class Author(models.Model):
@@ -40,3 +39,12 @@ class Product(models.Model):
     series = models.ForeignKey(Series, null=True, blank=True, on_delete=models.SET_NULL)
     genre = models.ForeignKey(Genre, null=True, blank=True, on_delete=models.SET_NULL)
     featured = models.BooleanField(default=False)
+    price = models.DecimalField(default=0.00, max_digits=5, decimal_places=2)
+
+# Class for product reviews, tied to both user and 
+
+class ProductReview(models.Model):
+    product = models.ForeignKey(Product, null=True, blank=True, on_delete=models.CASCADE)
+    reviewer = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
+    plus = models.IntegerField()
+    minus = models.IntegerField()

@@ -9,9 +9,11 @@ from django.shortcuts import render, get_object_or_404
 def products(request):
     # Products view, containing an oversight of all products. Since this is also the 'landing page' for visitors, it also contains 
     products = Product.objects.all()
-    
+    # Once data-entry is done, filter the feature var into [5]
+    feature = Product.objects.filter(featured=True)
     context = {
         "products": products,
+        "feature": feature,
 
     }
 
