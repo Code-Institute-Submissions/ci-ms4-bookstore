@@ -13,7 +13,12 @@
             <div id="featured-carousel" class="carousel slide" data-ride="carousel" align="center">
              <div class="carousel-inner">
               {% for product in feature %}
-             <div class="carousel-item active"> <img src="{{product.cover.url}}" alt="{{product.title}}"></div>
+             <div class="carousel-item active"> 
+               <img src="{{product.cover.url}}" alt="{{product.title}}">
+               <div class="carousel-caption d-none d-md-block">
+                <h5><a href="{% url 'product_info' product_id = product.id %}"><h5>{{product.title}}</h5></a></h5>
+                <p>...</p>
+              </div></div>
              {% endfor %}
            </div>                   
             <!-- Carousel controller-->
@@ -25,11 +30,6 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
             </a>
-            <!-- Thumbnails -->
-           <ol class="carousel-indicators list-inline">
-            {% for product in feature %}
-             <li class="list-inline-item active"> <a id="carousel-selector-0" class="selected" data-slide-to="0" data-target="#featured-carousel"> <img src="{{product.cover.url}}" class="img-fluid"> </a> </li>
-             {% endfor %}
            </ol>
         </div>
     </div>
@@ -39,12 +39,12 @@
 </div>
 <hr>
 <div class="row">
-  <div class="container-fluid">
+  <div class="container-fluid inline-block">
     {% for product in products %}
     <div class="col-lg-3 col-md-4 col-sm-6">
     <section class="tile-wrapper">
       <article class="tile-item">
-        <img class="" src="{% static 'img/default_cover.png' %}" alt="#">     
+        <img class="img-fluid" src="{% static 'img/default_cover.png' %}" alt="#">     
       </article>
       <div class="tile-details">
         <summary class="tile-name">

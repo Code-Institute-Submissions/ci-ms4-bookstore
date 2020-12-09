@@ -102,9 +102,6 @@ def edit_post(request, news_id):
             if form.is_valid():
                 #Instancing the edited news-item.
                 form.save()
-                
-                # A debug-print to be removed
-                print(instance)
 
                 messages.success(request, 'News item updated!')
                 return HttpResponseRedirect('/')
