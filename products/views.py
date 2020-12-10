@@ -1,4 +1,5 @@
-from products.models import Product, ProductReview
+from products.models import Product
+from .forms import ProductForm
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -33,6 +34,7 @@ def product_info(request, product_id):
             messages.warning(request, 'Only logged in users can add comments')
             return HttpResponseRedirect('products/<int:product_id>/')
         else:
+            
     """
 
 
@@ -45,3 +47,14 @@ def product_info(request, product_id):
     }
 
     return render(request, 'product_info.html', context)
+
+@login_required
+def dashboard(request):
+    user = request.user
+    form = ProductForm
+
+    context = {
+    'user': user,
+    'form': form
+    }
+    return render(request, 'dashboard.html', context)

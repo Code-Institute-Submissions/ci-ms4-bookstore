@@ -27,7 +27,7 @@
   </head>
   <body>
 
-<!-- I like this from the boilerplate, going to be working with messages and the toasts, so I'll comment this out for now. -->
+<!-- Based in part on the course-materials for Boutique Ado. -->
     {% if messages %}
         <div class="message-container">
             {% for message in messages %}
@@ -102,6 +102,7 @@
     <script type="text/javascript">
         $('.toast').toast('show');
     </script>
+    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
     {% endblock %}
 
     {% block extra_js %}

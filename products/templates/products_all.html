@@ -2,44 +2,40 @@
 {% load static %}
 {% block content %}
 <div class="row">
-  <div class="container">
-    <h1 class="text-justify">Featured books!</h1>
-  </div>
-</div>
-
-<div class="row">
- <div class="container">
-          <div class="col-md-12">
-            <div id="featured-carousel" class="carousel slide" data-ride="carousel" align="center">
-             <div class="carousel-inner">
-              {% for product in feature %}
-             <div class="carousel-item active"> 
-               <img src="{{product.cover.url}}" alt="{{product.title}}">
-               <div class="carousel-caption d-none d-md-block">
-                <h5><a href="{% url 'product_info' product_id = product.id %}"><h5>{{product.title}}</h5></a></h5>
-                <p>...</p>
-              </div></div>
-             {% endfor %}
-           </div>                   
-            <!-- Carousel controller-->
-            <a class="carousel-control-prev" href="#featured-carousel" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#featured-carousel" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-            </a>
-           </ol>
-        </div>
-    </div>
-</div>
-
+  <div class="container-fluid">
+    <h1 class="text-center">Featured books!</h1>
   </div>
 </div>
 <hr>
 <div class="row">
-  <div class="container-fluid inline-block">
+ <div class="container-fluid">
+      <div class="col-md-12">
+        <div id="featuredCarousel" class="carousel slide" data-ride="carousel" align="center">
+             <div class="carousel-inner">
+             {% for product in feature %}
+             <!-- It is critical to the function of the carousel that it adds active only to the first item in the index, or the slides will stop functioning. -->
+              <div class="carousel-item {% if forloop.first %} active{% endif %}"> 
+               <img class="d-block img-fluid" src="{{product.cover.url}}" alt="{{product.title}}">
+               <div class="carousel-caption d-none d-md-block">
+                <h5><a href="{% url 'product_info' product.id %}">{{product.title}}</a></h5>
+              </div>
+             {% endfor %}                       
+        </div>
+        <!-- Carousel controller-->
+        <a class="carousel-control-prev" href="#featuredCarousel" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#featured-carousel" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+          </a>                             
+      </div>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="container-fluid">
     {% for product in products %}
     <div class="col-lg-3 col-md-4 col-sm-6">
     <section class="tile-wrapper">
@@ -48,7 +44,7 @@
       </article>
       <div class="tile-details">
         <summary class="tile-name">
-          This is this tiles title.
+          {{product.title}}
         </summary>
       </div>
     </section>    

@@ -1,12 +1,29 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+{% if request.user.is_superuser %}
 <div class="row">
-  <div class="container-fluid">
+  <div class="container">
+    <div class="d-inline-flex">
+    <h1 class="text-justify">Administrative tools: </h1>
+  </div>    
+</div>
+<hr>        
+<div class="row">
+  <div class="container">
+    <span class="d-flex"><a class="text-right" href='#'><i class="fas fa-edit"></i></a><a class="text-right" href="#"><i class="fas fa-trash-alt"></i></a></span>    
+    </div>
+  </div>    
+</div>
+<hr>        
+{% endif %}
+<div class="row">
+  <div class="container-fluid">    
       <h1>{{ product.title }}</h1>
       <img src="{{product.cover.url}}">
       <p>{{ product.description }}</p>
       <hr>
+      <button type="submit">Add to bag!</button>
   </div>
 </div>
 {% endblock %}

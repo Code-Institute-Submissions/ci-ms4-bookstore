@@ -13,11 +13,20 @@ class Genre(models.Model):
     title = models.CharField(max_length=200, default="Genre title")
     desc = models.CharField(max_length=200, default="Genre description")
 
+    def __str__(self):
+        return self.title
+
 # A class for series of books, often requiring them to be read in order.
 
 class Series(models.Model):
+    class Meta:
+        verbose_name_plural: "Serial"
+
     title = models.CharField(max_length=200)
     summary = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.title
 
 # Specific authors can be tagged with multiple genres and multiple series.
 class Author(models.Model):
@@ -25,6 +34,12 @@ class Author(models.Model):
     summary = models.CharField(max_length=500, default="We currently have no information on this authors work! Get in the comments and inform us!")
     series = models.ForeignKey(Series, null=True, blank=True, on_delete=models.SET_NULL)
     genres = models.ForeignKey(Genre, null=True, blank=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return self.name
+
+    def get_name(self):
+        return self.name
 
 """
  The books themselves. Note that all foreign keys are set to set null on delete because while we don't want dangling references in the DB, neither do we want 
@@ -40,6 +55,9 @@ class Product(models.Model):
     genre = models.ForeignKey(Genre, null=True, blank=True, on_delete=models.SET_NULL)
     featured = models.BooleanField(default=False)
     price = models.DecimalField(default=0.00, max_digits=5, decimal_places=2)
+
+    def __str__(self):
+        return self.title
 
 # Class for product reviews, tied to both user and 
 
