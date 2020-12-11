@@ -1,12 +1,17 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+
+{% load crispy_forms_tags %}
+
 <div class="row">
   <div class="container-fluid">
-    <form>
+    <div class="form-group">
+    <form class="">
       {% csrf_token %}
-      {{form}}
-  </form>
+      {{form|crispy}}
+    </form>
+  </div>
   </div>
 </div>
 {% endblock %}

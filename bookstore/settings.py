@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'coverage',
+    'crispy_forms',
     # My apps
     'home',
     'products',
@@ -186,3 +187,7 @@ AUTHENTICATION_BACKENDS = (
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
+
+# Crispy form setup
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

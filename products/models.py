@@ -19,8 +19,6 @@ class Genre(models.Model):
 # A class for series of books, often requiring them to be read in order.
 
 class Series(models.Model):
-    class Meta:
-        verbose_name_plural: "Serial"
 
     title = models.CharField(max_length=200)
     summary = models.CharField(max_length=200)

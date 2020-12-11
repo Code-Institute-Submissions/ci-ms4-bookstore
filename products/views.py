@@ -4,12 +4,15 @@ from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
 # Create your views here.
 
 
 def products(request):
-    # Products view, containing an oversight of all products. Since this is also the 'landing page' for visitors, it also contains 
+    """
+    Products view, containing an oversight of all products. Since this is also the 'landing page' for visitors
+    """
+
     products = Product.objects.all()
     # Feature grabs the first 5 objects that match featured, so the main page is not inundated.
     feature = Product.objects.filter(featured=True)[:5]
@@ -52,7 +55,15 @@ def product_info(request, product_id):
 def dashboard(request):
     user = request.user
     form = ProductForm
-
+    if request.method == 'POST':
+        if form.is_valid() & user.user_is_superuser:
+              #Instancing new product
+            instance = form.save(commit=False)
+            form.save()
+            messages.success(request, 'Product item added!')
+            return HttpResponseRedirect('products/dashboard')
+        else:        
+            messages.success(request, 'Product item added!')
     context = {
     'user': user,
     'form': form
