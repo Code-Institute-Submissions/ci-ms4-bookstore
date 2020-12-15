@@ -54,7 +54,7 @@ def product_info(request, product_id):
 @login_required
 def dashboard(request):
     user = request.user
-    form = ProductForm(request.POST)
+    form = ProductForm(request.POST, request.FILES)
     if request.method == 'POST':
         if request.user.is_superuser:            
             #Instancing new product
