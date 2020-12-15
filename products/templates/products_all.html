@@ -40,11 +40,13 @@
     <div class="col-lg-3 col-md-4 col-sm-6">
     <section class="tile-wrapper">
       <article class="tile-item">
-        <img class="img-fluid" src="{% static 'img/default_cover.png' %}" alt="#">     
+        <img class="img-fluid" src="{{product.cover.url}}" alt="{{product.title}}">     
       </article>
       <div class="tile-details">
         <summary class="tile-name">
+          <a href="{% url 'product_info' product.id  %}">
           {{product.title}}
+          </a>
         </summary>
       </div>
     </section>    
