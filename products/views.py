@@ -60,7 +60,7 @@ def dashboard(request):
             #Instancing new product
             instance = form.save(commit=False)
             if form.is_valid():
-                form.save()
+                instance.save()
                 messages.success(request, 'Product item added!')
                 return HttpResponseRedirect('dashboard')
             else:
