@@ -22,6 +22,8 @@
     {% endblock %}
 
     {% block extra_css %}
+    <!-- CSS for plugins-->
+    <link rel="stylesheet" href="{% static 'css/plugins/owl.carousel.min.css' %}" />
     {% endblock %}
     <title>Bibliomania</title> <!-- Add custom titles for each view later -->
   </head>
@@ -99,13 +101,36 @@
     {% endblock %}
 
     {% block postloadjs %}
-    <script type="text/javascript">
-        $('.toast').toast('show');
-    </script>
+    <!--  Activates the jQuery Owl-Carousel plugin, documentation available: https://owlcarousel2.github.io/OwlCarousel2/docs/started-welcome.html -->
+    <script src="{% static 'js/plugins/owl.carousel.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
     {% endblock %}
 
     {% block extra_js %}
+
+    <script type="text/javascript">
+        $('.toast').toast('show');
+        $('.owl-carousel').owlCarousel({
+            loop:true,
+            margin:10,
+            responsiveClass:true,
+            responsive:{
+                0:{
+                    items:1,
+                    nav:true
+                },
+                600:{
+                    items:3,
+                    nav:false
+                },
+                1000:{
+                    items:5,
+                    nav:true,
+                    loop:false
+                }
+            }
+        })
+      </script>
     {% endblock %}
   </body>
 </html>

@@ -41,3 +41,14 @@ a, p{
 .toast-capper {
     height: 2px;
 }
+
+tr {
+    line-height: 120px;
+    min-height: 120px;
+    height: 120px;
+ }
+ .img-thumbnail{
+    line-height: 120px;
+    min-height: 120px;
+    height: 120px;
+ }

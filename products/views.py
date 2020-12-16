@@ -34,7 +34,7 @@ def product_info(request, product_id):
     # Post handler for user reviews
      if request.method == 'POST':
         if request.user.is_anonymous():
-            messages.warning(request, 'Only logged in users can add comments')
+            messages.warning(request, 'Only logged in users can add comments!')
             return HttpResponseRedirect('products/<int:product_id>/')
         else:
             

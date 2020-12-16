@@ -11,7 +11,7 @@ from django.dispatch import receiver
 
 class Genre(models.Model):
     title = models.CharField(max_length=200, default="Genre title")
-    desc = models.CharField(max_length=200, default="Genre description")
+    desc = models.TextField(max_length=200, default="Genre description")
 
     def __str__(self):
         return self.title
@@ -21,7 +21,7 @@ class Genre(models.Model):
 class Series(models.Model):
 
     title = models.CharField(max_length=200)
-    summary = models.CharField(max_length=200)
+    summary = models.TextField(max_length=200)
 
     def __str__(self):
         return self.title
@@ -29,7 +29,7 @@ class Series(models.Model):
 # Specific authors can be tagged with multiple genres and multiple series.
 class Author(models.Model):
     name = models.CharField(max_length=100)
-    summary = models.CharField(max_length=500, default="We currently have no information on this authors work! Get in the comments and inform us!")
+    summary = models.TextField(max_length=500, default="We currently have no information on this authors work! Get in the comments and inform us!")
     series = models.ForeignKey(Series, null=True, blank=True, on_delete=models.SET_NULL)
     genres = models.ForeignKey(Genre, null=True, blank=True, on_delete=models.SET_NULL)
 
@@ -46,7 +46,7 @@ class Author(models.Model):
 
 class Product(models.Model):
     title = models.CharField(max_length=255)
-    description = models.CharField(max_length=500)
+    description = models.TextField(max_length=500)
     cover = models.ImageField(upload_to='covers', null=True, blank=True) 
     author = models.ForeignKey(Author, null=True, blank=True, on_delete=models.SET_NULL)
     series = models.ForeignKey(Series, null=True, blank=True, on_delete=models.SET_NULL)
@@ -57,10 +57,11 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
-# Class for product reviews, tied to both user and 
+# Class for product reviews, tied to both user and item so you cannot vote more than once.
 
 class ProductReview(models.Model):
     product = models.ForeignKey(Product, null=True, blank=True, on_delete=models.CASCADE)
     reviewer = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
+    comment = models.TextField(null=True, blank=True, default="Comments...")
     plus = models.IntegerField()
     minus = models.IntegerField()
