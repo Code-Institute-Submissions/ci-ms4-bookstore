@@ -54,9 +54,9 @@ def product_info(request, product_id):
 @login_required
 def dashboard(request):
     user = request.user
-    form = ProductForm(request.POST, request.FILES)
     if request.method == 'POST':
         if request.user.is_superuser:            
+            form = ProductForm(request.POST, request.FILES)
             #Instancing new product
             instance = form.save(commit=False)
             if form.is_valid():
@@ -70,6 +70,6 @@ def dashboard(request):
             messages.warning(request, 'Please log in before trying to add new products!')
     context = {
     'user': user,
-    'form': form
+    'form': ProductForm
     }
     return render(request, 'dashboard.html', context)
