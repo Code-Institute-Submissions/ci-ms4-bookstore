@@ -1,7 +1,7 @@
-from django.db.models.base import Model
+from django.db.models.base import Model, ModelBase
 from django.forms import ModelForm, widgets, ImageField, Textarea, FileField
 from django.forms.models import modelform_factory
-from .models import Product, Author, Genre, Series
+from .models import Product, Author, Genre, ProductReview, Series
 
 class ProductForm(ModelForm):
     
@@ -13,7 +13,7 @@ class ProductForm(ModelForm):
         'class': 'form-control'
         }
         image = ImageField(label='Cover',
-                            required=False)
+                            required=True)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -42,5 +42,16 @@ class AuthorForm(ModelForm):
         model = Genre
         fields = ("__all__")
      
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+# Product reviews
+
+class ReviewForm(ModelForm):
+    class Meta:
+        model = ProductReview        
+        fields = ("plus", "minus", "comment")
+        verbose_name_plural = 'Reviews'
+        
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

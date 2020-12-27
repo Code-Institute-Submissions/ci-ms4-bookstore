@@ -28,6 +28,7 @@ class Series(models.Model):
         return self.title
 
 # Specific authors can be tagged with multiple genres and multiple series.
+
 class Author(models.Model):
     name = models.CharField(max_length=100)
     summary = models.TextField(max_length=500, default="We currently have no information on this authors work! Get in the comments and inform us!")
@@ -48,7 +49,7 @@ class Author(models.Model):
 
 class Product(models.Model):
     title = models.CharField(max_length=255)
-    description = models.TextField(max_length=2000)
+    description = models.TextField()
     cover = models.ImageField(upload_to='covers', null=True, blank=True) 
     author = models.ForeignKey(Author, null=True, blank=True, on_delete=models.SET_NULL)
     series = models.ForeignKey(Series, null=True, blank=True, on_delete=models.SET_NULL)
@@ -56,8 +57,8 @@ class Product(models.Model):
     featured = models.BooleanField(default=False)
     price = models.DecimalField(default=0.00, max_digits=5, decimal_places=2)
     # User reviews, collates the amount of reviews submitted for each
-    plus = models.PositiveIntegerField(default=0)
-    minus = models.PositiveIntegerField(default=0)
+    upvote = models.PositiveIntegerField(default=0)
+    downvote = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.title
@@ -68,10 +69,10 @@ class ProductReview(models.Model):
     class Meta:
         constraints =[
         models.UniqueConstraint(fields=['product','reviewer'], name="one_review_each"),
-
+        models.UniqueConstraint(fields=['plus', 'minus'], name="bool_plus_minus")
         ]
     product = models.ForeignKey(Product, null=True, blank=True, on_delete=models.CASCADE)
-    reviewer = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
+    reviewer = models.OneToOneField(User, on_delete=models.CASCADE)
     comment = models.TextField(max_length=500, null=True, blank=True, default="Comments...")
-    plus = models.IntegerField()
-    minus = models.IntegerField()
+    plus = models.BooleanField(verbose_name="Upvote!")
+    minus = models.BooleanField(verbose_name="Downvote!")

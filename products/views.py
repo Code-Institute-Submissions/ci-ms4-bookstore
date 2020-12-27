@@ -1,5 +1,5 @@
 from products.models import Product
-from .forms import ProductForm
+from .forms import ProductForm, ReviewForm
 from django.contrib.auth.models import AnonymousUser, User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -28,19 +28,25 @@ def product_info(request, product_id):
 
     user = request.user
     product = get_object_or_404(Product, id=product_id)
-    # reviews = ProductReview.objects.filter(=product_info)
 
-    """
     # Post handler for user reviews
-     if request.method == 'POST':
+    if request.method == 'POST':
         if request.user.is_anonymous():
             messages.warning(request, 'Only logged in users can add comments!')
             return HttpResponseRedirect('products/<int:product_id>/')
         else:
+            form = ReviewForm
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Your review has been posted!')
+                return HttpResponseRedirect('products/<int:product_id>/')
+            else:
+                messages.error(request, 'Your review was not valid. Please, try again!')
+                return HttpResponseRedirect('products/<int:product_id>/')               
             
-    """
-
+            
     context = {
+        "form": ReviewForm,
         "product": product,
         "product_info": product_info,
         # "reviews": reviews,
@@ -65,7 +71,8 @@ def dashboard(request):
                 messages.warning(request, 'One or more fields were not valid. Please try again.')
                 return HttpResponseRedirect('dashboard')
         else:        
-            messages.warning(request, 'Please log in as a staff-member before trying to add new products!')
+            messages.warning(request, 'This URL is restricted to Staff members, please login with your staff account.')
+            return HttpResponseRedirect('login')
     context = {
     'user': user,
     'form': ProductForm
@@ -74,23 +81,26 @@ def dashboard(request):
 
 @login_required
 def edit_product(request, product_id):
-
     # View for editing products
     user = request.user
     product = get_object_or_404(Product, id=product_id)
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES, instance=product)
         if user.is_superuser:
-           form.save()
-           messages.success(request, f"You have succesfully edited {product.title}")
-           return HttpResponseRedirect('dashboard')
+            if form.is_valid():
+                form.save()
+                messages.success(request, f"You have succesfully edited {product.title}")
+                return HttpResponseRedirect('dashboard')
+            else:                
+                messages.success(request, f"Failed to edit {product.title}, form was invalid.")
+                return HttpResponseRedirect('dashboard')
         else:           
            messages.warning(request, 'This URL is restricted to Staff members, please login with your staff account.')
            return HttpResponseRedirect('login')
 
     context = {
         "product": product,
-        'form': ProductForm,
+        'form': ProductForm(instance=product),
         "user": user,
     }
 
@@ -100,14 +110,11 @@ def edit_product(request, product_id):
 def delete_product(request, product_id):
     user = request.user
     product = get_object_or_404(Product, id=product_id)
-    if request.method == 'POST':
-        if user.is_superuser:
-           product.delete()
-           messages.warning(request, f"You have succesfully deleted the product!")
-           return HttpResponseRedirect('dashboard')
-        else:           
-           messages.warning(request, 'This URL is restricted to Staff members, please login with your staff account.')
-           return HttpResponseRedirect('login')
-
-    messages.warning(request, 'This URL is restricted.')
-    return HttpResponseRedirect('login')
+    
+    if user.is_superuser:
+        product.delete()
+        messages.warning(request, f"You have succesfully deleted the product!")
+        return HttpResponseRedirect('dashboard')
+    else:           
+        messages.warning(request, 'This URL is restricted to Staff members, please login with your staff account.')
+        return HttpResponseRedirect('login')

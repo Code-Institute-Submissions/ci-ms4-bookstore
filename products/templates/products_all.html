@@ -27,28 +27,28 @@
 <table class="table table-hover table-sm">
   <thead class="thead-dark">
     <tr>      
-      <th scope="col">Cover</th>
-      <th scope="col">Title</th>
-      <th scope="col">Series</th>
-      <th scope="col">Author</th>
-      <th scope="col">Genre</th>      
+      <th scope="col"><h4 class="text-left">Cover</h4></th>
+      <th scope="col"><h4 class="text-center">Title</h4></th>
+      <th scope="col"><h4 class="text-center">Series</h4></th>
+      <th scope="col"><h4 class="text-center">Author</h4></th>
+      <th scope="col"><h4 class="text-center">Genre</h4></th>      
       {% if request.user.is_superuser %}
-      <th scope="col">Edit</th>      
-      <th scope="col">Delete</th>      
+      <th scope="col"><h4 class="text-center">Edit</h4></th>      
+      <th scope="col"><h4 class="text-center">Delete</h4></th>      
       {% endif %}
     </tr>
   </thead>
   <tbody>
     {% for product in products %}
     <tr>
-      <th scope="row"><a href="{% url 'product_info' product.id  %}"><img class="img-thumbnail" src="{{product.cover.url}}" alt="{{product.title}}"></a></th>
-      <td><h4><a href="{% url 'product_info' product.id  %}">{{product.title}}</a></h4></td>
-      <td><h4>{{product.series}}</h4></td>
-      <td><h4>{{product.author}}</h4></td>
-      <td><h4>{{product.genre}}</h4></td>
-      {% if request.user.is_superuser %}
-      <td scope="col"><a href="{% url 'edit_product' product_id=product.id %}"><i class="fas fa-edit"></i></a></td>      
-      <td scope="col"><a href="{% url 'delete_product' product_id=product.id %}"><i class="fas fa-trash-alt"></i></a></td>      
+      <th scope="row"><a href="{% url 'product_info' product.id  %}"><img class="img-thumbnail rounded float-left" src="{{product.cover.url}}" alt="{{product.title}}"></a></th>
+      <td><h4 class="text-center"><a href="{% url 'product_info' product.id  %}">{{product.title}}</a></h4></td>
+      <td><h4 class="text-center">{{product.series}}</h4></td>
+      <td><h4 class="text-center">{{product.author}}</h4></td>
+      <td><h4 class="text-center">{{product.genre}}</h4></td>
+      {% if request.user.is_superuser %}      
+      <td scope="col"><h4 class="text-center"><a href="{% url 'edit_product' product_id=product.id %}"><i class="fas fa-edit"></i></a></h4></td>      
+      <td scope="col"><h4 class="text-center"><a href="{% url 'delete_product' product_id=product.id %}"><i class="fas fa-trash-alt"></i></a></h4></td>      
       {% endif %}
     </tr>
     {% endfor %}   
