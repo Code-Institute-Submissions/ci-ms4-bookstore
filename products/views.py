@@ -10,11 +10,11 @@ from django.shortcuts import redirect, render, get_object_or_404
 
 def products(request):
     """
-    Products view, containing an oversight of all products. Since this is also the 'landing page' for visitors
+    Products view, containing an oversight of all products. 
     """
 
     products = Product.objects.all()
-    # Feature grabs the first 5 objects that match featured, so the main page is not inundated.
+    # Feature grabs the first 5 objects that match as featured, so the main page is not inundated.
     feature = Product.objects.filter(featured=True)[:5]
     context = {
         "products": products,
@@ -40,8 +40,6 @@ def product_info(request, product_id):
             
     """
 
-
-
     context = {
         "product": product,
         "product_info": product_info,
@@ -55,7 +53,7 @@ def product_info(request, product_id):
 def dashboard(request):
     user = request.user
     if request.method == 'POST':
-        if request.user.is_superuser:            
+        if user.is_superuser:            
             form = ProductForm(request.POST, request.FILES)
             #Instancing new product
             instance = form.save(commit=False)
@@ -67,9 +65,49 @@ def dashboard(request):
                 messages.warning(request, 'One or more fields were not valid. Please try again.')
                 return HttpResponseRedirect('dashboard')
         else:        
-            messages.warning(request, 'Please log in before trying to add new products!')
+            messages.warning(request, 'Please log in as a staff-member before trying to add new products!')
     context = {
     'user': user,
     'form': ProductForm
     }
     return render(request, 'dashboard.html', context)
+
+@login_required
+def edit_product(request, product_id):
+
+    # View for editing products
+    user = request.user
+    product = get_object_or_404(Product, id=product_id)
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES, instance=product)
+        if user.is_superuser:
+           form.save()
+           messages.success(request, f"You have succesfully edited {product.title}")
+           return HttpResponseRedirect('dashboard')
+        else:           
+           messages.warning(request, 'This URL is restricted to Staff members, please login with your staff account.')
+           return HttpResponseRedirect('login')
+
+    context = {
+        "product": product,
+        'form': ProductForm,
+        "user": user,
+    }
+
+    return render(request, 'edit_product.html', context)
+
+@login_required
+def delete_product(request, product_id):
+    user = request.user
+    product = get_object_or_404(Product, id=product_id)
+    if request.method == 'POST':
+        if user.is_superuser:
+           product.delete()
+           messages.warning(request, f"You have succesfully deleted the product!")
+           return HttpResponseRedirect('dashboard')
+        else:           
+           messages.warning(request, 'This URL is restricted to Staff members, please login with your staff account.')
+           return HttpResponseRedirect('login')
+
+    messages.warning(request, 'This URL is restricted.')
+    return HttpResponseRedirect('login')

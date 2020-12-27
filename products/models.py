@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models import constraints
 from django.db.models.deletion import CASCADE, SET_NULL
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -42,17 +43,21 @@ class Author(models.Model):
 """
  The books themselves. Note that all foreign keys are set to set null on delete because while we don't want dangling references in the DB, neither do we want 
  products to be invalidated and removed from the store when administering many-to-many relationships.
+ 
 """
 
 class Product(models.Model):
     title = models.CharField(max_length=255)
-    description = models.TextField(max_length=500)
+    description = models.TextField(max_length=2000)
     cover = models.ImageField(upload_to='covers', null=True, blank=True) 
     author = models.ForeignKey(Author, null=True, blank=True, on_delete=models.SET_NULL)
     series = models.ForeignKey(Series, null=True, blank=True, on_delete=models.SET_NULL)
     genre = models.ForeignKey(Genre, null=True, blank=True, on_delete=models.SET_NULL)
     featured = models.BooleanField(default=False)
     price = models.DecimalField(default=0.00, max_digits=5, decimal_places=2)
+    # User reviews, collates the amount of reviews submitted for each
+    plus = models.PositiveIntegerField(default=0)
+    minus = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.title
@@ -60,8 +65,13 @@ class Product(models.Model):
 # Class for product reviews, tied to both user and item so you cannot vote more than once.
 
 class ProductReview(models.Model):
+    class Meta:
+        constraints =[
+        models.UniqueConstraint(fields=['product','reviewer'], name="one_review_each"),
+
+        ]
     product = models.ForeignKey(Product, null=True, blank=True, on_delete=models.CASCADE)
     reviewer = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
-    comment = models.TextField(null=True, blank=True, default="Comments...")
+    comment = models.TextField(max_length=500, null=True, blank=True, default="Comments...")
     plus = models.IntegerField()
     minus = models.IntegerField()

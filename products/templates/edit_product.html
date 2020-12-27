@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<div class="row">
+    <div class="container-fluid">
+        <h1>Editing product: {{product.title}}</h1>
+    </div>
+</div>
+<div class="row">
+  <div class="container">
+      <form method="POST" enctype="multipart/form-data" action="{% url 'edit_product' product_id=product.id %}">
+      {% csrf_token %}      
+      {{ form|crispy }}
+      <button type="submit" class="btn btn-primary">Edit product</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

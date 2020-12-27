@@ -18,12 +18,19 @@
 <hr>        
 {% endif %}
 <div class="row">
+  <div class="col-12">
+    <h1 class="text-center">{{ product.title }}</h1>
+  </div>
+</div>
+<div class="row">
   <div class="container-fluid">    
-      <h1>{{ product.title }}</h1>
-      <img src="{{product.cover.url}}">
+    <div class="col-sm-12 col-md-6">
+      <img class="img-responsive" src="{{product.cover.url}}">      
+    </div>
+    <div class="col-sm-12 col-md-6">
       <p>{{ product.description }}</p>
-      <hr>
-      <button type="submit">Add to bag!</button>
+    </div>
+      <button class="btn btn-primary" type="submit">Add to bag!</button>
   </div>
 </div>
 {% endblock %}
