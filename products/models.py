@@ -20,6 +20,8 @@ class Genre(models.Model):
 # A class for series of books, often requiring them to be read in order.
 
 class Series(models.Model):
+    class Meta:
+        verbose_name_plural = 'Series'
 
     title = models.CharField(max_length=200)
     summary = models.TextField(max_length=200)
@@ -38,9 +40,6 @@ class Author(models.Model):
     def __str__(self):
         return self.name
 
-    def get_name(self):
-        return self.name
-
 """
  The books themselves. Note that all foreign keys are set to set null on delete because while we don't want dangling references in the DB, neither do we want 
  products to be invalidated and removed from the store when administering many-to-many relationships.
@@ -56,7 +55,7 @@ class Product(models.Model):
     genre = models.ForeignKey(Genre, null=True, blank=True, on_delete=models.SET_NULL)
     featured = models.BooleanField(default=False)
     price = models.DecimalField(default=0.00, max_digits=5, decimal_places=2)
-    # User reviews, collates the amount of reviews submitted for each
+    # User reviews, collates the amount of reviews submitted for each as two separate values.
     upvote = models.PositiveIntegerField(default=0)
     downvote = models.PositiveIntegerField(default=0)
 
@@ -66,13 +65,15 @@ class Product(models.Model):
 # Class for product reviews, tied to both user and item so you cannot vote more than once.
 
 class ProductReview(models.Model):
-    class Meta:
-        constraints =[
-        models.UniqueConstraint(fields=['product','reviewer'], name="one_review_each"),
-        models.UniqueConstraint(fields=['plus', 'minus'], name="bool_plus_minus")
-        ]
+    REVIEW_SCORE_CHOICES = [
+        ('UP', 'Upvote'),
+        ('DOWN', 'Downvote'),
+    ]
     product = models.ForeignKey(Product, null=True, blank=True, on_delete=models.CASCADE)
-    reviewer = models.OneToOneField(User, on_delete=models.CASCADE)
+    reviewer = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     comment = models.TextField(max_length=500, null=True, blank=True, default="Comments...")
-    plus = models.BooleanField(verbose_name="Upvote!")
-    minus = models.BooleanField(verbose_name="Downvote!")
+    score = models.CharField(
+        max_length=4,
+        choices=REVIEW_SCORE_CHOICES,
+        default='UP'
+    )

@@ -1,5 +1,5 @@
 from django.db.models.base import Model, ModelBase
-from django.forms import ModelForm, widgets, ImageField, Textarea, FileField
+from django.forms import ModelForm, widgets, ImageField, Textarea, RadioSelect
 from django.forms.models import modelform_factory
 from .models import Product, Author, Genre, ProductReview, Series
 
@@ -50,8 +50,10 @@ class AuthorForm(ModelForm):
 class ReviewForm(ModelForm):
     class Meta:
         model = ProductReview        
-        fields = ("plus", "minus", "comment")
+        fields = ("score", "comment")
+        exclude = ("product", "reviewer")
         verbose_name_plural = 'Reviews'
+        widgets = {'score': RadioSelect}
         
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

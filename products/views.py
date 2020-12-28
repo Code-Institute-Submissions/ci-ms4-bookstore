@@ -1,4 +1,4 @@
-from products.models import Product
+from products.models import Product, ProductReview
 from .forms import ProductForm, ReviewForm
 from django.contrib.auth.models import AnonymousUser, User
 from django.contrib.auth.decorators import login_required
@@ -31,21 +31,25 @@ def product_info(request, product_id):
 
     # Post handler for user reviews
     if request.method == 'POST':
-        if request.user.is_anonymous():
-            messages.warning(request, 'Only logged in users can add comments!')
-            return HttpResponseRedirect('products/<int:product_id>/')
-        else:
-            form = ReviewForm
+        form = ReviewForm(request.POST)
+        if request.user.is_anonymous:
+            messages.warning(request, 'Only logged in users can add reviews!')
+            return HttpResponseRedirect(request.path_info)
+        else:                       
             if form.is_valid():
-                form.save()
+                instance = form.save(commit=False)
+                # Appears to be only sending the user object on printing
+                instance.reviewer = user
+                instance.product = product
+                instance.save()
                 messages.success(request, 'Your review has been posted!')
-                return HttpResponseRedirect('products/<int:product_id>/')
+                return HttpResponseRedirect(request.path_info)
             else:
                 messages.error(request, 'Your review was not valid. Please, try again!')
-                return HttpResponseRedirect('products/<int:product_id>/')               
-            
+                return HttpResponseRedirect(request.path_info)
             
     context = {
+        # We pass a separate, unbound ReviewForm in the contexts on GET, to avoid issues with anonymous users who lack an instance
         "form": ReviewForm,
         "product": product,
         "product_info": product_info,
@@ -72,7 +76,7 @@ def dashboard(request):
                 return HttpResponseRedirect('dashboard')
         else:        
             messages.warning(request, 'This URL is restricted to Staff members, please login with your staff account.')
-            return HttpResponseRedirect('login')
+            return HttpResponseRedirect('account_login')
     context = {
     'user': user,
     'form': ProductForm
@@ -96,7 +100,7 @@ def edit_product(request, product_id):
                 return HttpResponseRedirect('dashboard')
         else:           
            messages.warning(request, 'This URL is restricted to Staff members, please login with your staff account.')
-           return HttpResponseRedirect('login')
+           return HttpResponseRedirect('account_login')
 
     context = {
         "product": product,
@@ -117,4 +121,4 @@ def delete_product(request, product_id):
         return HttpResponseRedirect('dashboard')
     else:           
         messages.warning(request, 'This URL is restricted to Staff members, please login with your staff account.')
-        return HttpResponseRedirect('login')
+        return HttpResponseRedirect('account_login')
