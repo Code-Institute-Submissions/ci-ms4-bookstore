@@ -29,7 +29,7 @@ def product_info(request, product_id):
     user = request.user
     product = get_object_or_404(Product, id=product_id)
     if request.method == 'POST':
-        # Post handler for user reviews, with instancing to keep unique reviews
+        # Post handler for user reviews, with instancing to keep unique reviews. Checks for a registered users review of this product, if not found instantiates one.
         try:
             prod_instance = ProductReview.objects.get(reviewer=user, product=product)
         except ProductReview.DoesNotExist:
@@ -40,7 +40,6 @@ def product_info(request, product_id):
             return HttpResponseRedirect(request.path_info)
         else:                       
             if form.is_valid():                
-                # TO DO in this view: Add handling for score counters on the product
                 instance = form.save(commit=False)
                 instance.reviewer = user
                 instance.product = product
@@ -62,7 +61,7 @@ def product_info(request, product_id):
         "form": ReviewForm,
         "product": product,
         "product_info": product_info,
-        # "reviews": reviews,
+        # Commented out for now "reviews": get_object_or_404(ProductReview, reviewer=user, product=product),
         "user": user,
     }
 
