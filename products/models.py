@@ -70,10 +70,12 @@ class ProductReview(models.Model):
         ('DOWN', 'Downvote'),
     ]
     product = models.ForeignKey(Product, null=True, blank=True, on_delete=models.CASCADE)
-    reviewer = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    reviewer = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     comment = models.TextField(max_length=500, null=True, blank=True, default="Comments...")
     score = models.CharField(
         max_length=4,
         choices=REVIEW_SCORE_CHOICES,
         default='UP'
     )
+    def __str__(self):
+       return self.product.title +" review by " + self.reviewer.username

@@ -28,20 +28,29 @@ def product_info(request, product_id):
 
     user = request.user
     product = get_object_or_404(Product, id=product_id)
-
-    # Post handler for user reviews
     if request.method == 'POST':
-        form = ReviewForm(request.POST)
+        # Post handler for user reviews, with instancing to keep unique reviews
+        try:
+            prod_instance = ProductReview.objects.get(reviewer=user, product=product)
+        except ProductReview.DoesNotExist:
+            prod_instance = ProductReview(reviewer=user, product=product)
+        form = ReviewForm(request.POST, instance=prod_instance)
         if request.user.is_anonymous:
             messages.warning(request, 'Only logged in users can add reviews!')
             return HttpResponseRedirect(request.path_info)
         else:                       
-            if form.is_valid():
+            if form.is_valid():                
+                # TO DO in this view: Add handling for score counters on the product
                 instance = form.save(commit=False)
-                # Appears to be only sending the user object on printing
                 instance.reviewer = user
                 instance.product = product
-                instance.save()
+                if instance.score == 'UP':
+                    product.upvote +=1
+                    product.save()
+                else:
+                    product.downvote +=1
+                    product.save()
+                instance.save()                
                 messages.success(request, 'Your review has been posted!')
                 return HttpResponseRedirect(request.path_info)
             else:

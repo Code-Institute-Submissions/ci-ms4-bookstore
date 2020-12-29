@@ -57,7 +57,6 @@ def add_post(request):
     if request.method == 'POST':
         form = NewsForm(request.POST)
         if form.is_valid():
-
             #Instancing a new news-item.
             instance = form.save(commit=False) 
             instance.author = request.user
