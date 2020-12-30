@@ -1,5 +1,7 @@
+from decimal import Decimal
+from django.shortcuts import get_object_or_404
 from bag.views import shopping_bag
-from django.shortcuts import request
+from products.models import Product
 
 def bag_items(request):
 
@@ -9,6 +11,19 @@ def bag_items(request):
     # Placeholder value for Delivery while I figure out how I want to handle that.
     delivery = 10
     grand_total = total + delivery
+    bag = request.session.get('bag', {})
+
+    for product_id, quantity in bag.items():
+
+        product = get_object_or_404(Product, pk=product_id)
+        total += quantity * product.price
+        product_counter += quantity
+        item_contents.append({
+            'product_id': product_id,
+            'quantity': quantity,
+            'product': product
+        })
+
 
     context = {
         'item_contents': item_contents,

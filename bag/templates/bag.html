@@ -4,9 +4,17 @@
 
 <h1>Shopping bag!</h1>
 
-{% if bag_items %}
+{% if item_contents %}
 
-{% if else %}
+{% for item in item_contents %}
+
+{{ item.quantity }}
+{{ item.product.title }}
+{{ item.product.cover }}
+
+{% endfor %}
+
+{% else %}
 
 <h2>Your bag is currently empty. </h2>
 
