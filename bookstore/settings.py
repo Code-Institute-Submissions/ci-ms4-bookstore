@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'coverage',
     'crispy_forms',
+    'django_countries',
     # My apps
     'home',
     'products',
