@@ -5,15 +5,53 @@
 <h1>Shopping bag!</h1>
 
 {% if item_contents %}
+<hr>
+<div class="table-responsive">
+    <h6 class="text-center">Bag items total: {{ product_counter}}</h6>
+    <table class="table table-sm table-borderless">
+        <thead>
+          <tr>
+            <th scope="col"><h4 class="text-left">Cover</h4></th>            
+            <th scope="col"><h4 class="text-center">Title</h4></th>
+            <th scope="col"><h4 class="text-center">Quantity</h4></th>
+            <th scope="col"><h4 class="text-center">Remove</h4></th>
+            <th scope="col"><h4 class="text-center">Price</h4></th>
+          </tr>
+        </thead>
+        <tbody>
+         {% for item in item_contents %}
+          <tr>            
+            <th scope="row"><img src="{{ item.product.cover.url }}" class="img-thumbnail img-fluid rounded text-left"></th>
+            <td><a href="{% url 'product_info' product_id=item.product.id%}"><h6 class="text-center"> {{ item.product.title }}</h6></a></td>
+            <td><h6 class="text-center"><input type="number" value="{{ item.quantity }}" class="form-control form-control-sm"></h6></td>
+            <form method="POST" action="{% url 'remove_from_bag' product_id=item.product.id %}">
+              {% csrf_token %}
+            <td><h6 class="text-center"><button class="btn btn-link" type="submit"><i class="fas fa-minus"></i></button></h6></td>
+            <input type="hidden" name="redirect_url"  value="{{ request.path }}">
+          </form>
+            <td><h6 class="text-center">${{ item.product.price }}</h6></td>            
+          </tr>
+         {% endfor %}
+        </tbody>
+      </table>
+      <br>
+</div>
 
-{% for item in item_contents %}
+<!-- TODO:  Add the "If you're interested..." carousel here, to present related books the custom might also want to add-->
 
-{{ item.quantity }}
-{{ item.product.title }}
-{{ item.product.cover }}
+<hr>
 
-{% endfor %}
-
+<h5 class="text-left">Total items: {{product_counter}}</h5>
+<br>
+<h5 class="text-left">Cost: ${{ total }}</h5>
+<br>
+<h5 class="text-left">Delivery: ${{ delivery }}</h5>
+<hr>
+<h5 class="text-left">Grand total: ${{ grand_total }}</h5>
+<br>
+<a href="{% url 'products' %}" class="btn btn-primary">Keep shopping!</a>
+<button class="btn btn-primary">Go to checkout!</button>
+<hr>
 {% else %}
 
 <h2>Your bag is currently empty. </h2>

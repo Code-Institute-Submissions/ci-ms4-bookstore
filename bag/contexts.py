@@ -8,9 +8,6 @@ def bag_items(request):
     item_contents = []
     product_counter = 0
     total = 0
-    # Placeholder value for Delivery while I figure out how I want to handle that.
-    delivery = 10
-    grand_total = total + delivery
     bag = request.session.get('bag', {})
 
     for product_id, quantity in bag.items():
@@ -23,12 +20,16 @@ def bag_items(request):
             'quantity': quantity,
             'product': product
         })
-
+        
+    # Placeholder value for Delivery while I figure out how I want to handle that.
+    delivery = 10
+    grand_total = total + delivery
 
     context = {
         'item_contents': item_contents,
         'product_counter': product_counter,
         'total': total,
+        'delivery': delivery,
         'grand_total': grand_total
     }
 
