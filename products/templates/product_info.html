@@ -2,27 +2,22 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
-{% if request.user.is_superuser %}
 <div class="row">
-  <div class="container">
-    <div class="d-inline-flex">
-    <h1 class="text-justify">Administrative tools: </h1>
-  </div>    
-</div>
-<hr>        
-<div class="row">
-  <div class="container">
-    <span class="d-flex"><a class="text-right" href='#'><i class="fas fa-edit"></i></a><a class="text-right" href="#"><i class="fas fa-trash-alt"></i></a></span>    
-    </div>
-  </div>    
-</div>
-<hr>        
-{% endif %}
-<div class="row">
-  <div class="col-12">
+  <div class="container-fluid">
     <h1 class="text-center">{{ product.title }}</h1>
   </div>
 </div>
+<br>
+{% if request.user.is_superuser %}
+<hr>
+<div class="row">
+  <div class="container-fluid">
+      <!-- TO DO: Add handlers for editing and deleting -->
+    <h3 class="text-center">Administrative tools for product: {{ product.title }} (<a href='#'><i class="fas fa-edit"></i></a>  <a href="#"><i class="fas fa-trash-alt"></i></a>)</h3>
+  </div>    
+</div>
+<hr>          
+{% endif %}
 <div class="row">
   <div class="container-fluid">
     <table>
@@ -39,6 +34,7 @@
     </table>
   </div>
 </div>
+<br>
 <div class="row">
   <div class="container-fluid">    
     <div class="col-sm-12 col-md-4">

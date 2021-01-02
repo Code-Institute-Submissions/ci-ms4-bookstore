@@ -1,6 +1,12 @@
 from django.shortcuts import render
-
+from .forms import OrderForm
 # Create your views here.
 
-# TO DO : def checkout(request):
-    
+def checkout(request):
+    form = OrderForm
+
+    context = {
+        "form": form,
+    }
+
+    return render(request, 'checkout.html', context)

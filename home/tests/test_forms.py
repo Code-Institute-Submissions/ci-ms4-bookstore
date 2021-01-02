@@ -36,9 +36,7 @@ class NewsForm(TestCase):
     # A post that contains no valid foreign key is not valid.
     def invalid_fk_user_test(self):
         user = User.object.models({'pk': 'xx-xx-xx-xx'})
-
-        form = NewsForm(self)
-        
+        form = NewsForm(self)        
         form.author = user
         form.save()
 
