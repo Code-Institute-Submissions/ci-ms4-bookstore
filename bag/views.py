@@ -15,11 +15,11 @@ def add_to_bag(request, product_id):
     redirect_url = request.POST.get('redirect_url')
     product = get_object_or_404(Product, id=product_id)
     bag = request.session.get('bag', {})
-
-    if product_id in list(bag.keys()):
-        bag[product_id] += quantity
+    id_str = str(product_id)
+    if id_str in list(bag.keys()):
+        bag[id_str] += quantity
     else:
-        bag[product_id] = quantity
+        bag[id_str] = quantity
 
     request.session['bag'] = bag
     messages.success(request, f"You have succesfully added {product.title} to your bag!")
@@ -31,9 +31,10 @@ def remove_from_bag(request, product_id):
     redirect_url = request.POST.get('redirect_url')
     product = get_object_or_404(Product, id=product_id)
     bag = request.session.get('bag', {})
+    id_str = str(product_id)
 
-    if str(product_id) in list(bag.keys()):
-        bag.pop(str(product_id))
+    if id_str in list(bag.keys()):
+        bag.pop(id_str)
     else:
         messages.success(request, f"An error occured when trying to remove {product.title} from your bag! Try again later!")
         return redirect(redirect_url)
