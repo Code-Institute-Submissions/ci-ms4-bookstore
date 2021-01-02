@@ -1,23 +1,153 @@
-{% extends "base.html" %}
-{% load static %}
-{% load crispy_forms_tags %}
+{% extends "base.html" %} {% load static %} 
+{% load crispy_forms_tags %} 
 {% block content %}
 <div class="row">
-   <div class="container-fluid">
+  <div class="container-fluid">
+    <hr />
+    <h1 class="text-center">Checkout:</h1>
+    <br>
+    <p class="text-center font-italic">Please read through the summary below, fill in your delivery details and a valid credit or debit card. Our secure checkout system uses Stripe payment. If you run into problems, please click the envelope (<a href="#" data-toggle="modal" data-target="#support-modal"><i class="fas fa-envelope-open-text"></i></a>) to send a message to our support staff!</p>
+    <hr />
+
+    <!-- Support contact form. -->
+    <div class="modal fade" id="support-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Ran into trouble? Let us know!</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <!-- TODO : Add contact form inside this modal -->
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Send email</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Summary based on the bag-app bag.html -->
+{% if item_contents %}
+<div class="row">
+  <div class="container">
+    <h3 class="text-center">Order summary:</h3>
+    <br />
+    
     <hr>
-      <h1 class="text-center">Checkout:</h1>
+    <div class="table-responsive">
+      <h6 class="text-center">Bag items total: {{ product_counter}}</h6>
+      <table class="table table-sm table-borderless">
+        <thead>
+          <tr>
+            <th scope="col"><h4 class="text-left">Cover</h4></th>
+            <th scope="col"><h4 class="text-center">Title</h4></th>
+            <th scope="col"><h4 class="text-center">Quantity</h4></th>
+            <th scope="col"><h4 class="text-center">Remove</h4></th>
+            <th scope="col"><h4 class="text-center">Price</h4></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in item_contents %}
+          <tr>
+            <th scope="row">
+              <img
+                src="{{ item.product.cover.url }}"
+                class="img-thumbnail img-fluid rounded text-left"
+              />
+            </th>
+            <td>
+              <a href="{% url 'product_info' product_id=item.product.id%}"
+                ><h6 class="text-center">{{ item.product.title }}</h6></a
+              >
+            </td>
+            <td>
+              <h6 class="text-center">
+                <input
+                  type="number"
+                  value="{{ item.quantity }}"
+                  class="form-control form-control-sm"
+                />
+              </h6>
+            </td>
+            <form
+              method="POST"
+              action="{% url 'remove_from_bag' product_id=item.product.id %}"
+            >
+              {% csrf_token %}
+              <td>
+                <h6 class="text-center">
+                  <button class="btn btn-link" type="submit">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                </h6>
+              </td>
+              <input
+                type="hidden"
+                name="redirect_url"
+                value="{{ request.path }}"
+              />
+            </form>
+            <td><h6 class="text-center">${{ item.product.price }}</h6></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <br />
+    </div>
     <hr>
   </div>
 </div>
-
-<!-- Add searching/filtering functions here later -->
 <div class="row">
-    <div class="container">
-        <form action="{% url 'checkout' %}" method="POST">
-        {{ form|crispy }}
-        <button class="btn btn-success" type="submit">Submit order</button>
+      <div class="container">
+        <h5 class="text-left">Total items: {{product_counter}}</h5>
+        <br />
+        <h5 class="text-left">Cost: ${{ total }}</h5>
+        <br />
+        <h5 class="text-left">Delivery: ${{ delivery }}</h5>
+        <hr />
+        <h5 class="text-left font-weight-bold">Grand total: ${{ grand_total }}</h5>
+        <br />
+  </div>
+</div>
+<div class="row">
+  <div class="container">
+    <hr>
+    <h3 class="text-center">Order information:</h3>
+    <br />
+    <form action="{% url 'checkout' %}" method="POST">
+    {{ form|crispy }}
+    <div id="card-element">
+
+
+    </div>
+    
+    <div id="card-errors">
+      <br>
+      <p class="text-center font-italic">Upon submitting your order, your card will be charged ${{ grand_total }}</p>
+      <br>
+      <button class="btn btn-success" type="submit">Submit order</button>
     </form>
-   </div>
- </div>
+  </div>
+</div>
+
+
+
+
+</div>
+{% else %}
+<h1 class="text-center"><a href="{% url 'products' %}">Your bag is empty! Click here to return to the products list.</a></h1>
+{% endif %}
+
+{% endblock %}
+
+<!-- Init Stripe in here -->
+{% block extra_js %}
 
 {% endblock %}
