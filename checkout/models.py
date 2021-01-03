@@ -37,7 +37,7 @@ class Order(models.Model):
 
     def save(self, *args, **kwargs):
         """
-        A failsafe to make sure a unique UUID exists for each order 
+        A failsafe override to make sure a unique UUID exists for each order 
         """
         if not self.order_number:
             self.order_number = self._generate_order_number()
@@ -45,3 +45,24 @@ class Order(models.Model):
 
     def __str__(self):
         return self.order_number
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, null=False, blank=False,
+                              on_delete=models.CASCADE,
+                              related_name='items')
+    product = models.ForeignKey(Product, null=False, blank=False,
+                                on_delete=models.CASCADE)
+    quantity = models.IntegerField(null=False, blank=False, default=0)
+    order_item_total = models.DecimalField(max_digits=6, decimal_places=2,
+                                         null=False, blank=False,
+                                         editable=False)
+
+    def save(self, *args, **kwargs):
+        """
+        An override to ensure the price is always kept up to date on saving an order.
+        """
+        self.order_item_total = self.product.price * self.quantity
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f'Item "{self.product.title}"" on order {self.order.order_number}'
