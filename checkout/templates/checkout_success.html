@@ -1,0 +1,26 @@
+{% extends "base.html" %} {% load static %} 
+{% load crispy_forms_tags %} 
+{% block content %}
+<div class="container-fluid">
+<div class="row">
+    <hr>
+    <h1 class="text-center">Your order with ID: {{order.order_number}} has been submitted!</h1>
+    <p class="text-black">Your order information is below. A confirmation email will be sent to <strong>{{ order.email }}</strong>.</p>
+    <hr>
+  </div>
+</div>
+<div class="row bordered">
+      <div class="col" id="order-summary">
+          <small class="text-muted">Order {{order.order_number}}: </small>
+
+      </div>
+      <div class="col" id="delivery-summary">
+        <small class="text-muted">Deliver to: </small>
+      </div>
+      <div class="col" id="billing-summary">
+        <small class="text-muted">Billing-details: </small>
+        <h5 class="text-left">Delivery: ${{ delivery }}</h5>
+        <h5 class="text-left font-weight-bold">Grand total: ${{ grand_total }}</h5>
+      </div>
+</div>
+{% endblock %}

@@ -34,7 +34,7 @@ form.addEventListener('submit', function(event) {
     card.update({ 'disabled': true});
     $('#submit-button').attr('disabled', true);
     $('#payment-form').fadeToggle(100);
-    $('#loading-overlay').fadeToggle(100);
+    $('#loading-overlay-div').fadeToggle(100);
 
     let saveInfo = Boolean($('#id-save-info').attr('checked'));
 

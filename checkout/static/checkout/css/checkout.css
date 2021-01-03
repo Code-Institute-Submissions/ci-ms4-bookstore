@@ -2,5 +2,11 @@
 
 #card-element{
     color: #000000;
-    border: 1px solid;
+    border: 1px solid black;
+}
+
+#loading-overlay-div{
+    z-index: 9999;
+    background-color: #000000   ;
+
 }
