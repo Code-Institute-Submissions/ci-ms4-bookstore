@@ -203,6 +203,12 @@ django_heroku.settings(locals())
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+# Stripe settings
+
+STRIPE_CURRENCY = 'usd'
+STRIPE_PUBLIC_KEY = os.environ['STRIPE_PUBLIC_KEY']
+STRIPE_SECRET_KEY = os.environ['STRIPE_SECRET_KEY']
+
 if 'USE_AWS' in os.environ:
     AWS_STORAGE_BUCKET_NAME = 'django-bookstore-cims4'
     AWS_S3_REGION_NAME = 'eu-north-1'
@@ -220,7 +226,3 @@ if 'USE_AWS' in os.environ:
     # Overrides for production
     STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
-
-
-
-

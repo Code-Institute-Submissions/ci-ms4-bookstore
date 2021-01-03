@@ -42,7 +42,6 @@
     
     <hr>
     <div class="table-responsive">
-      <h6 class="text-center">Bag items total: {{ product_counter}}</h6>
       <table class="table table-sm table-borderless">
         <thead>
           <tr>
@@ -121,18 +120,21 @@
     <hr>
     <h3 class="text-center">Order information:</h3>
     <br />
-    <form action="{% url 'checkout' %}" method="POST">
+    <form action="{% url 'checkout' %}" method="POST" id="payment-form">
+      {% csrf_token %}
     {{ form|crispy }}
+    <label>Payment details:</label><br>
+
+    <!-- STRIPE containers -->
     <div id="card-element">
-
-
     </div>
     
     <div id="card-errors">
-      <br>
-      <p class="text-center font-italic">Upon submitting your order, your card will be charged ${{ grand_total }}</p>
-      <br>
-      <button class="btn btn-success" type="submit">Submit order</button>
+    </div>    
+    <br>
+    <p class="text-center font-italic">Upon submitting your order, your card will be charged ${{ grand_total }}</p>
+    <br>
+    <button class="btn btn-success" type="submit">Submit order</button>
     </form>
   </div>
 </div>
@@ -149,5 +151,10 @@
 
 <!-- Init Stripe in here -->
 {% block extra_js %}
+
+  {{ block.super }}
+  {{ stripe_public_key|json_script:"id_stripe_public_key" }}
+  {{ client_secret|json_script:"id_client_secret" }}
+  <script src="{% static 'checkout/js/stripe_content.js' %}"></script>
 
 {% endblock %}
