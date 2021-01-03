@@ -19,7 +19,7 @@ def checkout(request):
         amount=stripe_total,
         currency=settings.STRIPE_CURRENCY
     )
-    print(intent)
+    
     if not bag_items:
             messages.error(request,
                     "Your shopping bag is empty, so you cannot visit checkout!")
