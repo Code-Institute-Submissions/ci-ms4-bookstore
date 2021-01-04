@@ -208,7 +208,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 STRIPE_CURRENCY = 'usd'
 STRIPE_PUBLIC_KEY = os.environ['STRIPE_PUBLIC_KEY']
 STRIPE_SECRET_KEY = os.environ['STRIPE_SECRET_KEY']
-STRIPE_WH_SECRET = os.getenv('STRIPE_WH_SECRET', '')
+STRIPE_WH_SECRET = os.environ['STRIPE_WH_SECRET']
 
 if 'USE_AWS' in os.environ:
     AWS_STORAGE_BUCKET_NAME = 'django-bookstore-cims4'
