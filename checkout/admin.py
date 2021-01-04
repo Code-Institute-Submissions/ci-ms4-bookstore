@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Order
+from .models import Order, OrderItem
 # Register your models here.
 
 # Specifically making certain fields read-only to ensure they cannot be tampered with after an order is submitted.
@@ -24,3 +24,4 @@ class OrderAdmin(admin.ModelAdmin):
     ordering = ('-date',)
 
 admin.site.register(Order, OrderAdmin)
+admin.site.register(OrderItem)

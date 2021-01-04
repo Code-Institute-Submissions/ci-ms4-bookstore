@@ -1,4 +1,6 @@
+from bag.contexts import bag_items
 import uuid
+from django.db.models import Sum
 from django.db import models
 from django.conf import settings
 from products.models import Product
@@ -34,6 +36,16 @@ class Order(models.Model):
         Generate a random, unique order number using UUID
         """
         return uuid.uuid4().hex.upper()
+
+    def cost_calc(self):
+        """
+        A method for handling updating the total sum of the bag automatically.
+        """
+        self.order_total = self.lineitems.aggregate(
+            Sum('order_item_total'))['order_item_total__sum'] or 0
+        self.delivery_cost = bag_items.delivery
+        self.grand_total = self.order_total + self.delivery_cost
+        self.save()
 
     def save(self, *args, **kwargs):
         """

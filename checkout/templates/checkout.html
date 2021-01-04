@@ -1,8 +1,13 @@
 {% extends "base.html" %} {% load static %} 
 {% load crispy_forms_tags %} 
+{% block extra_css %}
+    <!-- CSS for checkout app -->
+    <link rel="stylesheet" href="{% static '/checkout/css/checkout.css' %}" />
+    {% endblock %}
 {% block content %}
 <div class="overlay"></div>
 <div class="container-fluid">
+  {% url 'cache_checkout_data' %}
   <div class="row"></div>
     <hr />
     <h1 class="text-center">Checkout:</h1>
@@ -125,17 +130,23 @@
     <form action="{% url 'checkout' %}" method="POST" id="payment-form">
       {% csrf_token %}
     {{ form|crispy }}
+    <label for="save_info">Yes, please save my details to my profile!</label>
+    <br>
+    <input name="save_info" type="checkbox">
+    <br>
     <label>Payment details:</label><br>
 
     <!-- STRIPE containers -->
-    <div id="card-element">
+    <fieldset class="px-3">
+    <div id="card-element">    
     </div>
-    
     <div id="card-errors">
-    </div>    
+    </div>
+    <input type="hidden" value="{{ client_secret }}" name="client_secret">    
     <br>
     <p class="text-center font-italic">Upon submitting your order, your card will be charged ${{ grand_total }}</p>
     <br>
+    </fieldset>
     <button class="btn btn-success" type="submit">Submit order</button>
     </form>
   </div>
@@ -152,9 +163,11 @@
 
 <!-- A wrapper for disabling input while stripe is awaiting a response -->
 <div id="loading-overlay-div">
-  <h1 class="text-light logo-font loading-spinner">
+  <h1 class="text-light logo-font loading-spinner text-center">
     <span class="icon">
       <i class="fas fa-3x fa-sync-alt fa-spin"></i>
+      <br>
+      <h1>Processing your order, do not reload the page...</h1>
     </span>
   </h1>
 </div>

@@ -7,13 +7,13 @@ from django.contrib import messages
 from django.conf import settings 
 from .models import OrderItem, Order
 from home.models import UserProfile
+from home.forms import ProfileForm
 from products.models import Product
 from .forms import OrderForm
 from bag.contexts import bag_items
 import stripe
 import json
 # Create your views here.
-
 
 @require_POST
 def cache_checkout_data(request):
@@ -127,29 +127,33 @@ def checkout(request):
 
     return render(request, 'checkout.html', context)
 
-def checkout_success(request, order):
+def checkout_success(request, order_id):
     save_info = request.session.get('save_info')
-    order = get_object_or_404(Order, order=order)
+    order_id = get_object_or_404(Order, order_number=order_id)
 
     if request.user.is_authenticated:
-        profile = UserProfile.objects.get(user=request.user)
+        profile = UserProfile.objects.get(user_id=request.user)
         # Attach the user's profile to the order
-        order.user_profile = profile
-        order.save()
+        order_id.user_id = profile
+        order_id.save()
 
         # Save the user's info, if the checkbox is ticked in checkout
         if save_info:
             profile_data = {
-                'default_phone_number': order.phone_number,
-                'default_country': order.country,
-                'default_postcode': order.postcode,
-                'default_town_or_city': order.town_or_city,
-                'default_street_address1': order.street_address1,
-                'default_street_address2': order.street_address2,
-                'default_county': order.county,
+                'default_phone_number': order_id.phone_number,
+                'default_country': order_id.country,
+                'default_postcode': order_id.postcode,
+                'default_town_or_city': order_id.town_or_city,
+                'default_street_address1': order_id.street_address1,
+                'default_street_address2': order_id.street_address2,
+                'default_county': order_id.county,
             }
-            user_profile_form = UserProfileForm(profile_data, instance=profile)
+            user_profile_form = ProfileForm(profile_data, instance=profile)
             if user_profile_form.is_valid():
                 user_profile_form.save()
+        
+        context = {
+            "order": order_id,
+        }
 
     return render(request, 'checkout_success.html', context)
