@@ -152,8 +152,8 @@ def checkout_success(request, order_id):
             if user_profile_form.is_valid():
                 user_profile_form.save()
         
-        context = {
-            "order": order_id,
-        }
+    context = {
+        "order": order_id,
+    }
 
     return render(request, 'checkout_success.html', context)

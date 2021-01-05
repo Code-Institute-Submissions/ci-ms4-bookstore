@@ -3,8 +3,7 @@ from django.http import request
 
 class StripeWebhook_Handler:
 
-
-    def __init__():
+    def __init__(self, request):
         self.request = request
 
     def handle_event(self, event):
