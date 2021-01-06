@@ -41,7 +41,7 @@ class Order(models.Model):
         """
         A method for handling updating the total sum of the bag automatically.
         """
-        self.order_total = self.lineitems.aggregate(
+        self.order_total = self.items.aggregate(
             Sum('order_item_total'))['order_item_total__sum'] or 0
         self.delivery_cost = bag_items.delivery
         self.grand_total = self.order_total + self.delivery_cost
