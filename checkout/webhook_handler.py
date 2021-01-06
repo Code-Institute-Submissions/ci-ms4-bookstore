@@ -100,12 +100,23 @@ class StripeWebhook_Handler:
                     original_bag=bag,
                     stripe_pid=pid,
                     grand_total=grand_total
-                )
-
-            
-        return HttpResponse(
-            content=f'Webhook received: {event["type"]}',
-            status=200)
+                )            
+                for item_id, item_data in json.loads(bag).items():
+                    product = Product.objects.get(id=item_id)
+                    if isinstance(item_data, int):
+                        order_item = OrderItem(
+                            order=order,
+                            product=product,
+                            quantity=item_data,
+                        )
+                        order_item.save()
+            except Exception as e:
+                if order:
+                    order.delete()
+                            
+                return HttpResponse(
+                    content=f'Webhook received: {event["type"]}',
+                    status=200)
 
     def handle_pi_failed(self, event):
         """
