@@ -42,8 +42,7 @@ class UserProfile(models.Model):
 #Using Django signals to ensure there's always a linked profile object to every user account.
 
 @receiver(post_save, sender=User)
-def profile_handler (sender, instance, created, **kwargs):
-    
+def profile_handler (sender, instance, created, **kwargs):   
 
     if created:
         UserProfile.objects.create(user_id=instance)

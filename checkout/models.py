@@ -1,5 +1,6 @@
 from bag.contexts import bag_items
 import uuid
+from django_countries.fields import CountryField
 from django.db.models import Sum
 from django.db import models
 from django.conf import settings
@@ -17,7 +18,7 @@ class Order(models.Model):
     full_name = models.CharField(max_length=50, null=False, blank=False)
     email = models.EmailField(max_length=254, null=False, blank=False)
     phone_number = models.CharField(max_length=20, null=False, blank=False)
-    country = models.CharField(max_length=40, null=False, blank=False)
+    country = CountryField(blank_label='Country *', null=False, blank=False)
     postcode = models.CharField(max_length=20, null=True, blank=True)
     town_or_city = models.CharField(max_length=40, null=False, blank=False)
     street_address1 = models.CharField(max_length=80, null=False, blank=False)
@@ -43,7 +44,7 @@ class Order(models.Model):
         """
         self.order_total = self.items.aggregate(
             Sum('order_item_total'))['order_item_total__sum'] or 0
-        self.delivery_cost = bag_items.delivery
+        self.delivery_cost = 10 # Temporary value while debugging.
         self.grand_total = self.order_total + self.delivery_cost
         self.save()
 
