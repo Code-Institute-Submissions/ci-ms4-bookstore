@@ -1,5 +1,6 @@
 from django.http import HttpResponse
-from django.http import request
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 from .models import Order, OrderItem
 from products.models import Product
 from home.models import UserProfile
