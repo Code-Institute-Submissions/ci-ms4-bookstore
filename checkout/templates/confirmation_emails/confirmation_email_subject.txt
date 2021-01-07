@@ -1,0 +1,1 @@
+Thank you for shopping at Bibliomania! (Bibliomania order: {{ order.order_number }} )
