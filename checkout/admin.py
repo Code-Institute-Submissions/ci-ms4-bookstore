@@ -4,7 +4,13 @@ from .models import Order, OrderItem
 
 # Specifically making certain fields read-only to ensure they cannot be tampered with after an order is submitted.
 
+class OrderItemAdminInline(admin.TabularInline):
+    model = OrderItem
+    readonly_fields = ('order_item_total',)
+
 class OrderAdmin(admin.ModelAdmin):
+    inlines = (OrderItemAdminInline,)
+    
     readonly_fields = ('order_number', 'date',
                        'delivery_cost', 'order_total',
                        'grand_total', 'original_bag',
@@ -24,4 +30,3 @@ class OrderAdmin(admin.ModelAdmin):
     ordering = ('-date',)
 
 admin.site.register(Order, OrderAdmin)
-admin.site.register(OrderItem)

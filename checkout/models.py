@@ -42,7 +42,7 @@ class Order(models.Model):
         """
         A method for handling updating the total sum of the bag automatically.
         """
-        self.order_total = self.items.aggregate(
+        self.order_total = self.order_items.aggregate(
             Sum('order_item_total'))['order_item_total__sum'] or 0
         self.delivery_cost = 10 # Temporary value while debugging.
         self.grand_total = self.order_total + self.delivery_cost
@@ -62,7 +62,7 @@ class Order(models.Model):
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, null=False, blank=False,
                               on_delete=models.CASCADE,
-                              related_name='items')
+                              related_name='order_items')
     product = models.ForeignKey(Product, null=False, blank=False,
                                 on_delete=models.CASCADE)
     quantity = models.IntegerField(null=False, blank=False, default=0)

@@ -3,12 +3,15 @@ from django.dispatch import receiver
 
 from .models import Order, OrderItem
 
+## TO-DO: Fix signals, print statements do not trigger so we must conclude they're not functioning
+
 
 @receiver(post_save, sender=OrderItem)
 def update_on_save(sender, instance, created, **kwargs):
     """
     Update order total on lineitem update/create
     """
+    
     instance.order.cost_calc()
 
 
@@ -17,4 +20,5 @@ def update_on_delete(sender, instance, **kwargs):
     """
     Update order total on lineitem delete
     """
+    
     instance.order.cost_calc()
