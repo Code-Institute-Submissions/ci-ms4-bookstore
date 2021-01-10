@@ -1,10 +1,11 @@
-from products.models import Product, ProductReview
+from products.models import *
 from .forms import ProductForm, ReviewForm
+from django.db.models import Q
 from django.contrib.auth.models import AnonymousUser, User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from django.shortcuts import redirect, render, get_object_or_404
+from django.shortcuts import redirect, reverse, render, get_object_or_404
 # Create your views here.
 
 
@@ -12,13 +13,37 @@ def products(request):
     """
     Products view, containing an oversight of all products. 
     """
-
     products = Product.objects.all()
+    query = None
+    series = None
+    author = None
+    genre = None
+
+    """
+    Search handler
+
+    """
+
+    if request.GET:
+        if 'q' in request.GET:
+            query = request.GET['q']
+            if not query:
+                messages.error(request,
+                               ("You didn't enter any search criteria! Please specify what to seasrch for."))
+                return redirect(reverse('products'))
+
+            queries = Q(title__icontains=query) | Q(description__icontains=query)
+            products = products.filter(queries)
+            print(products)
+
     # Feature grabs the first 5 objects that match as featured, so the main page is not inundated.
     feature = Product.objects.filter(featured=True)[:5]
+
     context = {
         "products": products,
         "feature": feature,
+        "series_filter": series,
+        "search_term": query,
     }
 
     return render(request, 'products_all.html', context)

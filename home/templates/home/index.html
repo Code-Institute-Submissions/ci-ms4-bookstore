@@ -3,14 +3,12 @@
 
 {% block content %}
 <div class="container-fluid">
-   <div class="row">
-      <div class="jumbotron" id="home-jumbotron-bg">
+      <div class="jumbotron jumbotron-fluid" id="home-jumbotron-bg">
           <h1 class="display-4">Bibliomania, the one-stop shop for fiction you love!</h1>
           <p class="lead">"The saddest aspect of life right now is that science fiction gathers knowledge faster than society gathers wisdom." - Isaac Asimov</p>
           <hr class="my-4">
           <a class="btn btn-outline-light btn-lg" href="{% url 'products' %}" role="button">See our full list of books for sale!</a>
         </div>
-  </div>
 </div>
 
 {% if request.user.is_superuser %}

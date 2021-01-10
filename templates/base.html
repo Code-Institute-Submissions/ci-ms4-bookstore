@@ -80,8 +80,8 @@
                     </div>
                   </li>
             </ul>
-            <form class="form-inline d-none d-md-block">
-              <input class="form-control mr-sm-2" type="search" placeholder="Search for books ..." aria-label="Search">
+            <form method="GET" class="form-inline d-none d-md-block" action="{% url 'products' %}">
+              <input class="form-control mr-sm-2"  name="q" type="text" placeholder="Search for books ..." aria-label="Search">
               <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
             </form>
             </div>
