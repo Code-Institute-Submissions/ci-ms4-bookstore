@@ -2,8 +2,8 @@
 {% load static %}
 
 {% block content %}
-<div class="row">
-   <div class="container-fluid">
+<div class="container-fluid">
+   <div class="row">
       <div class="jumbotron" id="home-jumbotron-bg">
           <h1 class="display-4">Bibliomania, the one-stop shop for fiction you love!</h1>
           <p class="lead">"The saddest aspect of life right now is that science fiction gathers knowledge faster than society gathers wisdom." - Isaac Asimov</p>
@@ -15,14 +15,15 @@
 
 {% if request.user.is_superuser %}
 <hr>
-<div class="row">  
-  <div class="container-fluid text-center">
+<div class="container-fluid">  
+  <div class="row text-center">
     <h2>News administration:</h2>
     <p class="text-center">Welcome back, {{request.user}}! Here is a quick summary on how to administer the frontpage news on the page.</p>
   </div>
   <br>  
 </div>
-<hr></p>
+<hr>
+<div class="container-fluid">
 <div class="row">
   <div class="col-md-4 col-sm-12">
     <hr>
@@ -47,6 +48,7 @@
       symbol and confirm you're sure you want to delete the item.</p>
     <hr>
   </div>
+</div>
 </div>
 
 <div class="modal fade" id="newsPostModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

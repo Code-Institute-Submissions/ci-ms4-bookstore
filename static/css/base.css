@@ -8,6 +8,8 @@ html{
     font-size: 12px;
 }
 
+
+/* Global styles */
 h1, h2, h3, h4, h5, h6{
     font-family: 'Cinzel', serif;
 }
@@ -23,6 +25,33 @@ a, p{
     background: url('../img/bookstore-jumbotron.jpg');
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+#home-jumbotron-bg p{
+    color: #ffffff;
+}
+
+footer{
+    margin-top: 10vh;
+    font-size: 0.7rem;
+    left: 0;
+    bottom: 0;
+    height: 8vh;
+    width: 100vw;
+    position: fixed;
+}
+
+/* Style rules for the product-info pages*/
+
+.img-wrap-floater{
+    float: left;
+    max-width: 25vw;
+    margin-right: 5px;
+}
+
+.product-desc-wrapper{
+ margin: 5px;
+ font-size: 1.25rem;
 }
 
 /* Bootstrap toast styles ( https://getbootstrap.com/docs/4.3/components/toasts/ ), will customize further as I go along */
@@ -52,3 +81,4 @@ tr {
     min-height: 120px;
     height: 120px;
  }
+

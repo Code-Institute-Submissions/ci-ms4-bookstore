@@ -55,13 +55,19 @@ def product_info(request, product_id):
             else:
                 messages.error(request, 'Your review was not valid. Please, try again!')
                 return HttpResponseRedirect(request.path_info)
-            
+
+    
+
+    reviews = ProductReview.objects.filter(product=product).exists()
+    series =  Product.objects.filter(series=product.series).all()
+
     context = {
         # We pass a separate, unbound ReviewForm in the contexts on GET, to avoid issues with anonymous users who lack an instance
         "form": ReviewForm,
         "product": product,
         "product_info": product_info,
-        # Commented out for now "reviews": get_object_or_404(ProductReview, reviewer=user, product=product),
+        "reviews": reviews,
+        "series": series,
         "user": user,
     }
 
