@@ -21,38 +21,40 @@
    </div>
 </div>
 <hr>
-<!-- Just an experiment with layout -->
-<div class="table-responsive">
-<table class="table table-hover">
-  <thead class="thead-dark">
-    <tr>      
-      <th scope="col"><h4 class="text-left">Cover</h4></th>
-      <th scope="col"><h4 class="text-center">Title</h4></th>
-      <th scope="col"><h4 class="text-center">Series</h4></th>
-      <th scope="col"><h4 class="text-center">Author</h4></th>
-      <th scope="col"><h4 class="text-center">Genre</h4></th>      
-      {% if request.user.is_superuser %}
-      <th scope="col"><h4 class="text-center">Edit</h4></th>      
-      <th scope="col"><h4 class="text-center">Delete</h4></th>      
-      {% endif %}
-    </tr>
-  </thead>
-  <tbody>
+<div class="row">
+  
     {% for product in products %}
-    <tr>
-      <th scope="row"><a href="{% url 'product_info' product.id  %}"><img class="img-thumbnail rounded float-left" src="{{product.cover.url}}" alt="{{product.title}}"></a></th>
-      <td><h4 class="text-center"><a href="{% url 'product_info' product.id  %}">{{product.title}}</a></h4></td>
-      <td><h4 class="text-center">{{product.series}}</h4></td>
-      <td><h4 class="text-center">{{product.author}}</h4></td>
-      <td><h4 class="text-center">{{product.genre}}</h4></td>
-      {% if request.user.is_superuser %}      
-      <td scope="col"><h4 class="text-center"><a href="{% url 'edit_product' product_id=product.id %}"><i class="fas fa-edit"></i></a></h4></td>      
-      <td scope="col"><h4 class="text-center"><a href="{% url 'delete_product' product_id=product.id %}"><i class="fas fa-trash-alt"></i></a></h4></td>      
-      {% endif %}
-    </tr>
-    {% endfor %}   
-  </tbody>
-</table>
+    <div class="col">
+    <div class="card" style="width: 18rem;">
+      <img class="card-img-top rounded" src="{{product.cover.url}}" alt="{{product.title}}">
+      <div class="card-body">
+        <h5 class="card-title">{{product.title}}</h5>
+        <p class="card-text">
+          <strong>Author: </strong>{{product.author.name}}<br>
+          <strong>Series: </strong>{{product.series.title}}<br>
+          <strong>Genre: </strong>{{product.genre.title}}<br></p>
+        <a href="{% url 'product_info' product.id  %}" class="btn btn-primary">Details</a>
+        <br>
+        <form class="form" method="POST" action="{% url 'add_to_bag' product_id=product.id %}">
+          {% csrf_token %}
+          <input type="hidden" value="1" name="quantity" min="1">
+          <input type="hidden" name="redirect_url"  value="{{ request.path }}">
+          <br>
+          <button class="btn btn-primary" type="submit">Add to bag!</button>
+        </form>
+        {% if request.user.is_superuser %} 
+        <hr>
+        <h6 class="text-left">Admin options: </h6>     
+        <a href="{% url 'edit_product' product_id=product.id %}"><i class="fas fa-edit"></i></a>  
+          <a href="{% url 'delete_product' product_id=product.id %}"><i class="fas fa-trash-alt"></i>      
+        {% endif %}
+      </div>
+    </div>
+    </div>
+    {% endfor %} 
+  
+</div>
+
 {% endblock %}
 
 {% block extra_js %}

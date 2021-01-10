@@ -59,7 +59,7 @@
           {% if reviews %} 
           <h1>Reviews exist!</h1>
           {% else %}
-          <h1 class="text-center">No reviews exist yet!  Why not <a href="{% url 'account_login' %}">login</a> and add one!</h1>
+          <span><p class="text-center">No reviews exist yet!  Why not <a data-toggle="modal" href="#review-modal">click here</a> and add one!</p></span>
           {% endif%}
       </div>
     </div>
@@ -85,22 +85,37 @@
               {% endfor %}                       
        </div>
     </div>
- </div>
- <hr>
+</div>
+<hr>
  {% endif %}
-<form method="POST">
-  <div class="form-group">
-    {% csrf_token %}      
-    {{ form|crispy }}
-  {% if request.user.is_anonymous %}
-  <h5><a href="{% url 'account_login' %}">Only logged in users can add reviews! Click here to log in!</a></h5>
-  {% else %}
-  <h5>By: {{request.user}}</h5>
-  <button type="submit" class="btn btn-primary">Add review</button>
-  {% endif %}
+ <div class="modal fade" id="review-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Review product</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST">
+      <div class="modal-body">        
+          <div class="form-group">
+            {% csrf_token %}
+            {{form|crispy}}         
+          </div>
+      </div>
+      <div class="modal-footer">
+        {% if request.user.is_anonymous %}
+        <a class="btn btn-warning" href="{% url 'account_login' %}">Log in to review</a>
+        {% else %}
+        <button type="submit" class="btn btn-primary">Add review</button>
+        {% endif %}              
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </form>
+    </div>
   </div>
-</form>
-
+</div>
 {% endblock %}
 
 {% block extra_js %}
@@ -124,7 +139,7 @@
                 nav:false
             },
             1000:{
-                items:5,
+                items: 5,
                 nav:true,
                 loop:false
             }

@@ -37,22 +37,24 @@ footer{
     font-size: 0.7rem;
     left: 0;
     bottom: 0;
-    height: 8vh;
+    height: 5vh;
     width: 100vw;
     position: fixed;
+}
+footer p{
+    padding-top: 1.5rem;
 }
 
 /* Style rules for the product-info pages*/
 
 .img-wrap-floater{
     float: left;
-    max-height: 25vw;
-    margin-right: 5px;
+    margin-right: 15px;
 }
 
 .product-desc-wrapper{
- margin: 5px;
  font-size: 1.25rem;
+ padding: 5px;
 }
 
 /* Bootstrap toast styles ( https://getbootstrap.com/docs/4.3/components/toasts/ ), will customize further as I go along */
