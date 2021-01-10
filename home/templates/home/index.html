@@ -10,7 +10,26 @@
           <a class="btn btn-outline-light btn-lg" href="{% url 'products' %}" role="button">See our full list of books for sale!</a>
         </div>
 </div>
-
+<hr>
+<div class="row">
+  <div class="container-fluid">
+    <h1 class="text-center">Currently featured books!</h1>
+  </div>
+</div>
+<div class="row">
+ <div class="container">
+   <!-- Uses the jQuery owl-carousel plugin instead of the bootstrap carousel, for better responsiveness. -->
+    <div class="owl-carousel owl-theme">
+             {% for product in feature %}
+             <div class="item">
+              <img class="d-block" src="{{product.cover.url}}" alt="{{product.title}}">
+              <h5><a href="{% url 'product_info' product.id %}">{{product.title}}</a></h5>
+            </div>
+             {% endfor %}                       
+      </div>
+   </div>
+</div>
+<hr>
 {% if request.user.is_superuser %}
 <hr>
 <div class="container-fluid">  
@@ -138,4 +157,35 @@
         </div>  
     {% endfor%}         
 </div>   
+{% endblock %}
+
+{% block extra_js %}
+
+<script type="text/javascript">
+    $('.toast').toast('show');
+    $('.owl-carousel').owlCarousel({
+        loop:true,
+        margin:10,
+        responsiveClass:true,
+        responsive:{
+            0:{
+                items:1,
+                nav:true
+            },
+            4:{
+                items:2,
+                nav:true
+            },
+            600:{
+                items:4,
+                nav:false
+            },
+            1000:{
+                items:5,
+                nav:true,
+                loop:false
+            }
+        }
+    });
+  </script>
 {% endblock %}

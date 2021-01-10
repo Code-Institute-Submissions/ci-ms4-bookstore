@@ -25,6 +25,7 @@ a, p{
     background: url('../img/bookstore-jumbotron.jpg');
     background-repeat: no-repeat;
     background-size: cover;
+    padding: 15px
 }
 
 #home-jumbotron-bg p{
@@ -45,7 +46,7 @@ footer{
 
 .img-wrap-floater{
     float: left;
-    max-width: 25vw;
+    max-height: 25vw;
     margin-right: 5px;
 }
 

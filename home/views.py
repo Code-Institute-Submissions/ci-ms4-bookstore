@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from .models import NewsPost
 from .forms import NewsForm
+from products.models import Product
 
 # Create your views here.
 
@@ -11,10 +12,12 @@ def index(request):
     form = NewsForm()
     # News post sorted by date, newer at the top, limited to five total items for the index page.
     newsposts = NewsPost.objects.order_by('-time', 'title')[:5]
+    feature = Product.objects.filter(featured=True)[:5]
 
     context = {
         'news': newsposts,
         'form': form,
+        'feature': feature,
     }
 
     return render(request, 'home/index.html', context)

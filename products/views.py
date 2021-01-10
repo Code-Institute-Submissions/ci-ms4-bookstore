@@ -34,7 +34,6 @@ def products(request):
 
             queries = Q(title__icontains=query) | Q(description__icontains=query)
             products = products.filter(queries)
-            print(products)
 
     # Feature grabs the first 5 objects that match as featured, so the main page is not inundated.
     feature = Product.objects.filter(featured=True)[:5]
