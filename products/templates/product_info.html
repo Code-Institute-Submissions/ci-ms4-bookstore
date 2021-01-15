@@ -2,7 +2,7 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="row">
+<div class="row no-gutters">
   <div class="container-fluid">
     <h1 class="text-center">{{ product.title }}</h1>
   </div>
@@ -10,7 +10,7 @@
 <br>
 {% if request.user.is_superuser %}
 <hr>
-<div class="row">
+<div class="row no-gutters">
   <div class="container-fluid">
     <h3 class="text-center">Administrative tools for product: {{ product.title }} (<a href="{% url 'edit_product' product_id=product.id %}"><i class="fas fa-edit"></i></a>  <a href="{% url 'delete_product' product_id=product.id %}"><i class="fas fa-trash-alt"></i></a>)</h3>
   </div>    
@@ -19,7 +19,7 @@
 {% endif %}
 <hr>
 <div class="container-fluid">
-  <div class="row">  
+  <div class="row no-gutters">  
     <div class="col-xs-12 col-sm-6">
       <div class="img-wrap-floater">
         <img class="img-fluid rounded float-left" src="{{product.cover.url}}" alt="Cover">      
@@ -68,12 +68,12 @@
 
 {% if series %}
 <hr>
-<div class="row">
+<div class="row no-gutters">
   <div class="container">
     <h3 class="text-center">Other books in the same series...</h3>
   </div>
 </div>
-<div class="row">
+<div class="row no-gutters">
   <div class="container">
     <!-- Uses the jQuery owl-carousel plugin instead of the bootstrap carousel, for better responsiveness. -->
      <div class="owl-carousel owl-theme">

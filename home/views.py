@@ -13,7 +13,6 @@ def index(request):
     # News post sorted by date, newer at the top, limited to five total items for the index page.
     newsposts = NewsPost.objects.order_by('-time', 'title')[:5]
     feature = Product.objects.filter(featured=True)[:5]
-
     context = {
         'news': newsposts,
         'form': form,

@@ -11,13 +11,13 @@
         </div>
 </div>
 <hr>
-<div class="row">
-  <div class="container-fluid">
-    <h1 class="text-center">Currently featured books!</h1>
+<div class="container-fluid text-center">     
+  <div class="row">
+    <h1>Currently featured books!</h1>
   </div>
 </div>
-<div class="row">
- <div class="container">
+<div class="container-fluid">
+  <div class="row">
    <!-- Uses the jQuery owl-carousel plugin instead of the bootstrap carousel, for better responsiveness. -->
     <div class="owl-carousel owl-theme">
              {% for product in feature %}
@@ -31,16 +31,16 @@
 </div>
 <hr>
 {% if request.user.is_superuser %}
-<div class="container-fluid">  
-  <div class="row text-center">
+<div class="row text-center">
+  <div class="container-fluid">  
     <h2>News administration:</h2>
     <p class="text-center">Welcome back, {{request.user}}! Here is a quick summary on how to administer the frontpage news on the page.</p>
   </div>
   <br>  
 </div>
 <hr>
-<div class="container-fluid">
 <div class="row">
+<div class="container-fluid">
   <div class="col-md-4 col-sm-12">
     <hr>
     <h4>How do I add posts? <a href="#newsPostModal" data-toggle="modal" data-target="#newsPostModal"><i class="fas fa-pen"></i></a></h4> 

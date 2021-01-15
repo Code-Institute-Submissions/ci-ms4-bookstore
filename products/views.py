@@ -1,4 +1,5 @@
 from products.models import *
+from django.core.paginator import Paginator
 from .forms import ProductForm, ReviewForm
 from django.db.models import Q
 from django.contrib.auth.models import AnonymousUser, User
@@ -18,6 +19,7 @@ def products(request):
     series = None
     author = None
     genre = None
+    
 
     """
     Search handler
@@ -28,23 +30,31 @@ def products(request):
         if 'q' in request.GET:
             query = request.GET['q']
             if not query:
-                messages.error(request,
-                               ("You didn't enter any search criteria! Please specify what to seasrch for."))
+                messages.error(request, "You didn't enter any search criteria! Please specify what to search for.")
                 return redirect(reverse('products'))
+            else: 
+                queries = Q(title__icontains=query) | Q(description__icontains=query) 
+                products = products.filter(queries)
 
-            queries = Q(title__icontains=query) | Q(description__icontains=query)
-            products = products.filter(queries)
 
     # Feature grabs the first 5 objects that match as featured, so the main page is not inundated.
     feature = Product.objects.filter(featured=True)[:5]
 
+    paginator = Paginator(products, 5)
+    page_number = request.GET.get('page')
+
+    try:
+        page_obj = paginator.get_page(page_number)
+    except:
+        page_obj = paginator.get_page(1)
+
     context = {
-        "products": products,
+        "products": page_obj,
         "feature": feature,
         "series_filter": series,
         "search_term": query,
     }
-
+    
     return render(request, 'products_all.html', context)
 
 def product_info(request, product_id):
@@ -79,8 +89,6 @@ def product_info(request, product_id):
             else:
                 messages.error(request, 'Your review was not valid. Please, try again!')
                 return HttpResponseRedirect(request.path_info)
-
-    
 
     reviews = ProductReview.objects.filter(product=product).exists()
     series =  Product.objects.filter(series=product.series).all()

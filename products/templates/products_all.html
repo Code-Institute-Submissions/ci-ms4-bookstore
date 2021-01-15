@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<div class="row">
-  <div class="container-fluid">
+<div class="row no-gutters">
+  <div class="container">
     <h1 class="text-center">Featured books!</h1>
   </div>
 </div>
 <hr>
-<div class="row">
+<div class="row no-gutters">
  <div class="container">
    <!-- Uses the jQuery owl-carousel plugin instead of the bootstrap carousel, for better responsiveness. -->
     <div class="owl-carousel owl-theme">
@@ -21,40 +21,148 @@
    </div>
 </div>
 <hr>
-<div class="row">
-  
-    {% for product in products %}
-    <div class="col">
-    <div class="card" style="width: 18rem;">
-      <img class="card-img-top rounded" src="{{product.cover.url}}" alt="{{product.title}}">
-      <div class="card-body">
-        <h5 class="card-title">{{product.title}}</h5>
-        <p class="card-text">
-          <strong>Author: </strong>{{product.author.name}}<br>
-          <strong>Series: </strong>{{product.series.title}}<br>
-          <strong>Genre: </strong>{{product.genre.title}}<br></p>
-        <a href="{% url 'product_info' product.id  %}" class="btn btn-primary">Details</a>
-        <br>
-        <form class="form" method="POST" action="{% url 'add_to_bag' product_id=product.id %}">
-          {% csrf_token %}
-          <input type="hidden" value="1" name="quantity" min="1">
-          <input type="hidden" name="redirect_url"  value="{{ request.path }}">
-          <br>
-          <button class="btn btn-primary" type="submit">Add to bag!</button>
-        </form>
-        {% if request.user.is_superuser %} 
-        <hr>
-        <h6 class="text-left">Admin options: </h6>     
-        <a href="{% url 'edit_product' product_id=product.id %}"><i class="fas fa-edit"></i></a>  
-          <a href="{% url 'delete_product' product_id=product.id %}"><i class="fas fa-trash-alt"></i>      
-        {% endif %}
-      </div>
-    </div>
-    </div>
-    {% endfor %} 
-  
+<div class="row no-gutters">
+  <div class="col-10 offset-1">
+    <h3 class="text-center">Filters: </h3>
+  </div>
 </div>
+<br>
+<div class="row no-gutters">
+  <div class="container">
+<form class="form-inline text-center">  
+      <div class="col">
+      <label for="filter">Sort by: </label>
+      <select class="custom-select my-1 mr-sm-2" name="filter">        
+        <option value="author">
+          Author
+        </option>
+        <option series="genre">
+          Genre
+        </option>
+        <option value="series">
+          Series
+        </option>
+      </select>
+      </div>
+      <div class="col">
+      <label for="filter">Results per page: </label>
+      <select class="form-control mb-2 mr-sm-2" name="filter">        
+        <option value="10">
+          10
+        </option>
+        <option value="20">
+          20
+        </option>
+        <option value="30">
+          30
+        </option>
+      </select>
+    </div>
+    <div class="col">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+</div>
+</div>  
+<hr>
 
+  <hr>
+  <div class="row no-gutters">  
+        {% for product in products %}
+      <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3  d-flex justify-content-center">
+        <div class="card h-100 border-0" style="width: 15rem;">
+          <img class="card-img-top" src="{{product.cover.url}}" alt="{{product.title}}">
+          <div class="card-body pb-0">
+            <h5 class="card-title">{{product.title}}</h5>
+            <p class="card-text">
+              <strong>Author: </strong>{{product.author.name}}<br>
+              <strong>Series: </strong>{{product.series.title}}<br>
+              <strong>Genre: </strong>{{product.genre.title}}<br></p>
+              <strong>Price: </strong>${{product.price}}<br>
+              <br>
+            <a href="{% url 'product_info' product.id  %}" class="btn btn-primary">More Details</a>
+            <br>
+            <form class="form" method="POST" action="{% url 'add_to_bag' product_id=product.id %}">
+              {% csrf_token %}
+              <input type="hidden" value="1" name="quantity" min="1">
+              <input type="hidden" name="redirect_url"  value="{{ request.path }}">
+              <br>
+              <button class="btn btn-primary" type="submit">Add to bag!</button>
+            </form>
+            {% if request.user.is_superuser %} 
+            <hr>
+            <h6 class="text-left">Admin options: </h6>     
+            <a href="{% url 'edit_product' product_id=product.id %}"><i class="fas fa-edit"></i></a>  
+              <a href="{% url 'delete_product' product_id=product.id %}"><i class="fas fa-trash-alt"></i></a>      
+            {% endif %}
+          </div>
+        </div>
+      </div>    
+      <!-- Adding horizontal rules based on viewport for readability-->
+        {% if forloop.counter|divisibleby:1 %}
+          <div class="col-12 d-sm-none mb-5">
+            <hr>
+          </div>
+          {% endif %}                        
+          {% if forloop.counter|divisibleby:2 %}
+          <div class="col-12 d-none d-sm-block d-md-block d-lg-none mb-5">
+          <hr>
+          </div>
+          {% endif %}
+          {% if forloop.counter|divisibleby:3 %}
+          <div class="col-12 d-none d-lg-block d-xl-none mb-5">
+          <hr>
+          </div>
+          {% endif %}
+          {% if forloop.counter|divisibleby:4 %}
+          <div class="col-12 d-none d-xl-block mb-5">
+            <hr>
+          </div>
+          {% endif %}
+        {% endfor %}   
+  </div>
+</div>
+</div>
+<hr>
+<div class="row no-gutters">
+  <div class="col-10 offset-1">
+    <h3 class="text-center">More results: </h3>
+  </div>
+</div>
+<br>
+<div class="container-fluid">  
+  <div class="row justify-content-center">  
+    {% if products.has_other_pages %} 
+    <nav>
+      <ul class="pagination pagination-lg">
+        {% if products.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page={{products.previous_page_number}}"><i class="fas fa-backward"></i></a></li>
+          {% else %}
+          <li><a href="#" class="page-link" class="disabled button big previous"><i class="fas fa-step-backward"></i></a></li>
+          {% endif %}
+  
+          {% for i in products.paginator.page_range %}
+            {% if products.number == i %}
+          <li class="page-item active"><a class="page-link" href="?page={{product.i}}">{{i}}</a></li>
+            {% else%}
+          <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+          {% endif %}
+          {% endfor %}
+        
+  
+          {% if products.has_next %}
+          <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}"><i class="fas fa-forward"></i></a></li>
+          {% else %}
+          <li><a href="#" class="page-link disabled button big next"><i class="fas fa-step-forward"></i></a></li>
+          {% endif %}
+      </ul>
+    </nav>
+    {% endif %}
+    </div>
+    <!-- Footer clearance -->
+  </div>
+</div>
+<hr>
 {% endblock %}
 
 {% block extra_js %}
