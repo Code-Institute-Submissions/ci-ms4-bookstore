@@ -57,7 +57,10 @@
           </tbody>
         </table>                
           {% if reviews %} 
-          <h1>Reviews exist!</h1>
+            {% for item in reviews %}
+            <h1>Comment by: {{item.reviewer}}</h1>
+            <p>Comment: {{item.comment}}</p>
+            {% endfor %}
           {% else %}
           <span><p class="text-center">No reviews exist yet!  Why not <a data-toggle="modal" href="#review-modal">click here</a> and add one!</p></span>
           {% endif%}

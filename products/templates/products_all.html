@@ -23,14 +23,18 @@
 <hr>
 <div class="row no-gutters">
   <div class="col-10 offset-1">
-    <h3 class="text-center">Filters: </h3>
+    <h3 class="text-center">Search: </h3>
   </div>
 </div>
 <br>
 <div class="row no-gutters">
-  <div class="container">
-<form class="form-inline text-center">  
-      <div class="col">
+  <div class="container-fluid">
+  <form class="form-inline text-center">  
+    <div class="col">
+      <label for="q">Search criteria: </label>
+      <input type="text" name="q" class="form-control" placeholder="Enter your search-criteria here">
+    </div>
+    <div class="col">
       <label for="filter">Sort by: </label>
       <select class="custom-select my-1 mr-sm-2" name="filter">        
         <option value="author">
@@ -43,10 +47,10 @@
           Series
         </option>
       </select>
-      </div>
-      <div class="col">
-      <label for="filter">Results per page: </label>
-      <select class="form-control mb-2 mr-sm-2" name="filter">        
+    </div>
+    <div class="col">
+      <label for="paginate">Results per page: </label>
+      <select class="form-control mb-2 mr-sm-2" name="paginate">        
         <option value="10">
           10
         </option>

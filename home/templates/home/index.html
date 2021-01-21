@@ -11,13 +11,14 @@
         </div>
 </div>
 <hr>
-<div class="container-fluid text-center">     
-  <div class="row">
-    <h1>Currently featured books!</h1>
+<div class="row">
+  <div class="container">     
+    <h1 class="text-center">Currently featured books!</h1>
   </div>
 </div>
-<div class="container-fluid">
-  <div class="row">
+<br>
+<div class="row">
+   <div class="container">
    <!-- Uses the jQuery owl-carousel plugin instead of the bootstrap carousel, for better responsiveness. -->
     <div class="owl-carousel owl-theme">
              {% for product in feature %}
@@ -95,7 +96,8 @@
 </div>
 
 {% endif %}
-
+<div class="row">
+  <div class="container-fluid">
 <div class="accordion" id="accordionNews">      
    {% for item in news %}
       <div class="card">
@@ -155,7 +157,9 @@
           </div>
         </div>  
     {% endfor%}         
-</div>   
+  </div>  
+  </div>   
+</div>
 {% endblock %}
 
 {% block extra_js %}

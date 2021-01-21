@@ -19,6 +19,8 @@ def products(request):
     series = None
     author = None
     genre = None
+    # Unlike the others, paginate has a set starting value of 15 to fall back on.
+    paginate = 10
     
 
     """
@@ -33,14 +35,16 @@ def products(request):
                 messages.error(request, "You didn't enter any search criteria! Please specify what to search for.")
                 return redirect(reverse('products'))
             else: 
-                queries = Q(title__icontains=query) | Q(description__icontains=query) 
-                products = products.filter(queries)
+                queries = Q(title__icontains=query) | Q(description__icontains=query) | Q(author__name__icontains=query) | Q(series__title__icontains=query)
+                products = products.filter(queries).order_by('title')
+        if 'paginate' in request.GET:
+            paginate = request.GET['paginate']
 
 
     # Feature grabs the first 5 objects that match as featured, so the main page is not inundated.
     feature = Product.objects.filter(featured=True)[:5]
-
-    paginator = Paginator(products, 5)
+    
+    paginator = Paginator(products, paginate)
     page_number = request.GET.get('page')
 
     try:
@@ -90,7 +94,7 @@ def product_info(request, product_id):
                 messages.error(request, 'Your review was not valid. Please, try again!')
                 return HttpResponseRedirect(request.path_info)
 
-    reviews = ProductReview.objects.filter(product=product).exists()
+    reviews = ProductReview.objects.filter(product=product).all()
     series =  Product.objects.filter(series=product.series).all()
 
     context = {

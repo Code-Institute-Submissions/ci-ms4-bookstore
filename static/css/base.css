@@ -34,11 +34,11 @@ a, p{
 
 footer{
     margin-top: 5rem;
-    font-size: 0.7rem;
+    font-size: 1rem;
     left: 0;
     bottom: 0;
-    height: 5vh;
-    width: 100vw;
+    height: 4vh;
+    width: 100%;
     position: fixed;
 }
 footer p{
