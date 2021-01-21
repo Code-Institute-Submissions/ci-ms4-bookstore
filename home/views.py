@@ -2,9 +2,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from .models import NewsPost
+from .models import NewsPost, UserProfile
 from .forms import NewsForm
 from products.models import Product
+from checkout.models import Order
 
 # Create your views here.
 
@@ -32,6 +33,20 @@ def archive(request):
     }
 
     return render(request, 'home/archive.html', context)
+
+@login_required
+def user_profile(request):
+    user = request.user
+    profile = UserProfile.objects.get(user_id=user)
+    orders = Order.objects.filter(user_id=profile)
+
+    context = {
+        'user': user,
+        'profile': profile,
+        'orders': orders,
+    }
+
+    return render(request, 'home/profile.html', context)
 
 
 """
