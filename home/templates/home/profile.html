@@ -6,14 +6,40 @@
 
 <h1>Welcome back, {{user}}</h1>
 
-<h3>Your profile information: </h3>
+<div class="container-fluid">
+    <h3 class="text-center">Your profile information: </h3>
 <br>
+<form class="form" method="POST">
 {% csrf_token %}
-    
+<hr>
+<h6 class="text-center">Account information: </h6>
+    <div class="row">
+        <div class="col">
+            <label for="username">Username: </label>
+        <input type="text" name="username" value="{{user.username}}" class="form-control">
+        </div>  
+        <div class="col">
+            <label for="email">First name: </label>
+        <input type="text" name="first_name" value="{{user.first_name}}" class="form-control">
+        </div>  
+        <div class="col">
+            <label for="email">Last name: </label>
+        <input type="text" name="last_name" value="{{user.last_name}}" class="form-control">
+        </div>
+    </div>
+    <hr>
+    <h6 class="text-center">Shipping details: </h6>
+    <div class="row">
+        
+    <div class="col">
+        <label for="email">Email: </label>
+        <input type="text" name="email" value="{{user.email}}" class="form-control">
+    </div>
+    <div class="col">
     {{ form.default_phone_number|as_crispy_field}}
-    
+    </div>
+</div>
     {{ form.default_street_address1|as_crispy_field}}
-    
     {{ form.default_street_address2|as_crispy_field}}
     
     {{ form.default_town_or_city|as_crispy_field}}
@@ -23,14 +49,21 @@
     {{ form.default_postcode|as_crispy_field}}
     
     {{ form.default_country|as_crispy_field}}
+
+    <button class="btn btn-primary" type="submit">Update information</button>
+</form>
+<hr>
+</div>
 <h3>Your orders: </h3>
 <br>
 {% if orders %}
 
 {% for order in orders %}
 
-{{order}}
-
+<h3>Order: {{order}} </h3>
+{% for order_item in order.order_items.all %}
+    {{order_item}}
+    {% endfor %}
 {% endfor %}
 
 {% else %}

@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import NewsPost, UserProfile
 from .forms import NewsForm, ProfileForm
 from products.models import Product
-from checkout.models import Order
+from checkout.models import Order, OrderItem
 
 # Create your views here.
 
@@ -41,6 +41,10 @@ def user_profile(request):
     orders = Order.objects.filter(user_id=profile)
     form = ProfileForm(instance=profile)
 
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+    
     context = {
         'user': user,
         'profile': profile,
