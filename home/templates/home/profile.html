@@ -3,28 +3,41 @@
 {% load static %}
 
 {% block content %}
-
-<h1>Welcome back, {{user}}</h1>
-
 <div class="container-fluid">
-    <h3 class="text-center">Your profile information: </h3>
+<h1 class="text-center">Welcome back, {{user}}</h1>
+</div>
+<div class="container-fluid">
+    <div class="row">
+<div class="col-md-6 col-sm-12">
+<h3 class="text-center">Your profile information: </h3>
 <br>
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
 <form class="form" method="POST">
 {% csrf_token %}
 <hr>
 <h6 class="text-center">Account information: </h6>
     <div class="row">
         <div class="col">
-            <label for="username">Username: </label>
-        <input type="text" name="username" value="{{user.username}}" class="form-control">
+            {{user_form.username|as_crispy_field}}
         </div>  
         <div class="col">
-            <label for="email">First name: </label>
-        <input type="text" name="first_name" value="{{user.first_name}}" class="form-control">
+            {{user_form.first_name|as_crispy_field}}
         </div>  
         <div class="col">
-            <label for="email">Last name: </label>
-        <input type="text" name="last_name" value="{{user.last_name}}" class="form-control">
+            {{user_form.last_name|as_crispy_field}}
         </div>
     </div>
     <hr>
@@ -32,8 +45,7 @@
     <div class="row">
         
     <div class="col">
-        <label for="email">Email: </label>
-        <input type="text" name="email" value="{{user.email}}" class="form-control">
+    {{user_form.email|as_crispy_field}}
     </div>
     <div class="col">
     {{ form.default_phone_number|as_crispy_field}}
@@ -54,22 +66,62 @@
 </form>
 <hr>
 </div>
-<h3>Your orders: </h3>
+
+<div class="col-md-6 col-sm-12">
+    <h3 class="text-center">Your orders: </h3>
 <br>
 {% if orders %}
 
 {% for order in orders %}
 
-<h3>Order: {{order}} </h3>
-{% for order_item in order.order_items.all %}
-    {{order_item}}
-    {% endfor %}
-{% endfor %}
+<div class="accordion" id="accordionExample">
+    <div class="card">
+      <div class="card-header" id="collapseOrderHeader-{{order.id}}">
+        <h2 class="mb-0">
+          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOrder-{{order.id}}" aria-expanded="true" aria-controls="collapseOne">
+            Order-ID: {{order}}  ({{ order.date }})
+          </button>
+        </h2>
+      </div>
+  
+      <div id="collapseOrder-{{order.id}}" class="collapse {% if forloop.first %} show {% endif %}" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order_item in order.order_items.all %}
+                    <tr>
+                    <td><a href="{% url 'product_info' order_item.product.id  %}">{{order_item.product.title}} </a></td>
+                    <td>{{order_item.quantity}} </td>
+                    <td>{{order_item.order_item_total}} </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </table>
+                <hr>
+                <p>
+                    Shipping cost: {{order.delivery_cost}} </p>
+                    <br>
+                    Grand total: {{order.grand_total}}<br>
+                </p>
+            </div>
+        </div>
+      </div>
+    </div>
 
+{% endfor %}
 {% else %}
 
 No orders found!
 
 {% endif %}
-
+</div>
+</div>
+</div>
 {% endblock %}

@@ -1,5 +1,6 @@
-# Forms for handling the news items on the main page
+# Forms for handling the news items on the main page and the user profile views
 
+from django.contrib.auth.models import User
 from django.forms import ModelForm, widgets
 from .models import NewsPost, UserProfile
 
@@ -21,4 +22,9 @@ class NewsForm(ModelForm):
 class ProfileForm(ModelForm):
     class Meta:
         model = UserProfile
+        fields = ("__all__")
+
+class UserForm(ModelForm):
+    class Meta:
+        model = User
         fields = ("__all__")

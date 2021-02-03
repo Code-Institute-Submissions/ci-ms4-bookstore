@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from .models import NewsPost, UserProfile
-from .forms import NewsForm, ProfileForm
+from .forms import NewsForm, ProfileForm, UserForm
 from products.models import Product
 from checkout.models import Order, OrderItem
 
@@ -38,17 +38,24 @@ def archive(request):
 def user_profile(request):
     user = request.user
     profile = UserProfile.objects.get(user_id=user)
-    orders = Order.objects.filter(user_id=profile)
+    orders = Order.objects.filter(user_id=profile).order_by('-date')
     form = ProfileForm(instance=profile)
+    user_form = UserForm(instance=user)
 
     if request.method == 'POST':
-        if form.is_valid():
+        if form.is_valid() & user_form.is_valid():
+            print("Valid!")
             form.save()
+            user_form.save()
+        else:
+            print("Invalid!")
+            print(request.POST)
     
     context = {
         'user': user,
         'profile': profile,
         'form':form,
+        'user_form': user_form,
         'orders': orders,
     }
 
