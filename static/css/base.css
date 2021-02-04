@@ -85,3 +85,6 @@ tr {
     height: 120px;
  }
 
+ .img-cover{
+     max-height: 500px !important;
+ }

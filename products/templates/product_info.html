@@ -22,7 +22,7 @@
   <div class="row no-gutters">  
     <div class="col-xs-12 col-sm-6">
       <div class="img-wrap-floater">
-        <img class="img-fluid rounded float-left" src="{{product.cover.url}}" alt="Cover">      
+        <img class="img-fluid rounded float-left img-cover" src="{{product.cover.url}}" alt="Cover">      
       </div>
       <div class="product-desc-wrapper">
         <h4 class="text-center"> Summary: </h4>
@@ -185,12 +185,12 @@
             },
             600:{
                 items:4,
-                nav:false
+                nav:true
             },
             1000:{
                 items: 5,
                 nav:true,
-                loop:false
+                loop:true
             }
         }
     });
