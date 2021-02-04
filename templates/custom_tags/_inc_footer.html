@@ -14,7 +14,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form class="form" method="POST">
+        <form class="form" method="POST" action="{% url 'contact_mailer' %}"> 
         <div class="modal-body">
           {% csrf_token %}
           {{mail_form|crispy}}

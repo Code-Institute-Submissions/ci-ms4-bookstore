@@ -33,8 +33,7 @@ EMAIL_HOST_USER = os.environ['MAIL_USERNAME']
 EMAIL_HOST_PASSWORD = os.environ['MAIL_PASSWORD']
 EMAIL_USE_TLS = False
 
-#Sender
-#  
+#Sender#  
 DEFAULT_FROM_EMAIL = os.environ['MAIL_USERNAME']
 
 # Email settings, currently set for my personal host.

@@ -1,9 +1,11 @@
+from django.core.mail import send_mail, BadHeaderError
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
+from django.template.loader import render_to_string
 from .models import NewsPost, UserProfile
-from .forms import NewsForm, ProfileForm, UserForm
+from .forms import NewsForm, ProfileForm, UserForm, MailForm
 from products.models import Product
 from checkout.models import Order, OrderItem
 
@@ -145,4 +147,25 @@ def edit_post(request, news_id):
         messages.warning(request, 'This URL is restricted to Staff members, please login with your staff account.')
         return HttpResponseRedirect('/')
 
-  
+""" 
+
+  Email API for handling contact-emails
+
+"""
+
+def contact_mailer(request):
+      if request.method == 'POST':
+        form = MailForm(request.POST)
+        if form.is_valid():            
+            subject = render_to_string('custom_email/confirmation_email_subject.txt', {'subject': form.cleaned_data['subject']})
+            message = render_to_string('custom_email/confirmation_email_body.txt', {'subject': form.cleaned_data['message'], 'email': form.cleaned_data['email']})
+
+
+
+            try:
+                send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, ['bibliomania@patrikaxelsson.one'])
+            except BadHeaderError:
+                messages.warning(request, 'An error occured. Please try again')
+            
+            messages.success(request, 'Your mail has been sent!')
+            return HttpResponseRedirect('/')
