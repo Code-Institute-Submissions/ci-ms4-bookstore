@@ -1,5 +1,5 @@
 # Forms for handling the news items on the main page and the user profile views
-
+from django import forms
 from django.contrib.auth.models import User
 from django.forms import ModelForm, widgets
 from .models import NewsPost, UserProfile
@@ -28,3 +28,8 @@ class UserForm(ModelForm):
     class Meta:
         model = User
         fields = ("__all__")
+
+class MailForm(forms.Form):
+    subject = forms.CharField(max_length=200, required=True)
+    message = forms.CharField(max_length=200, required=True, widget=forms.Textarea())
+    email = forms.EmailField(required=True)

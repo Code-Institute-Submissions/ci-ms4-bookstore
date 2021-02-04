@@ -31,76 +31,8 @@
    </div>
 </div>
 <hr>
-{% if request.user.is_superuser %}
-<div class="container-fluid">  
-<div class="row text-center">
-  
-    <h2>News administration:</h2>
-    <p class="text-center">Welcome back, {{request.user}}! Here is a quick summary on how to administer the frontpage news on the page.</p>
-  </div>
-  <br>  
-</div>
-<hr>
 <div class="container-fluid">
-<div class="row">
-
-  <div class="col-md-4 col-sm-12">
-    <hr>
-    <h4>How do I add posts? <a href="#newsPostModal" data-toggle="modal" data-target="#newsPostModal"><i class="fas fa-pen"></i></a></h4> 
-    <p>You can add news to the frontpage from here or from the staff dashboard. Simply click the 
-      <a href="#newsPostModal" data-toggle="modal" data-target="#newsPostModal"><i class="fas fa-pen"></i></a> and enter any news you want added.</p>
-    <hr>
-  </div>
-
-  <div class="col-md-4 col-sm-12">
-    <hr>
-    <h4>How do I edit posts? <i class="fas fa-edit"></i></h4>
-    <p>You can edit already posts either from the front page or the archives. You just need to look for the <i class="fas fa-edit"></i> symbol in the news list and click it. 
-      Note: You will be signed as the news-items author and the time-stamp will update to the time of your post, meaning the item will be posted to the top of the news.</p>
-    <hr>
-  </div>
-
-  <div class="col-md-4 col-sm-12">
-    <hr>
-    <h4>How do I delete posts? <i class="fas fa-trash-alt"></i></h4>
-    <p>Like with editing, find the header in the archives or in the list-view. Click the <i class="fas fa-trash-alt"></i> 
-      symbol and confirm you're sure you want to delete the item.</p>
-    <hr>
-  </div>
-</div>
-</div>
-
-<div class="modal fade" id="newsPostModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="newsPostModalLabel">Add News:</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form class="form" action="{% url 'add_post' %}" method="POST">
-        <div class="form-group">
-          <div class="modal-body">
-              {% csrf_token %}
-              {{ form }}                   
-              <p>Your display-name and the time of posting will be automatically added when you press save.</p>
-          </div>
-          <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <input type="submit" class="btn btn-secondary" value="Save">
-      </div>
-    </div>
-    </form> 
-  </div>
-    
-  </div>
-</div>
-
-{% endif %}
-<div class="container-fluid">
-<div class="row">
-  
+<div class="row">  
 <div class="accordion" id="accordionNews">      
    {% for item in news %}
       <div class="card">

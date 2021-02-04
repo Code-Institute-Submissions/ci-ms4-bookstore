@@ -37,7 +37,7 @@
   </head>
   <body>
 
-<!-- Based in part on the course-materials for Boutique Ado. -->
+<!-- Based in part on the course-materials for Boutique Ado. Shows toasts when the django messages flash at redirects. -->
     {% if messages %}
         <div class="message-container">
             {% for message in messages %}
@@ -82,8 +82,16 @@
                 <li class="nav-item mr-3">
                     <a class="nav-link" href="{% url 'user_profile' %}"><i class="fas fa-id-badge"></i> My Profile</a>
                 </li>
-                {% else %}       
-
+                {% endif %}
+                {% if request.user.is_superuser %}
+                <!-- Admin interface through dropdown-nav -->
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" id="adminDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-cogs"></i> Staff Toolkit</a>
+                  <div class="dropdown-menu" aria-labelledby="adminDropdown">
+                    <a class="dropdown-item" href="{% url 'dashboard' %}"><i class="fas fa-chart-line"></i> Product dashboard</a>
+                    <a class="dropdown-item" href="#newsPostModal" data-toggle="modal" data-target="#newsPostModal"><i class="fas fa-pen"></i> Add news item</a>
+                  </div>
+                </li>
                 {% endif %}
             </ul>
             <form method="GET" class="form-inline d-none d-md-block" action="{% url 'products' %}">
@@ -101,33 +109,22 @@
     {% block content %}
     {% endblock %}
 
-    
-    <footer class="bg-light mt-auto">
-        <div class="justify-content-center text-wrap">
-        <strong><p class="text-center">Copyright 2020 Patrik Schöön-Axelsson. This site is a tech-demo. All books and cover-art referenced are the property of their owner. If you are the copyright owner of any item or image referenced on this page and wish it removed, please click <a data-toggle="modal" href="#mailerModal">here</a> to submit a takedown-request.</p></strong>
-        </div>
-    </footer>
-    
+    {% if request.user.is_superuser %}
+    <!-- Loads the news-editing Modal only if needed -->
+    {% load allform_loader %}    
+    {% block news_form %}          
+                  
+    {% load_newsform %}               
+                    
+    {% endblock %}
+    {% endif %}
 
-    <div class="modal fade" id="mailerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Email us!</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              Form for contact!
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-          </div>
-        </div>
-      </div>
+    {% block footer %}          
+                  
+    {% load_footer %}               
+                    
+    {% endblock %}
+
     {% block postloadjs %}
     <!--  Activates the jQuery Owl-Carousel plugin, documentation available: https://owlcarousel2.github.io/OwlCarousel2/docs/started-welcome.html -->
     <script src="{% static 'js/plugins/owl.carousel.min.js' %}"></script>
