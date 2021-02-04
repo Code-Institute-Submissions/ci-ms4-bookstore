@@ -21,6 +21,7 @@
    </div>
 </div>
 <hr>
+<div class="container">
 <div class="row no-gutters">
   <div class="col-10 offset-1">
     <h3 class="text-center">Search: </h3>
@@ -72,6 +73,7 @@
   </div>
 </div>  
 </form>
+</div>
   <hr>
   <div class="row no-gutters">  
         {% for product in products %}
@@ -129,6 +131,7 @@
   </div>
 </div>
 </div>
+{% if products.has_other_pages %} 
 <hr>
 <div class="row no-gutters">
   <div class="col-10 offset-1">
@@ -138,9 +141,9 @@
 <br>
 <div class="container-fluid">  
   <div class="row justify-content-center">  
-    {% if products.has_other_pages %} 
+    
     <nav>
-      <ul class="pagination pagination-lg">
+      <ul class="pagination pagination-sm" id="product-paginator">
         {% if products.has_previous %}
           <li class="page-item"><a class="page-link" href="?page={{products.previous_page_number}}"><i class="fas fa-backward"></i></a></li>
           {% else %}
@@ -163,11 +166,12 @@
           {% endif %}
       </ul>
     </nav>
-    {% endif %}
+    
     </div>
     <!-- Footer clearance -->
   </div>
 </div>
+{% endif %}
 <hr>
 {% endblock %}
 

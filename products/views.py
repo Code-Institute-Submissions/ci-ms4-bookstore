@@ -48,7 +48,7 @@ def products(request):
                 products = products.filter(queries).order_by(filter)
                 
                 if 'paginate' in request.GET:
-                    paginate = request.GET['paginate']
+                    paginate = int(request.GET['paginate'])
 
 
     # Feature grabs the first 5 objects that match as featured, so the main page is not inundated.
