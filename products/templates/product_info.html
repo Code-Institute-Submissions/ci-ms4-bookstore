@@ -41,30 +41,48 @@
       </div>
     </div>
       <div class="col-xs-12 col-sm-6">
+        {% if reviews %} 
         <h4 class="text-center">Customer reviews: </h4>
-        <br>
-        <div class="table-responsive">
-        <table class="table table-sm">
-          <thead class="bg-light">
-            <th class="text-center"><i class="fas fa-thumbs-up"></i></th>
-            <th class="text-center"><i class="fas fa-thumbs-down"></i></th>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="text-center"><h4>{{product.upvote}}</h4></td>
-              <td class="text-center"><h4>{{product.downvote}}</h4></td>
-            </tr>
-          </tbody>
-        </table>                
-          {% if reviews %} 
-            {% for item in reviews %}
-            <h1>Comment by: {{item.reviewer}}</h1>
-            <p>Comment: {{item.comment}}</p>
-            {% endfor %}
-          {% else %}
-          <span><p class="text-center">No reviews exist yet!  Why not <a data-toggle="modal" href="#review-modal">click here</a> and add one!</p></span>
-          {% endif%}
+        <div class="chart-container" style="position: relative; height:70%; width:70%">
+        <canvas id="reviewChart"></canvas>
+        </div>
+        <br> 
+        <div id="last-comment" class="text-center">
+          <h4>Comment by: {{reviews.0.reviewer}}</h4>
+          <h5>Comment: {{reviews.0.comment}}</h5>
+          <a data-toggle="modal" href="#reviewModal">Click here to view all comments</a>
+        </div>
+        <!-- Modal for all reviews -->
+        <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                {% for item in reviews %}
+                <hr>
+                <h4>Comment by: {{item.reviewer}}</h4>
+                <h5>Comment: {{item.comment}}</h5>
+                <hr>
+                {% endfor %}
+              
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
+      {% else %}
+        <span><h2 class="text-center">No reviews exist yet!  Why not <a data-toggle="modal" href="#review-modal">click here</a> and add one?</h2></span>
+      {% endif%}
     </div>
   </div>
 </div>
@@ -122,6 +140,34 @@
 {% endblock %}
 
 {% block extra_js %}
+<!-- Setup for plugins, OwlCarousel, Charts.JS etc with conditional rendering for reviews. -->
+{% if reviews %} 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.js" integrity="sha512-zO8oeHCxetPn1Hd9PdDleg5Tw1bAaP0YmNvPY8CwcRyUk7d7/+nyElmFrB6f7vg4f7Fv4sui1mcep8RIEShczg==" crossorigin="anonymous"></script>
+<script type="text/javascript">
+  let ctx = document.getElementById("reviewChart")
+  let productChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ['Positive', 'Negative'],
+      datasets: [{
+        label: 'Positive and Negative votes',
+        data: [{{product.upvote}}, {{product.downvote}}],
+        backgroundColor: [
+            'rgba(0, 214, 57, 0.2)',
+            'rgba(240, 14, 14, 0.2)'],
+        borderColor: [
+            'rgba(47, 74, 58, 1)',
+            'rgba(255, 94, 94, 1)'],
+        borderWidth: 1
+        }]
+    },
+    options: {
+      responsive: true,
+      cutoutPercentage: 25
+  }
+  });
+{% endif %}
+</script>
 
 <script type="text/javascript">
     $('.owl-carousel').owlCarousel({
