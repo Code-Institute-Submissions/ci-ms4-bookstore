@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.core.mail import send_mail, BadHeaderError
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -157,10 +158,8 @@ def contact_mailer(request):
       if request.method == 'POST':
         form = MailForm(request.POST)
         if form.is_valid():            
-            subject = render_to_string('custom_email/confirmation_email_subject.txt', {'subject': form.cleaned_data['subject']})
-            message = render_to_string('custom_email/confirmation_email_body.txt', {'subject': form.cleaned_data['message'], 'email': form.cleaned_data['email']})
-
-
+            subject = render_to_string('home\custom_email\contact_email_subject.txt', {'subject': form.cleaned_data['subject']})
+            message = render_to_string('home\custom_email\contact_email_body.txt', {'message': form.cleaned_data['message'], 'email': form.cleaned_data['email']})
 
             try:
                 send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, ['bibliomania@patrikaxelsson.one'])
