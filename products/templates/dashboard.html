@@ -3,14 +3,61 @@
 {% block content %}
 
 {% load crispy_forms_tags %}
-
+<hr>
 <div class="row">
   <div class="container">
-      <form method="POST" enctype="multipart/form-data">
-      {% csrf_token %}      
-      {{ form|crispy }}
-      <button type="submit" class="btn btn-primary">Add product</button>
-    </form>
+    <h1 class="text-center">Charts</h1>
   </div>
 </div>
+<div class="row">
+  <div class="container">
+    <canvas id="dashboardChart"></canvas>
+  </div>
+</div>
+<div class="row">
+  <div class="container">
+    <div class="col">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProductModal">
+       Add Product to store
+      </button>
+    </div>
+  </div>
+</div>
+<hr>
+<!-- Add Product modal -->
+<div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form method="POST" enctype="multipart/form-data">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+          {% csrf_token %}      
+          {{ form|crispy }}
+          
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Add product</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.js" integrity="sha512-zO8oeHCxetPn1Hd9PdDleg5Tw1bAaP0YmNvPY8CwcRyUk7d7/+nyElmFrB6f7vg4f7Fv4sui1mcep8RIEShczg==" crossorigin="anonymous">
+</script>
+<script type="text/javascript" src="{% static 'js/dashboard_charts.js' %}">
+  let PRODUCTS_URL = "{% url 'api_products-list' %}"
+  let ORDER_URL = "{% url 'api_orders-list' %}"
+</script>
+
 {% endblock %}
