@@ -2,6 +2,7 @@ $(document).ready(function () {
     let ctx = document.getElementById("dashboardChart")
     let PRODUCTS_URL = '/rest-api/products/'
     let ORDERS_URL = '/rest-api/orders/'   
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
     let labels = []
     let dataSet = []
@@ -11,7 +12,17 @@ $(document).ready(function () {
 
     let colRandom = () => Math.random() * 256 >> 0;
 
-    fetch(PRODUCTS_URL).then(
+    // Sets up the CSRF token being passed to the API
+
+    const request = new Request(
+        PRODUCTS_URL,
+        {headers: {'X-CSRFToken': csrftoken}}
+    );
+
+    fetch(request, {
+        method: 'GET',
+        mode: 'same-origin'})
+        .then(
         response => response.json())
         .then(data =>  {   
         
@@ -26,7 +37,6 @@ $(document).ready(function () {
             colors.push(`rgba(${colRandom()}, ${colRandom()}, ${colRandom()}, 0.2)`)           
     })
 
-    console.log(colors) 
     let dashChart = new Chart(ctx, {
         type: 'bar',
         data: {

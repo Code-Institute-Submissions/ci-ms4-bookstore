@@ -1,12 +1,14 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-
+{% csrf_token %}
 {% load crispy_forms_tags %}
 <hr>
 <div class="row">
   <div class="container">
     <h1 class="text-center">Charts</h1>
+    <br>
+    <p class="text-center">Use the interface below to visualize data from the store.</p>
   </div>
 </div>
 <div class="row">
@@ -14,6 +16,7 @@
     <canvas id="dashboardChart"></canvas>
   </div>
 </div>
+<hr>
 <div class="row">
   <div class="container">
     <div class="col">
@@ -23,7 +26,7 @@
     </div>
   </div>
 </div>
-<hr>
+
 <!-- Add Product modal -->
 <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModal" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -55,9 +58,6 @@
 {% block extra_js %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.js" integrity="sha512-zO8oeHCxetPn1Hd9PdDleg5Tw1bAaP0YmNvPY8CwcRyUk7d7/+nyElmFrB6f7vg4f7Fv4sui1mcep8RIEShczg==" crossorigin="anonymous">
 </script>
-<script type="text/javascript" src="{% static 'js/dashboard_charts.js' %}">
-  let PRODUCTS_URL = "{% url 'api_products-list' %}"
-  let ORDER_URL = "{% url 'api_orders-list' %}"
-</script>
+<script type="text/javascript" src="{% static 'js/dashboard_charts.js' %}"></script>
 
 {% endblock %}
