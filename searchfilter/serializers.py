@@ -12,7 +12,7 @@ Uses Django Rest-Framework model serializers.
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id', 'title', 'upvote', 'downvote']
+        fields = ['id', 'title', 'upvote', 'downvote', "price"]
 
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:

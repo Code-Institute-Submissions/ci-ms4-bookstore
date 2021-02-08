@@ -7,6 +7,7 @@ $(document).ready(function () {
     let labels = []
     let dataSetUpvote = []
     let dataSetDownvote = []
+    let dataSetPrice = []
 
     // Generates random rgba colors for the chart 
 
@@ -31,8 +32,9 @@ $(document).ready(function () {
         
         let fetchDataResult = data.results
 
-
-        fetchDataResult.forEach(item => {           
+        fetchDataResult.forEach(item => {
+            console.log(item)
+            dataSetPrice.push(item.price)
             dataSetUpvote.push(item.upvote)
             dataSetDownvote.push(item.downvote)
             labels.push(item.title)  
@@ -72,8 +74,7 @@ $(document).ready(function () {
 
     // Event listeners for adding / removing data from the Chart object. Randomizing colours for each new dataset, to make separations clearer.
 
-    $('#downvotesCheck').change(function (e) { 
-        
+    $('#downvotesCheck').change(function (e) {        
         
         let colors = []
         dataSetDownvote.forEach(item = () =>{
@@ -84,10 +85,22 @@ $(document).ready(function () {
     });
 
     $('#upvotesCheck').change(function (e) { 
+        
         let colors = []
         dataSetDownvote.forEach(item = () =>{
             colors.push(`rgba(${colRandom()}, ${colRandom()}, ${colRandom()}, 0.5)`)
         });
-        addDataSet(dashChart, '# of Upvotes', colors,dataSetUpvote);
+
+        addDataSet(dashChart, '# of Upvotes', colors, dataSetUpvote);
+    });
+
+    $('#priceCheck').change(function (e) { 
+
+        let colors = []
+        dataSetPrice.forEach(item = () =>{
+            colors.push(`rgba(${colRandom()}, ${colRandom()}, ${colRandom()}, 0.5)`)
+        });
+        console.log(dataSetPrice)
+        addDataSet(dashChart, 'Item price ( In $ )', colors, dataSetPrice);
     });
 });
