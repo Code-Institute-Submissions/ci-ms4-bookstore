@@ -8,7 +8,18 @@
   <div class="container">
     <h1 class="text-center">Charts</h1>
     <br>
-    <p class="text-center">Use the interface below to visualize data from the store.</p>
+    <p class="text-center">Use the interface below to visualize data from the store. Check the boxes of data you want to graph, then press the re-draw button. Mousing over bars reveals more details.</p>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="btn-toolbar" role="toolbar">
+      <div class="btn-group" role="group" aria-label="Chart controls">
+        <button type="button mr-2" class="btn btn-secondary"> <i class="fas fa-backward"></i> Previous Data </button>
+        <button type="button" class="btn btn-secondary" id="redrawChartBtn"><i class="fas fa-chart-bar"></i> Redraw Chart</button>
+        <button type="button ml-2" class="btn btn-secondary">Next <i class="fas fa-forward"></i></i></button>
+      </div>
+    </div>
   </div>
 </div>
 <div class="row">
@@ -22,31 +33,24 @@
    <h5 class="text-center">Chart products: </h5>
   </div>
 </div>
-<div class="row">
-  <div class="container">
-    <div class="col-xs-12">
-      <label for="upvotes">Upvotes:</label>
-      <br>
-      <input type="checkbox" name="upvotes" id="upvotesCheck">
-      </select>
-    </div>
-    <div class="col-xs-12">
-      <label for="downvotes">Downvotes:</label>
-      <br>
-      <input type="checkbox" name="downvotes" id="downvotesCheck">
-      </select>
-    </div>
-    <div class="col-xs-12">
-      <label for="price">Price:</label>
-      <br>
-      <input type="checkbox" name="price" id="priceCheck">
-      </select>
-    </div>
-  </div>
+<div class="container">
+    <div class="row">
+      <div class="btn-group btn-group-toggle" data-toggle="button">
+        <label class="btn btn-secondary">
+        <input type="checkbox" id="upvotesCheck" autocomplete="off"> 
+        Upvotes</label>
+      <label class="btn btn-secondary">
+        <input type="checkbox"id="downvotesCheck" autocomplete="off">
+        Downvotes</label>
+        <label class="btn btn-secondary">
+        <input type="checkbox" id="priceCheck" autocomplete="off">
+         Price</label>
+      </div>
+   </div>
 </div>
 <hr>
-<div class="row">
-  <div class="container">
+<div class="container">
+  <div class="row">
     <div class="col">
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProductModal">
        Add Product to store

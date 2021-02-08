@@ -4,6 +4,8 @@ $(document).ready(function () {
     let ORDERS_URL = '/rest-api/orders/'   
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
+    // Globally scoping these variables on initialization.
+
     let labels = []
     let dataSetUpvote = []
     let dataSetDownvote = []
@@ -21,7 +23,7 @@ $(document).ready(function () {
     );
 
 
-    // Sorts the original data from the fetch-request.
+    // On load performs a fetch request for the first 10 items in the Products category. Add pagination.
 
     fetch(request, {
         method: 'GET',
@@ -33,7 +35,6 @@ $(document).ready(function () {
         let fetchDataResult = data.results
 
         fetchDataResult.forEach(item => {
-            console.log(item)
             dataSetPrice.push(item.price)
             dataSetUpvote.push(item.upvote)
             dataSetDownvote.push(item.downvote)
@@ -60,7 +61,7 @@ $(document).ready(function () {
     });
 
 
-    // Functionality for adding datasets to the chart and updating it
+    // Functionality for adding more datasets to the chart and updating it
 
     function addDataSet(chart, label, colors, data) {
 
@@ -74,33 +75,74 @@ $(document).ready(function () {
 
     // Event listeners for adding / removing data from the Chart object. Randomizing colours for each new dataset, to make separations clearer.
 
-    $('#downvotesCheck').change(function (e) {        
+    $('#redrawChartBtn').click(() => { 
+
+        let dashChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: []
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });       
         
-        let colors = []
-        dataSetDownvote.forEach(item = () =>{
-            colors.push(`rgba(${colRandom()}, ${colRandom()}, ${colRandom()}, 0.5)`)
-        });
+        // Conditional logic to check what datasets to draw.
+
+        if ($('#upvotesCheck').prop('checked')) {
+            let colors = []
+
+            dataSetUpvote.forEach(item = () =>{
+                colors.push(`rgba(${colRandom()}, ${colRandom()}, ${colRandom()}, 0.5)`)
+            });
+            addDataSet(dashChart, '# of Upvotes', colors ,dataSetUpvote);
+            dashChart.update()
+        };
+        if ($('#downvotesCheck').prop('checked')) {
+            let colors = []
+
+            dataSetDownvote.forEach(item = () =>{
+                colors.push(`rgba(${colRandom()}, ${colRandom()}, ${colRandom()}, 0.5)`)
+            });
+            addDataSet(dashChart, '# of Downvotes', colors ,dataSetDownvote);
+            dashChart.update()
+        };
+
+        if ($('#priceCheck').prop('checked')) {
+            let colors = []
+
+            dataSetPrice.forEach(item = () =>{
+                colors.push(`rgba(${colRandom()}, ${colRandom()}, ${colRandom()}, 0.5)`)
+            });
+            addDataSet(dashChart, 'Item price ( In $ )', colors, dataSetPrice);
+            dashChart.update()
+        };
         
-        addDataSet(dashChart, '# of Downvotes', colors ,dataSetDownvote);
+        
     });
 
-    $('#upvotesCheck').change(function (e) { 
+    $('#downvotesCheck').change(() => {        
+        let checkBox = $('#downvotesCheck')
         
-        let colors = []
-        dataSetDownvote.forEach(item = () =>{
-            colors.push(`rgba(${colRandom()}, ${colRandom()}, ${colRandom()}, 0.5)`)
-        });
-
-        addDataSet(dashChart, '# of Upvotes', colors, dataSetUpvote);
+        checkBox.attr("checked", !checkBox.attr("checked"));                
     });
 
-    $('#priceCheck').change(function (e) { 
+    $('#upvotesCheck').change(() => { 
+        let checkBox = $('#upvotesCheck')
+        
+        checkBox.attr("checked", !checkBox.attr("checked"));    
+    });
 
-        let colors = []
-        dataSetPrice.forEach(item = () =>{
-            colors.push(`rgba(${colRandom()}, ${colRandom()}, ${colRandom()}, 0.5)`)
-        });
-        console.log(dataSetPrice)
-        addDataSet(dashChart, 'Item price ( In $ )', colors, dataSetPrice);
+    $('#priceCheck').change(() => { 
+        let checkBox = $('#priceCheck')
+        
+        checkBox.attr("checked", !checkBox.attr("checked"));  
     });
 });
