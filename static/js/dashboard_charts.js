@@ -5,8 +5,8 @@ $(document).ready(function () {
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
     let labels = []
-    let dataSet = []
-    let colors = []
+    let dataSetUpvote = []
+    let dataSetDownvote = []
 
     // Generates random rgba colors for the chart 
 
@@ -19,6 +19,9 @@ $(document).ready(function () {
         {headers: {'X-CSRFToken': csrftoken}}
     );
 
+
+    // Sorts the original data from the fetch-request.
+
     fetch(request, {
         method: 'GET',
         mode: 'same-origin'})
@@ -29,23 +32,19 @@ $(document).ready(function () {
         let fetchDataResult = data.results
 
 
-        fetchDataResult.forEach(item => {
-            
+        fetchDataResult.forEach(item => {           
+            dataSetUpvote.push(item.upvote)
+            dataSetDownvote.push(item.downvote)
+            labels.push(item.title)  
+        });
+    });
 
-            dataSet.push(item.upvote)
-            labels.push(item.title)
-            colors.push(`rgba(${colRandom()}, ${colRandom()}, ${colRandom()}, 0.2)`)           
-    })
-
+    // Chart that loads on loading the page.
     let dashChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: labels,
-            datasets: [{
-                label: '# of Upvotes',
-                data: dataSet,
-                backgroundColor: colors,
-            }]
+            datasets: []
         },
         options: {
             scales: {
@@ -56,6 +55,39 @@ $(document).ready(function () {
                 }]
             }
         }
-});
+    });
+
+
+    // Functionality for adding datasets to the chart and updating it
+
+    function addDataSet(chart, label, colors, data) {
+
+		chart.data.datasets.push({
+	    label: label,
+        backgroundColor: colors,
+        data: data
+    });
+    chart.update();
+    }   
+
+    // Event listeners for adding / removing data from the Chart object. Randomizing colours for each new dataset, to make separations clearer.
+
+    $('#downvotesCheck').change(function (e) { 
+        
+        
+        let colors = []
+        dataSetDownvote.forEach(item = () =>{
+            colors.push(`rgba(${colRandom()}, ${colRandom()}, ${colRandom()}, 0.5)`)
+        });
+        
+        addDataSet(dashChart, '# of Downvotes', colors ,dataSetDownvote);
+    });
+
+    $('#upvotesCheck').change(function (e) { 
+        let colors = []
+        dataSetDownvote.forEach(item = () =>{
+            colors.push(`rgba(${colRandom()}, ${colRandom()}, ${colRandom()}, 0.5)`)
+        });
+        addDataSet(dashChart, '# of Upvotes', colors,dataSetUpvote);
     });
 });
