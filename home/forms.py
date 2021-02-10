@@ -22,12 +22,12 @@ class NewsForm(ModelForm):
 class ProfileForm(ModelForm):
     class Meta:
         model = UserProfile
-        fields = ("__all__")
+        fields = ('default_phone_number', 'default_street_address1', 'default_street_address2', 'default_town_or_city', 'default_county', 'default_postcode', 'default_country')
 
 class UserForm(ModelForm):
     class Meta:
         model = User
-        fields = ("__all__")
+        fields = ('username', 'first_name', 'last_name', 'email')
 
 class MailForm(forms.Form):
     subject = forms.CharField(max_length=200, required=True)

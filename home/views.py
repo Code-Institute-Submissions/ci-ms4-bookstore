@@ -1,14 +1,16 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.core.mail import send_mail, BadHeaderError
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from .models import NewsPost, UserProfile
 from .forms import NewsForm, ProfileForm, UserForm, MailForm
 from products.models import Product
-from checkout.models import Order, OrderItem
+from checkout.models import Order
 
 # Create your views here.
 
@@ -43,16 +45,22 @@ def user_profile(request):
     profile = UserProfile.objects.get(user_id=user)
     orders = Order.objects.filter(user_id=profile).order_by('-date')
     form = ProfileForm(instance=profile)
-    user_form = UserForm(instance=user)
+    user_form = UserForm(instance=user )
 
     if request.method == 'POST':
-        if form.is_valid() & user_form.is_valid():
-            print("Valid!")
+        form = ProfileForm(instance=profile, data=request.POST)
+        user_form = UserForm(instance=user, data=request.POST )
+        if form.is_valid():
             form.save()
+            messages.success(request, 'Your profile has been updated!')
+        else:
+            messages.warning(request, 'Your form was rejected as invalid! Please, try again.')
+
+        if user_form.is_valid():
+            messages.success(request, 'Your user-information has been updated!')
             user_form.save()
         else:
-            print("Invalid!")
-            print(request.POST)
+            messages.warning(request, 'Your form was rejected as invalid! Please, try again.')
     
     context = {
         'user': user,

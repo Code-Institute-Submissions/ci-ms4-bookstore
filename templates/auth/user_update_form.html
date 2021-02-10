@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}    
+{% load static %}
+
+{% block content %}
+<h6 class="text-center">Account information: </h6>
+<div class="container">
+<form class="form" method="POST">
+    {% csrf_token %}    
+    <div class="row">
+        <div class="col">
+            {{form.username|as_crispy_field}}
+        </div>  
+        <div class="col">
+            {{form.first_name|as_crispy_field}}
+        </div>  
+        <div class="col">
+            {{form.last_name|as_crispy_field}}
+        </div>
+    </div>
+    <hr>
+    <h6 class="text-center">Shipping details: </h6>
+    {{ formset.form.management_form }}
+
+    {{ formset.form.default_street_address1|as_crispy_field}}
+    {{ formset.form.default_street_address2|as_crispy_field}}
+    
+    {{ formset.form.default_town_or_city|as_crispy_field}}
+    
+    {{ formset.form.default_county|as_crispy_field}}
+    
+    {{ formset.form.default_postcode|as_crispy_field}}
+    
+    {{ formset.form.default_country|as_crispy_field}}
+    
+    <input type="submit" value="Update profile">
+</form>
+</div>
+
+{% endblock %}

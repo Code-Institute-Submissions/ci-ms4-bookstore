@@ -73,6 +73,13 @@ $(document).ready(function () {
     chart.update();
     }   
 
+    function removeData(chart) {
+        chart.data.labels.pop();
+        chart.data.datasets.forEach((dataset) => {
+            dataset.data.pop();
+        });
+    }
+
     // Event listeners for adding / removing data from the Chart object. Randomizing colours for each new dataset, to make separations clearer.
 
     $('#redrawChartBtn').click(() => { 
@@ -93,7 +100,9 @@ $(document).ready(function () {
                 }
             }
         });       
-        
+
+        removeData(dashChart)
+
         // Conditional logic to check what datasets to draw.
 
         if ($('#upvotesCheck').prop('checked')) {
@@ -103,7 +112,6 @@ $(document).ready(function () {
                 colors.push(`rgba(${colRandom()}, ${colRandom()}, ${colRandom()}, 0.5)`)
             });
             addDataSet(dashChart, '# of Upvotes', colors ,dataSetUpvote);
-            dashChart.update()
         };
         if ($('#downvotesCheck').prop('checked')) {
             let colors = []
@@ -112,7 +120,6 @@ $(document).ready(function () {
                 colors.push(`rgba(${colRandom()}, ${colRandom()}, ${colRandom()}, 0.5)`)
             });
             addDataSet(dashChart, '# of Downvotes', colors ,dataSetDownvote);
-            dashChart.update()
         };
 
         if ($('#priceCheck').prop('checked')) {
@@ -122,8 +129,10 @@ $(document).ready(function () {
                 colors.push(`rgba(${colRandom()}, ${colRandom()}, ${colRandom()}, 0.5)`)
             });
             addDataSet(dashChart, 'Item price ( In $ )', colors, dataSetPrice);
-            dashChart.update()
         };
+        
+        
+        dashChart.update()
         
         
     });

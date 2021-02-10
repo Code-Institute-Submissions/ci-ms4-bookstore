@@ -39,18 +39,25 @@
         <div class="col">
             {{user_form.last_name|as_crispy_field}}
         </div>
+        <div class="col">
+            {{user_form.email|as_crispy_field}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="container">
+        <button type="submit" class="btn btn-primary">Update profile</button>
+        </div>
     </div>
     <hr>
     <h6 class="text-center">Shipping details: </h6>
     <div class="row">
-        
     <div class="col">
-    {{user_form.email|as_crispy_field}}
+    
     </div>
     <div class="col">
     {{ form.default_phone_number|as_crispy_field}}
     </div>
-</div>
+    </div>
     {{ form.default_street_address1|as_crispy_field}}
     {{ form.default_street_address2|as_crispy_field}}
     
@@ -62,7 +69,7 @@
     
     {{ form.default_country|as_crispy_field}}
 
-    <button class="btn btn-primary" type="submit">Update information</button>
+    <button type="submit" class="btn btn-primary">Update shipping details</button>
 </form>
 <hr>
 </div>
