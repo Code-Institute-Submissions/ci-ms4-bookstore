@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<h1 class="text-center">Products</h1>
+
+
+<table class="table table-hover">
+    <thead>
+        <th>
+            Title
+        </th>
+        <th>
+            Author
+        </th>
+        <th>
+            Price            
+        </th>
+        <th>
+            Series            
+        </th>
+        <th>
+            Genre            
+        </th>
+        <th>
+            Edit
+        </th>
+        <th>
+            Delete
+        </th>
+    </thead>
+    {% for product in object_list %}
+    <tr>
+        <td>
+            {{ product.title }}
+        </td>
+        <td>
+            {{ product.author }}
+        </td>
+        <td>
+            ${{ product.price }}
+        </td>
+        <td>
+            {{ product.series }}
+        </td>
+        <td>
+            {{ product.genre }}
+        </td>
+        <td>
+            <i class="fas fa-edit">
+        </td>        
+        <td>
+            <i class="fas fa-trash-alt"></i>
+        </td>
+    </tr>
+    {% empty %}
+
+    {% endfor %}
+</table>
+
+{% endblock %}

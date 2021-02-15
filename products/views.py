@@ -1,6 +1,7 @@
 from products.models import *
 from django.core.paginator import Paginator
-from .forms import ProductForm, ReviewForm
+from .forms import AuthorForm, GenreForm, ProductForm, ReviewForm, SeriesForm
+from django.views.generic.list import ListView
 from django.db.models import Q
 from django.contrib.auth.models import AnonymousUser, User
 from django.contrib.auth.decorators import login_required
@@ -139,7 +140,10 @@ def dashboard(request):
             return HttpResponseRedirect('account_login')
     context = {
     'user': user,
-    'form': ProductForm
+    'product_form': ProductForm,
+    'author_form': AuthorForm,
+    'genre_form': GenreForm,
+    'series_form': SeriesForm
     }
     return render(request, 'dashboard.html', context)
 
@@ -182,3 +186,62 @@ def delete_product(request, product_id):
     else:           
         messages.warning(request, 'This URL is restricted to Staff members, please login with your staff account.')
         return HttpResponseRedirect('account_login')
+
+
+""" 
+
+Generic endpoints for handling form-validation.
+
+"""
+
+def add_author(request):
+    form = AuthorForm
+    if request.method == 'POST':
+        form = AuthorForm(request.POST)
+        if form.is_valid():
+            messages.success(request, 'New author added succesfully!')
+            form.save()
+            return redirect('dashboard')
+        else: 
+            messages.warning(request, 'Author not saved, form invalid!')
+            return redirect('dashboard')
+
+    return redirect('dashboard')
+
+
+def add_genre(request):
+    form = GenreForm
+    if request.method == 'POST':
+        form = GenreForm(request.POST)
+        if form.is_valid():
+            messages.success(request, 'New genre added succesfully!')
+            form.save()
+            return redirect('dashboard')
+        else: 
+            messages.warning(request, 'Genre not saved, form invalid!')
+            return redirect('dashboard')
+
+    return redirect('dashboard')
+
+def add_series(request):
+    form = SeriesForm
+    if request.method == 'POST':
+        form = SeriesForm(request.POST)
+        if form.is_valid():
+            messages.success(request, 'New series added succesfully!')
+            form.save()
+            return redirect('dashboard')
+        else: 
+            messages.warning(request, 'Series not saved, form invalid!')
+            return redirect('dashboard')
+
+    return redirect('dashboard')
+
+class ProductListView(ListView):
+
+    model = Product
+    paginate_by = 50
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context

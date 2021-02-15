@@ -39,7 +39,7 @@ class SeriesForm(ModelForm):
 
 class AuthorForm(ModelForm):
     class Meta:
-        model = Genre
+        model = Author
         fields = ("__all__")
      
     def __init__(self, *args, **kwargs):
