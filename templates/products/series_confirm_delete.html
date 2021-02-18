@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container-fluid">
+    <div class="text-center">
+    <h1>Deleting: {{series.title}}</h1>
+    <p><strong>PLEASE READ: </strong> - Deleting an entry for a series means all books in that series will be set to 'Null' in the database, which may cause unexpected behaviour with the store. If you need to perform any changes to the record of the author, it is instead <strong>highly</strong> recommended that you edit the record for the series to your liking. However, if you need to delete the record of the series completely, please click the button below. It is highly advised that before you do this, you prepare a plan to manually edit all products in the store with an already prepared new series model.</p>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <a class="btn btn-secondary" href="{% url 'product-list' %}">Cancel</a>
+    <input class="btn btn-warning" type="submit" value="Delete">
+</form>
+</div>
+</div>
+{% endblock %}

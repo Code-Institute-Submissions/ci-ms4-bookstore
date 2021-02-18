@@ -1,60 +1,66 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<h1 class="text-center">Products</h1>
+<div class="container-fluid">
+        <div class="row">
+            <div class="text-center">
+            <h1>Products</h1>
+            <br>
+            <p>Please use this interface to interact with products, authors, genres and series of items in the database. If you need to take a deeper look into the database, the Django admin-interface is available at <a href="/admin">this</a> link and access is granted to all staff-members.</p>
 
+        </div>
+            <table class="table table-hover">
+                <thead>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Author
+                    </th>
+                    <th>
+                        Genre            
+                    </th>
+                    <th>
+                        Series            
+                    </th>
+                    <th>
+                        Price ($)            
+                    </th>
+                    <th>
+                        Edit
+                    </th>
+                    <th>
+                        Delete
+                    </th>
+                </thead>
+                {% for product in object_list %}
+                <tr>
+                    <td>
+                        <a href="{% url 'edit_product' product.id  %}">{{ product.title }}</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'edit_author' product.author.id  %}">{{ product.author }} <i class="fas fa-edit"></i></a>
+                    </td>
+                    <td>
+                        {{ product.genre }} (<a href="{% url 'edit_genre' product.genre.id  %}"><i class="fas fa-edit"></i></a> <a href="{% url 'delete_genre' product.genre.id  %}"><i class="fas fa-trash-alt">)</i></a>
+                    </td>
+                    <td>
+                        {{ product.series }} (<a href="{% url 'edit_series' product.series.id  %}"><i class="fas fa-edit"></i></a> <a href="{% url 'delete_series' product.series.id  %}"><i class="fas fa-trash-alt">)</i></a>
+                    </td>
+                    <td>
+                        ${{ product.price }}
+                    </td>
+                    <td>
+                        <a href="{% url 'edit_product' product.id  %}"><i class="fas fa-edit"></i></a>
+                    </td>        
+                    <td>
+                        <a href="{% url 'delete_product' product.id  %}"><i class="fas fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+                {% empty %}
 
-<table class="table table-hover">
-    <thead>
-        <th>
-            Title
-        </th>
-        <th>
-            Author
-        </th>
-        <th>
-            Genre            
-        </th>
-        <th>
-            Series            
-        </th>
-        <th>
-            Price ($)            
-        </th>
-        <th>
-            Edit
-        </th>
-        <th>
-            Delete
-        </th>
-    </thead>
-    {% for product in object_list %}
-    <tr>
-        <td>
-            <a href="{% url 'edit_product' product.id  %}">{{ product.title }}</a>
-        </td>
-        <td>
-            <a href="{% url 'edit_author' product.author.id  %}">{{ product.author }} <i class="fas fa-edit"></i></a>
-        </td>
-        <td>
-            <a href="{% url 'edit_genre' product.genre.id  %}">{{ product.genre }} <i class="fas fa-edit"></i></a>
-        </td>
-        <td>
-            <a href="{% url 'edit_series' product.series.id  %}">{{ product.series }} <i class="fas fa-edit"></i></a>
-        </td>
-        <td>
-            ${{ product.price }}
-        </td>
-        <td>
-            <a href="{% url 'edit_product' product.id  %}"><i class="fas fa-edit"></i></a>
-        </td>        
-        <td>
-            <i class="fas fa-trash-alt"></i>
-        </td>
-    </tr>
-    {% empty %}
-
-    {% endfor %}
-</table>
-
+                {% endfor %}
+            </table>
+    </div>
+</div>
 {% endblock %}

@@ -1,14 +1,16 @@
 from products.models import *
+from django.urls import reverse_lazy
 from django.core.paginator import Paginator
 from .forms import AuthorForm, GenreForm, ProductForm, ReviewForm, SeriesForm
 from django.views.generic.list import ListView
-from django.views.generic.edit import UpdateView 
+from django.views.generic.edit import UpdateView, DeleteView 
 from django.db.models import Q
 from django.contrib.auth.models import AnonymousUser, User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, reverse, render, get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 # Create your views here.
 
 
@@ -191,9 +193,14 @@ def delete_product(request, product_id):
 
 """ 
 
-Generic endpoints for handling form-validation.
+Generic endpoints for handling form-validation, as well as class-based standard-views providing a FrontEnd layer for staffmembers to edit the forms.
 
 """
+
+class AdminStaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
+
+    def test_func(self):
+        return self.request.user.is_superuser or self.request.user.is_staff
 
 def add_author(request):
     form = AuthorForm
@@ -238,32 +245,48 @@ def add_series(request):
 
     return redirect('dashboard')
 
-class ProductListView(ListView):
+class ProductListView(ListView, AdminStaffRequiredMixin):
 
     model = Product
-    ordering = ['-title']
+    ordering = ['-author']
     paginate_by = 50
+
+    def handle_no_permission(self):
+        print("Not allowed!")
+        return redirect('home')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
 
-class EditProductView(UpdateView):
+class EditProductView(UpdateView, AdminStaffRequiredMixin):
     model = Product
     fields = ['title', 'description', 'cover', 'author', 'series', 'genre', 'featured', 'price']
     template_name_suffix = '_update_form'
 
-class EditGenreView(UpdateView):
+class EditGenreView(UpdateView, AdminStaffRequiredMixin):
     model = Genre
     fields = ['title', 'desc']
     template_name_suffix = '_update_form'
 
-class EditSeriesView(UpdateView):
+class EditSeriesView(UpdateView, AdminStaffRequiredMixin):
     model = Series
     fields = ['title', 'summary']
     template_name_suffix = '_update_form'
 
-class EditAuthorView(UpdateView):
+class EditAuthorView(UpdateView, AdminStaffRequiredMixin):
     model = Author
     fields = ['name', 'summary', 'series', 'genres']
     template_name_suffix = '_update_form'
+
+class DeleteAuthorView(DeleteView, AdminStaffRequiredMixin):
+    model = Author
+    success_url = reverse_lazy('product-list')
+
+class DeleteGenreView(DeleteView, AdminStaffRequiredMixin):
+    model = Genre
+    success_url = reverse_lazy('product-list')
+
+class DeleteSeriesView(DeleteView, AdminStaffRequiredMixin):
+    model = Series
+    success_url = reverse_lazy('product-list')
