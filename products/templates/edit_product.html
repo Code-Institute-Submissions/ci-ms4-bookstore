@@ -11,7 +11,7 @@
 </div>
 <div class="row">
   <div class="container">
-      <form method="POST" enctype="multipart/form-data" action="{% url 'edit_product' product_id=product.id %}">
+      <form method="POST" enctype="multipart/form-data" action="{% url 'edit_product' pk=product.id %}">
       {% csrf_token %}      
       {{ form|crispy }}
       <button type="submit" class="btn btn-primary">Edit product</button>

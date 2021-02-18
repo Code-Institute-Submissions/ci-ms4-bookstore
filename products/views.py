@@ -2,6 +2,7 @@ from products.models import *
 from django.core.paginator import Paginator
 from .forms import AuthorForm, GenreForm, ProductForm, ReviewForm, SeriesForm
 from django.views.generic.list import ListView
+from django.views.generic.edit import UpdateView 
 from django.db.models import Q
 from django.contrib.auth.models import AnonymousUser, User
 from django.contrib.auth.decorators import login_required
@@ -240,8 +241,29 @@ def add_series(request):
 class ProductListView(ListView):
 
     model = Product
+    ordering = ['-title']
     paginate_by = 50
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+
+class EditProductView(UpdateView):
+    model = Product
+    fields = ['title', 'description', 'cover', 'author', 'series', 'genre', 'featured', 'price']
+    template_name_suffix = '_update_form'
+
+class EditGenreView(UpdateView):
+    model = Genre
+    fields = ['title', 'desc']
+    template_name_suffix = '_update_form'
+
+class EditSeriesView(UpdateView):
+    model = Series
+    fields = ['title', 'summary']
+    template_name_suffix = '_update_form'
+
+class EditAuthorView(UpdateView):
+    model = Author
+    fields = ['name', 'summary', 'series', 'genres']
+    template_name_suffix = '_update_form'

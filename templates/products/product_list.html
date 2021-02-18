@@ -13,13 +13,13 @@
             Author
         </th>
         <th>
-            Price            
+            Genre            
         </th>
         <th>
             Series            
         </th>
         <th>
-            Genre            
+            Price ($)            
         </th>
         <th>
             Edit
@@ -31,22 +31,22 @@
     {% for product in object_list %}
     <tr>
         <td>
-            {{ product.title }}
+            <a href="{% url 'edit_product' product.id  %}">{{ product.title }}</a>
         </td>
         <td>
-            {{ product.author }}
+            <a href="{% url 'edit_author' product.author.id  %}">{{ product.author }} <i class="fas fa-edit"></i></a>
+        </td>
+        <td>
+            <a href="{% url 'edit_genre' product.genre.id  %}">{{ product.genre }} <i class="fas fa-edit"></i></a>
+        </td>
+        <td>
+            <a href="{% url 'edit_series' product.series.id  %}">{{ product.series }} <i class="fas fa-edit"></i></a>
         </td>
         <td>
             ${{ product.price }}
         </td>
         <td>
-            {{ product.series }}
-        </td>
-        <td>
-            {{ product.genre }}
-        </td>
-        <td>
-            <i class="fas fa-edit">
+            <a href="{% url 'edit_product' product.id  %}"><i class="fas fa-edit"></i></a>
         </td>        
         <td>
             <i class="fas fa-trash-alt"></i>
