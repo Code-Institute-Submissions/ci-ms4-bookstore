@@ -2,43 +2,17 @@
 {% load static %}
 
 {% block content %}
-<div class="container-fluid">
-      <div class="jumbotron" id="home-jumbotron-bg">
+      <div class="jumbotron jumbotron-fluid" id="home-jumbotron-bg">
+        <div class="container">
         <h1 class="display-4">Bibliomania, the one-stop shop for fiction you love!</h1> 
-        <div id="jumbotron-newscard" class="card" style="width: 15rem;">
-          <div class="card-header">
-            Latest news:
-          </div>
-          <div class="card-body">
-            <h5 class="card-title">{{news.0.title}}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">By: {{news.0.author}}</h6>
-            <p class="card-text">{{news.0.post}}</p>
-          </div>
-          <div class="card-footer">
-            <small class="text-muted">Posted: {{news.0.time}}</small>
-          </div>
-            {% if request.user.is_superuser %}
-            <hr>
-            <div class="admin-dropdown">
-              <button class="btn btn-primary "><i class="fas fa-cogs"></i> Admin options</button>
-              <div class="admin-dropdownContent">
-                <!-- Delete item link. -->
-                <a href="{% url 'delete_post' news_id=news.0.pk %}"><i class="fas fa-trash-alt"></i> Delete post</a>            
-                <!-- Creates a modal for editing posts already submitted. -->
-                <a data-toggle="modal" href="#edit-post-{{news.0.pk}}">
-                  <i class="fas fa-edit"></i> Edit post
-                </a>
-              </div>
-            </div>
-            {% endif %}
-          </div>
-        </div>
           
           <p class="lead">"The saddest aspect of life right now is that science fiction gathers knowledge faster than society gathers wisdom." - Isaac Asimov</p>
           <hr class="my-4">
           <a class="btn btn-outline-light btn-lg" href="{% url 'products' %}" role="button">See our full list of books for sale!</a>
         </div>
+    </div>
 </div>
+    
 <hr>
 <div class="container">     
     <h1 class="text-center">Currently featured books!</h1>
@@ -58,9 +32,11 @@
    </div>
 </div>
 <hr>
-<div class="row">  
-  <div class="container-fluid">
-    <h2 class="text-center">Older news: </h2>
+<div class="container-fluid">
+  <div class="text-center">
+    <h2 cla>News: </h2>
+    <br>
+    <p>For older news, <a href="{% url 'archive' %}">click this link</a> to visit our archive!</p>
   </div>
 </div>
 

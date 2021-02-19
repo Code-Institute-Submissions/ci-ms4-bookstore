@@ -1,7 +1,39 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<div class="container-fluid">
+{% if products.has_other_pages %} 
+<div class="container-fluid">  
+    <div class="row justify-content-center">        
+      <nav>
+        <ul class="pagination pagination-sm" id="product-paginator">
+          {% if products.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{products.previous_page_number}}"><i class="fas fa-backward"></i></a></li>
+            {% else %}
+            <li><a href="#" class="page-link" class="disabled button big previous"><i class="fas fa-step-backward"></i></a></li>
+            {% endif %}
+    
+            {% for i in products.paginator.page_range %}
+              {% if products.number == i %}
+            <li class="page-item active"><a class="page-link" href="?page={{product.i}}">{{i}}</a></li>
+              {% else%}
+            <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+            {% endif %}
+            {% endfor %}
+          
+    
+            {% if products.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}"><i class="fas fa-forward"></i></a></li>
+            {% else %}
+            <li><a href="#" class="page-link disabled button big next"><i class="fas fa-step-forward"></i></a></li>
+            {% endif %}
+        </ul>
+      </nav>
+      
+      </div>
+    </div>
+  </div>
+  {% endif %}
+<div class="container">
         <div class="row">
             <div class="text-center">
             <h1>Products</h1>
@@ -9,27 +41,27 @@
             <p>Please use this interface to interact with products, authors, genres and series of items in the database. If you need to take a deeper look into the database, the Django admin-interface is available at <a href="/admin">this</a> link and access is granted to all staff-members.</p>
 
         </div>
-            <table class="table table-hover">
+            <table class="table table-hover" id="sortableTable">
                 <thead>
                     <th>
-                        Title
+                        Title <i class="fas fa-sort"></i>
                     </th>
                     <th>
-                        Author
+                        Author <i class="fas fa-sort"></i>
                     </th>
                     <th>
-                        Genre            
+                        Genre <i class="fas fa-sort"></i>
                     </th>
                     <th>
-                        Series            
+                        Series <i class="fas fa-sort"></i>
                     </th>
                     <th>
-                        Price ($)            
+                        Price ($) <i class="fas fa-sort"></i>         
                     </th>
-                    <th>
+                    <th class="no-sort">
                         Edit
                     </th>
-                    <th>
+                    <th class="no-sort">
                         Delete
                     </th>
                 </thead>
@@ -39,13 +71,13 @@
                         <a href="{% url 'edit_product' product.id  %}">{{ product.title }}</a>
                     </td>
                     <td>
-                        <a href="{% url 'edit_author' product.author.id  %}">{{ product.author }} <i class="fas fa-edit"></i></a>
+                        {{ product.author }} ( <a href="{% url 'edit_author' product.author.id  %}"><i class="fas fa-edit"></i></a> <a href="{% url 'delete_author' product.author.id  %}"><i class="fas fa-trash-alt"></i></a>)
                     </td>
                     <td>
-                        {{ product.genre }} (<a href="{% url 'edit_genre' product.genre.id  %}"><i class="fas fa-edit"></i></a> <a href="{% url 'delete_genre' product.genre.id  %}"><i class="fas fa-trash-alt">)</i></a>
+                        {{ product.genre }} (<a href="{% url 'edit_genre' product.genre.id  %}"><i class="fas fa-edit"></i></a> <a href="{% url 'delete_genre' product.genre.id  %}"><i class="fas fa-trash-alt"></i></a>)
                     </td>
                     <td>
-                        {{ product.series }} (<a href="{% url 'edit_series' product.series.id  %}"><i class="fas fa-edit"></i></a> <a href="{% url 'delete_series' product.series.id  %}"><i class="fas fa-trash-alt">)</i></a>
+                        {{ product.series }} (<a href="{% url 'edit_series' product.series.id  %}"><i class="fas fa-edit"></i></a> <a href="{% url 'delete_series' product.series.id  %}"><i class="fas fa-trash-alt"></i></a>)
                     </td>
                     <td>
                         ${{ product.price }}
@@ -63,4 +95,11 @@
             </table>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/plugins/jquery.tablesort.min.js' %}"></script>
+<script>
+    $('#sortableTable').tablesort();
+</script>
 {% endblock %}
