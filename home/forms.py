@@ -30,6 +30,6 @@ class UserForm(ModelForm):
         fields = ('username', 'first_name', 'last_name', 'email')
 
 class MailForm(forms.Form):
-    subject = forms.CharField(max_length=200, required=True)
-    message = forms.CharField(max_length=200, required=True, widget=forms.Textarea())
-    email = forms.EmailField(required=True)
+    subject = forms.CharField(max_length=200, required=True, label="Subject: ")
+    message = forms.CharField(max_length=200, required=True, label="Your message: ", widget=forms.Textarea())
+    email = forms.EmailField(required=True, label="Your email")

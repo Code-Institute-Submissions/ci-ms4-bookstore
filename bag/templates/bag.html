@@ -23,7 +23,7 @@
           <tr>            
             <th scope="row"><img src="{{ item.product.cover.url }}" class="img-thumbnail img-fluid rounded text-left"></th>
             <td><a href="{% url 'product_info' product_id=item.product.id%}"><h6 class="text-center"> {{ item.product.title }}</h6></a></td>
-            <td><h6 class="text-center"><input type="number" value="{{ item.quantity }}" class="form-control form-control-sm"></h6></td>
+            <td><h6 class="text-center"><input type="number" value="{{ item.quantity }}" min="0" max="30" class="form-control form-control-sm"></h6></td>
             <form method="POST" action="{% url 'remove_from_bag' product_id=item.product.id %}">
               {% csrf_token %}
             <td><h6 class="text-center"><button class="btn btn-link" type="submit"><i class="fas fa-minus"></i></button></h6></td>

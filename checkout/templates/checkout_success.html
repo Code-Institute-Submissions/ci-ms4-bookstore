@@ -2,27 +2,50 @@
 {% load crispy_forms_tags %} 
 {% block content %}
 <div class="row">
-  <div class="container">  
+  <div class="container-fluid text-center">  
     <hr>
-    <h1 class="text-center">Your order with ID: {{order.order_number}} has been submitted!</h1><br>
-    <p class="text-center">Your order summary is below. A confirmation email will be sent to <strong>{{ order.email }}</strong>.</p>
+    <h1>Your order with ID: {{order.order_number}} has been submitted!</h1><br>
+    <p>Your order summary is below. A confirmation email will be sent to <strong>{{ order.email }}</strong>.</p>
     <hr>
   </div>
 </div>
-<div class="row">
-  <div class="container-fluid">
-      <div class="col-md-4" id="order-summary">
-          <small class="text-muted">Order details: {{order.order_number}}: </small><br>
 
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-md-4 col-xs-12" id="order-summary">
+          <h4>Order details: {{order.order_number}}: </h4>
+          <hr>
+          {% for item in order_items %}
+           <h5>Title: {{item.product.title }}</h5>
+           <h5>Quantity: {{item.quantity }}</h5>
+           <h5>Total: {{item.order_item_total }}</h5>           
+           <hr>
+          {% endfor %}
       </div>
-      <div class="col-md-4" id="delivery-summary">
-        <small class="text-muted">Deliver to: </small><br>
+      <div class="col-md-4 col-xs-12" id="delivery-summary">
+        <h4>Deliver to: </h4>
+        <hr>
+        <h5>{{order.full_name}}</h5>
+        <h5>{{order.street_address1}}</h5>
+        <h5>{{order.street_address2}}</h5>
+        <h5>{{order.postcode}}</h5>
+        <h5>{{order.county}}</h5>
+        <hr>
       </div>
-      <div class="col-md-4" id="billing-summary">
-        <small class="text-muted">Billing-details: </small><br>
-        <h5 class="text-left">Delivery: ${{ delivery }}</h5><br>
-        <h5 class="text-left font-weight-bold">Grand total: ${{ grand_total }}</h5><br>
+      <div class="col-md-4 col-xs-12" id="billing-summary">
+        <h4>Billing-details: </h4>
+        <hr>
+        <h5 >Delivery: ${{ delivery }}</h5><br>
+        <h5 class="font-weight-bold">Grand total: ${{ grand_total }}</h5><br>
+        <hr>
       </div>
     </div>
 </div>
+
+<div class="container-fluid">
+  <div class="row">
+    <a href="{% url 'home' %}" class="btn btn-secondary">Go to the front page</a>
+    <a href="{% url 'user_profile' %}" class="btn btn-secondary">Go to your profile</a>
+  </div>
+</div>    
 {% endblock %}

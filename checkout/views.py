@@ -10,6 +10,7 @@ from home.models import UserProfile
 from home.forms import ProfileForm
 from products.models import Product
 from .forms import OrderForm
+from home.forms import MailForm
 from bag.contexts import bag_items
 import stripe
 import json
@@ -120,6 +121,7 @@ def checkout(request):
             return redirect(reverse('products'))
 
     context = {
+        'mail_form': MailForm,
         "form": order_form,
         'stripe_public_key': stripe_public_key,
         'client_secret': intent.client_secret,
@@ -130,6 +132,7 @@ def checkout(request):
 def checkout_success(request, order_id):
     save_info = request.session.get('save_info')
     order_id = get_object_or_404(Order, order_number=order_id)
+    order_items = OrderItem.objects.filter(order=order_id)
 
     if request.user.is_authenticated:
         profile = UserProfile.objects.get(user_id=request.user)
@@ -154,6 +157,7 @@ def checkout_success(request, order_id):
         
     context = {
         "order": order_id,
+        "order_items":order_items,
     }
 
     return render(request, 'checkout_success.html', context)
