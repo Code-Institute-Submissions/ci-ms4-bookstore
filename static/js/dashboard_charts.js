@@ -1,3 +1,11 @@
+    // Globally scoping these variables on initialization as empty arrays.
+
+    let labels = []
+    let dataSetUpvote = []
+    let dataSetDownvote = []
+    let dataSetPrice = []
+
+
 $(document).ready(() => {
     let ctx = document.getElementById("dashboardChart")
     let PRODUCTS_URL = '/rest-api/products/'
@@ -16,12 +24,6 @@ $(document).ready(() => {
         checkboxHandler()
     });
 
-    // Globally scoping these variables on initialization as empty arrays.
-
-    let labels = []
-    let dataSetUpvote = []
-    let dataSetDownvote = []
-    let dataSetPrice = []
 
     // Generates random rgba colors for the chart 
 
@@ -29,15 +31,20 @@ $(document).ready(() => {
 
     // Sets up the CSRF token being passed to the API
 
-    const request = new Request(
+    const product_request = new Request(
         PRODUCTS_URL,
+        {headers: {'X-CSRFToken': csrftoken}}
+    );
+
+    const order_request = new Request(
+        ORDERS_URL,
         {headers: {'X-CSRFToken': csrftoken}}
     );
 
     
     // On load performs a fetch request for the first 10 items in the Products category. Add pagination.
 
-    fetch(request, {
+    fetch(product_request, {
         method: 'GET',
         mode: 'same-origin'})
         .then(
@@ -139,5 +146,22 @@ $(document).ready(() => {
         dashChart.update()
         
         
+    });
+
+    $('#orderAJAX').click(() =>{
+        fetch(order_request, {
+            method: 'GET',
+            mode: 'same-origin'})
+            .then(
+            response => response.json())
+            .then(data =>  {   
+                let dateResults = data.results
+
+                dateResults.forEach(result => {
+                    let date = moment(result.date)
+                    console.log(date)
+                    
+                });
+            });
     });
 });

@@ -24,8 +24,6 @@ class ProductViewSet(viewsets.ModelViewSet):
 Testing API - This view exists only for testing purposes and is used to manipulate the Product objects of the database, for testing the API.
 It will be commented out from all deployed versions and is only included for assessment purposes. 
 
-
-
 def vote_rigger(request):
     products = Product.objects.all()
     
