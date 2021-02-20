@@ -53,7 +53,8 @@ DEBUG = 'DEVELOPMENT' in os.environ
 ALLOWED_HOSTS = [
     'localhost',
     'http://127.0.0.1:8000/',
-    'https://django-bookstore-example.herokuapp.com/'
+    'https://django-bookstore-example.herokuapp.com/',
+    'https://bibliomania-django.herokuapp.com/'
 ]
 
 
