@@ -261,21 +261,25 @@ class ProductListView(ListView, AdminStaffRequiredMixin):
 
 class EditProductView(UpdateView, AdminStaffRequiredMixin):
     model = Product
+    success_url = reverse_lazy('product-list')
     fields = ['title', 'description', 'cover', 'author', 'series', 'genre', 'featured', 'price']
     template_name_suffix = '_update_form'
 
 class EditGenreView(UpdateView, AdminStaffRequiredMixin):
     model = Genre
+    success_url = reverse_lazy('product-list')
     fields = ['title', 'desc']
     template_name_suffix = '_update_form'
 
 class EditSeriesView(UpdateView, AdminStaffRequiredMixin):
     model = Series
+    success_url = reverse_lazy('product-list')
     fields = ['title', 'summary']
     template_name_suffix = '_update_form'
 
 class EditAuthorView(UpdateView, AdminStaffRequiredMixin):
     model = Author
+    success_url = reverse_lazy('product-list')
     fields = ['name', 'summary', 'series', 'genres']
     template_name_suffix = '_update_form'
 
