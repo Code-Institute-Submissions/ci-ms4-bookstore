@@ -148,6 +148,8 @@ $(document).ready(() => {
         
     });
 
+
+    // Order time-axis chart cut for time, just kept it for after assessment so I can pick up the work after.
     $('#orderAJAX').click(() =>{
         fetch(order_request, {
             method: 'GET',
@@ -164,4 +166,6 @@ $(document).ready(() => {
                 });
             });
     });
+
+
 });

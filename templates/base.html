@@ -15,10 +15,8 @@
     {% block corecss %}
         <!-- Font Awesome CDN-->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
-        <!-- Bootstrap CSS-->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato&display=swap">
-        <link rel="stylesheet" href="{% static 'css/base.css' %}">
+        <!-- SCSS compiled import, includes compiled versions of all plugins CSS. -->
+        <link rel="stylesheet" href="{% static 'scss/style.css' %}">
     {% endblock %}
 
     {% block corejs %}    
@@ -31,9 +29,8 @@
 
     {% block extra_css %}
     <!-- CSS for plugins-->
-    <link rel="stylesheet" href="{% static 'css/plugins/owl.carousel.min.css' %}" />
     {% endblock %}
-    <title>Bibliomania</title> <!-- Add custom titles for each view later -->
+    <title>Bibliomania {% if extra_title %} {{extra_title}} {% endif %}</title> <!-- Add custom titles for each view later -->
   </head>
   <body>
 
@@ -59,7 +56,7 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
           <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'home' %}">Bibliomania</a>
+            <span class="navbar-brand mb-0 h1">Bibliomania</span>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
