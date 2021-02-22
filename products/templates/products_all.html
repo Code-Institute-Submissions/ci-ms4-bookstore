@@ -82,7 +82,7 @@
           {% if product.cover %}
           <img class="card-img-top" src="{{product.cover.url}}" alt="{{product.title}}">
           {% else %}
-          <img class="card-img-top" src="{% static '/img/default_cover.png' %}"  alt="{{product.title}}">  
+          <img class="card-img-top" src="{% static 'img/default_cover.png' %}"  alt="{{product.title}}">  
           {% endif %}
           <div class="card-body pb-0">
             <h5 class="card-title">{{product.title}}</h5>
