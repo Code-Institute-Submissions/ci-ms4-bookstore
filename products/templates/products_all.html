@@ -79,7 +79,11 @@
         {% for product in products %}
       <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3  d-flex justify-content-center">
         <div class="card h-100 border-0" style="width: 15rem;">
+          {% if product.cover %}
           <img class="card-img-top" src="{{product.cover.url}}" alt="{{product.title}}">
+          {% else %}
+          <img class="card-img-top" src="{% static '/img/default_cover.png' %}"  alt="{{product.title}}">  
+          {% endif %}
           <div class="card-body pb-0">
             <h5 class="card-title">{{product.title}}</h5>
             <p class="card-text">

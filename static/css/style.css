@@ -9874,5 +9874,17 @@ footer p {
 .admin-dropdown .admin-dropdownContent a:hover {
   background-color: #f1f1f1;
 }
+.navbar .navbar-brand {
+  font-family: "IM Fell DW Pica SC", serif;
+  font-size: 2rem;
+}
+
+.message-container {
+  position: fixed;
+  top: 72px;
+  right: 15px;
+  z-index: 99999999999;
+  font-size: 1.25rem;
+}
 
 /*# sourceMappingURL=style.css.map */
