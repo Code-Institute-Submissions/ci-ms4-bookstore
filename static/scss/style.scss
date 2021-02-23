@@ -12,13 +12,16 @@ $secondary: #800101;
 
 
 html {
-    font-size: 10px;
+    font-size: 62.5%;
 }
 
 body {
     font-family: $main-txt;
     font-size: 1.6rem;
     a {
+        font-size: 1.6rem;
+    }
+    p {
         font-size: 1.6rem;
     }
 }
@@ -115,6 +118,7 @@ footer{
     .admin-dropdown:hover {
 
         .admin-dropdownContent {
+            
         
       }
 
@@ -136,4 +140,10 @@ footer{
     right: 15px;
     z-index: 99999999999;
     font-size: 1.30rem;
+}
+
+/* Fixed height, for consistency*/
+.img-thumbnail {
+    height: 200px;
+    width: auto;
 }

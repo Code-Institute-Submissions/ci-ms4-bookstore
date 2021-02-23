@@ -2,6 +2,9 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
+{% csrf_token %}
+<input type="hidden" name="item_pk" value="{{product.id}}">
+<hr>
 <div class="row no-gutters">
   <div class="container-fluid">
     <h1 class="text-center">{{ product.title }}</h1>
@@ -22,12 +25,41 @@
   <div class="row no-gutters">  
     <div class="col-xs-12 col-sm-6">
       <div class="img-wrap-floater">
-        <img class="img-fluid rounded float-left img-cover" src="{{product.cover.url}}" alt="Cover">      
+        <img class="img-thumbnail rounded float-left img-cover" src="{{product.cover.url}}" alt="Cover">      
       </div>
       <div class="product-desc-wrapper">
         <h4 class="text-center"> Summary: </h4>
         <br>
         <p>{{product.description}}</p>
+        <hr>
+        <h5 class="text-center">Written by: {{product.author.name}}</h5>
+        <br>
+        <p>{{product.author.summary}}</p>
+        <hr>
+        <h5 class="text-center">Part of the series: {{product.series.title}}</h5>
+        <br>
+        <p>{{product.series.summary}}</p>
+        {% if series %}
+        <div class="row no-gutters">
+          <div class="container">
+            <h3 class="text-center">Other books in the same series...</h3>
+          </div>
+        </div>
+        <div class="row no-gutters">
+          <div class="container">
+            <!-- Uses the jQuery owl-carousel plugin instead of the bootstrap carousel, for better responsiveness. -->
+            <div class="owl-carousel owl-theme">
+                      {% for product in series %}
+                      <div class="item">
+                      <img class="d-block img-thumbnail" src="{{product.cover.url}}" alt="{{product.title}}">
+                      <h5><a href="{% url 'product_info' product.id %}">{{product.title}}</a></h5>
+                    </div>
+                      {% endfor %}                       
+              </div>
+            </div>
+        </div>
+        <hr>
+        {% endif %}
         <hr>
         <form class="form" method="POST" action="{% url 'add_to_bag' product_id=product.id %}">
           {% csrf_token %}
@@ -42,7 +74,9 @@
     </div>
       <div class="col-xs-12 col-sm-6"> 
         <h4 class="text-center">Customer reviews: </h4>
-        <div class="chart-container" style="position: relative; height:70%; width:70%">
+        <div class="d-flex justify-content-center">
+        <div class="chart-container" style="position: relative; height: 90%; width:90%">
+          </div>
         <canvas id="reviewChart"></canvas>
         </div>
         <div class="row no-gutters">
@@ -94,85 +128,12 @@
     <hr class="footer-separator">
   </div>
 </div>
-{% if series %}
-<div class="row no-gutters">
-  <div class="container">
-    <h3 class="text-center">Other books in the same series...</h3>
-  </div>
-</div>
-<div class="row no-gutters">
-  <div class="container">
-    <!-- Uses the jQuery owl-carousel plugin instead of the bootstrap carousel, for better responsiveness. -->
-     <div class="owl-carousel owl-theme">
-              {% for product in series %}
-              <div class="item">
-               <img class="d-block img-fluid" src="{{product.cover.url}}" alt="{{product.title}}">
-               <h5><a href="{% url 'product_info' product.id %}">{{product.title}}</a></h5>
-             </div>
-              {% endfor %}                       
-       </div>
-    </div>
-</div>
-<hr>
- {% endif %}
- <div class="modal fade" id="review-modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Review product</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form method="POST">
-      <div class="modal-body">        
-          <div class="form-group">
-            {% csrf_token %}
-            {{form|crispy}}         
-          </div>
-      </div>
-      <div class="modal-footer">
-        {% if request.user.is_anonymous %}
-        <a class="btn btn-warning" href="{% url 'account_login' %}">Log in to review</a>
-        {% else %}
-        <button type="submit" class="btn btn-primary">Add review</button>
-        {% endif %}              
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </form>
-    </div>
-  </div>
-</div>
 {% endblock %}
 
 {% block extra_js %}
 <!-- Setup for plugins, OwlCarousel, Charts.JS etc with conditional rendering for reviews. -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.js" integrity="sha512-zO8oeHCxetPn1Hd9PdDleg5Tw1bAaP0YmNvPY8CwcRyUk7d7/+nyElmFrB6f7vg4f7Fv4sui1mcep8RIEShczg==" crossorigin="anonymous"></script>
-<script type="text/javascript">
-  let ctx = document.getElementById("reviewChart")
-  let productChart = new Chart(ctx, {
-    type: 'pie',
-    data: {
-      labels: ['Positive', 'Negative'],
-      datasets: [{
-        label: 'Positive and Negative votes',
-        data: [{{product.upvote}}, {{product.downvote}}],
-        backgroundColor: [
-            'rgba(0, 214, 57, 0.2)',
-            'rgba(240, 14, 14, 0.2)'],
-        borderColor: [
-            'rgba(47, 74, 58, 1)',
-            'rgba(255, 94, 94, 1)'],
-        borderWidth: 1
-        }]
-    },
-    options: {
-      responsive: true,
-      cutoutPercentage: 25
-  }
-  });
-</script>
 
 <script type="text/javascript">
     $('.owl-carousel').owlCarousel({
@@ -200,4 +161,10 @@
         }
     });
   </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.js" integrity="sha512-zO8oeHCxetPn1Hd9PdDleg5Tw1bAaP0YmNvPY8CwcRyUk7d7/+nyElmFrB6f7vg4f7Fv4sui1mcep8RIEShczg==" crossorigin="anonymous">
+</script>
+<script type="text/javascript" src="{% static 'js/plugins/moment.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/product_review.js' %}"></script>
+
 {% endblock %}

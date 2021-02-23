@@ -17,7 +17,6 @@ class OrderViewSet(viewsets.ModelViewSet):
 class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
     queryset = Product.objects.all().order_by('-upvote')
-    permission_classes = [permissions.IsAuthenticated]
 
 """
 

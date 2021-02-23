@@ -19,10 +19,13 @@ def index(request):
     # News post sorted by date, newer at the top, limited to five total items for the index page.
     newsposts = NewsPost.objects.order_by('-time', 'title')[:5]
     feature = Product.objects.filter(featured=True)[:5]
+    extra_title = '- Home'
+
     context = {
         'news': newsposts,
         'form': form,
         'feature': feature,
+        'extra_title': extra_title
     }
 
     return render(request, 'home/index.html', context)
@@ -31,10 +34,12 @@ def archive(request):
     # All items, sorted by date
     newsposts = NewsPost.objects.order_by('-time')
     form = NewsForm
+    extra_title = '- New archive'
 
     context = {
         'news': newsposts,
-        'form': form
+        'form': form,
+        'extra_title': extra_title
     }
 
     return render(request, 'home/archive.html', context)
