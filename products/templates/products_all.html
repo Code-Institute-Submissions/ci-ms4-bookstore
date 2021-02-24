@@ -13,7 +13,7 @@
     <div class="owl-carousel owl-theme">
              {% for product in feature %}
              <div class="item">
-              <img class="d-block" src="{{product.cover.url}}" alt="{{product.title}}">
+              <img class="img-thumbnail" src="{{product.cover.url}}" alt="{{product.title}}">
               <h5><a href="{% url 'product_info' product.id %}">{{product.title}}</a></h5>
             </div>
              {% endfor %}                       
