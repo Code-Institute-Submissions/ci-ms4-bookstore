@@ -175,7 +175,7 @@ def contact_mailer(request):
             message = render_to_string('home/custom_email/contact_email_body.txt', {'message': form.cleaned_data['message'], 'email': form.cleaned_data['email']})
 
             try:
-                send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, ['bibliomania@patrikaxelsson.one'])
+                send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, ['paxapps.noreply@gmail.com'])
             except BadHeaderError:
                 messages.warning(request, 'An error occured. Please try again')
             

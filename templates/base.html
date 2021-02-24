@@ -72,7 +72,7 @@
                   </li>
                 <li class="nav-item mr-3">
                 <a class="nav-link" href="{% url 'shopping_bag' %}">
-                  Shopping cart <i class="fas fa-shopping-cart"></i>{% if  item_contents %}<span class="badge badge-pill badge-primary animate__animated animate__pulse">{{item_contents|length}}</span>{% endif %}</a>
+                  Shopping cart <i class="fas fa-shopping-cart"></i>{% if  item_contents %}<span class="badge badge-pill badge-primary animate__animated animate__bounce">{{item_contents|length}}</span>{% endif %}</a>
                 </li>
                 <li class="nav-item mr-3">
                     {% if request.user.is_authenticated %}
