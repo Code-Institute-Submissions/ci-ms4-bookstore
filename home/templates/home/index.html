@@ -2,10 +2,9 @@
 {% load static %}
 
 {% block content %}
-      <div class="jumbotron jumbotron-fluid" id="home-jumbotron-bg">
+      <div class="jumbotron jumbotron-fluid animate__animated animate__fadeInLeftBig" id="home-jumbotron-bg">
         <div class="container">
-        <h1 class="display-4">Bibliomania, the one-stop shop for fiction you love!</h1> 
-          
+        <h1 class="display-4">Bibliomania, the one-stop shop for fiction you love!</h1>           
           <p class="lead">"The saddest aspect of life right now is that science fiction gathers knowledge faster than society gathers wisdom." - Isaac Asimov</p>
           <hr class="my-4">
           <a class="btn btn-outline-light btn-lg" href="{% url 'products' %}" role="button">See our full list of books for sale!</a>
@@ -18,13 +17,13 @@
     <h1 class="text-center">Currently featured books!</h1>
 </div>
 <br>
-<div class="row">
-  <div class="container">
+
+<div class="container">
    <!-- Uses the jQuery owl-carousel plugin instead of the bootstrap carousel, for better responsiveness. -->
     <div class="owl-carousel owl-theme">
              {% for product in feature %}
              <div class="item">
-              <img class="d-block" src="{{product.cover.url}}" alt="{{product.title}}">
+              <img class="img-fluid" src="{{product.cover.url}}" alt="{{product.title}}">
               <h5><a href="{% url 'product_info' product.id %}">{{product.title}}</a></h5>
             </div>
              {% endfor %}                       
@@ -38,20 +37,16 @@
     <br>
     <p>For older news, <a href="{% url 'archive' %}">click this link</a> to visit our archive!</p>
   </div>
-</div>
-
-
 <div class="card-deck">
   {% for item in news %}
     <div class="card" style="width: 15rem;">
       <div class="card-body">
-        <div class="card-title">{{item.title}}</div>
-        <h6 class="card-subtitle mb-2 text-muted">By: {{item.author}}</h6>
+        <div class="card-title"><h3>{{item.title}}</h3></div>
+        <h5 class="card-subtitle mb-2 text-muted">By: {{item.author}}</h5>
         <p class="card-text">{{item.post}}</p>
       </div>
         <div class="card-footer">
           <small class="text-muted">Posted: {{item.time}}</small>
-        </div>
         {% if request.user.is_superuser %}
         <hr>
         <div class="admin-dropdown">
@@ -63,7 +58,8 @@
             <a data-toggle="modal" href="#edit-post-{{item.pk}}">
               <i class="fas fa-edit"></i> Edit post
             </a>
-          </div>        
+          </div>   
+        </div>     
         {% endif %}
       </div>
       </div>
@@ -96,6 +92,7 @@
       {% endif %}
       {% endfor %}
     </div>
+    </div>
   </div>
 </div>
 {% endblock %}
@@ -105,7 +102,6 @@
 <script type="text/javascript">
     $('.toast').toast('show');
     $('.owl-carousel').owlCarousel({
-        autoHeight: true,
         loop:true,
         margin:10,
         responsiveClass:true,

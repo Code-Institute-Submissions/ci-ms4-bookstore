@@ -6,9 +6,9 @@
 
 {% if item_contents %}
 <hr>
-<div class="table-responsive">
+<div class="table table-responsive">
     <h6 class="text-center">Bag items total: {{ product_counter}}</h6>
-    <table class="table table-sm table-borderless">
+    <table class="table table-borderless">
         <thead>
           <tr>
             <th scope="col"><h4 class="text-left">Cover</h4></th>            
@@ -20,9 +20,8 @@
         </thead>
         <tbody>
          {% for item in item_contents %}
-          <tr>            
-            <th scope="row">
-            <img src="{{ item.product.cover.url }}" class="img-thumbnail rounded text-left"></th>
+            <tr>
+            <td><img src="{{ item.product.cover.url }}" class="h-100"></th></td>
             <td><a href="{% url 'product_info' product_id=item.product.id%}"><h6 class="text-center"> {{ item.product.title }}</h6></a></td>
             <td><h6 class="text-center"><input type="number" value="{{ item.quantity }}" min="0" max="30" class="form-control form-control-sm"></h6></td>
             <form method="POST" action="{% url 'remove_from_bag' product_id=item.product.id %}">
@@ -30,8 +29,8 @@
             <td><h6 class="text-center"><button class="btn btn-link" type="submit"><i class="fas fa-minus"></i></button></h6></td>
             <input type="hidden" name="redirect_url"  value="{{ request.path }}">
           </form>
-            <td><h6 class="text-center">${{ item.product.price }}</h6></td>            
-          </tr>
+            <td><h6 class="text-center">${{ item.product.price }}</h6></td>     
+            </tr>       
          {% endfor %}
         </tbody>
       </table>

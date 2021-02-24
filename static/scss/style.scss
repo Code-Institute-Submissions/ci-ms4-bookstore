@@ -1,15 +1,16 @@
-@import './imports';
-@import url('https://fonts.googleapis.com/css2?family=Benne&family=IM+Fell+DW+Pica+SC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Roboto:wght@300&display=swap');
 
 /* Compile into a style.css to import into the base template, to include all imports such as bootstrap, owlcarousel etc 
 together with the customization. */
 
-$main-txt: 'Benne', serif;
-$logo-txt: 'IM Fell DW Pica SC', serif;
-$primary: #640180;
+$main-txt: 'Roboto', sans-serif;
+$logo-txt: 'Dancing Script', cursive;
 $secondary: #800101;
 
-
+$theme-colors: (
+  "primary": #640180,
+  "danger": #ff4136
+);
 
 html {
     font-size: 62.5%;
@@ -17,15 +18,26 @@ html {
 
 body {
     font-family: $main-txt;
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     a {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
     }
     p {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
+    }
+    button{
+        font-size: 1.5rem;
     }
 }
 
+#footer{
+    p{
+    font-size: 1rem;
+    }
+}
+.jumbotron{
+    font-family: $logo-txt;
+}
 #home-jumbotron-bg{
     margin-top: 60px;
     color: #ffffff;
@@ -118,7 +130,7 @@ footer{
     .admin-dropdown:hover {
 
         .admin-dropdownContent {
-            
+
         
       }
 
@@ -134,6 +146,11 @@ footer{
 
 }
 
+.img-thumbnail{
+    height: 300px;
+    width: auto;
+}
+
 .message-container {
     position: fixed;
     top: 72px;
@@ -142,8 +159,29 @@ footer{
     font-size: 1.30rem;
 }
 
-/* Fixed height, for consistency*/
-.img-thumbnail {
-    height: 200px;
-    width: auto;
+
+.owl-carousel .owl-item{
+    height:285px;
+    width:auto;
+    .item img {
+        display:block;
+        width:100%;
+        height:100%;
+        margin:0
+      }
 }
+
+img { 
+    tr{
+    display: block; 
+    height: 100%; 
+    width: auto; 
+    }
+}
+td {
+    font-size: 1.5rem;
+}
+
+/* We import at the end of the SCSS file, to override the themed-colours of bootstrap. */
+
+@import './imports';

@@ -17,6 +17,10 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
         <!-- SCSS compiled import, includes compiled versions of all plugins CSS. -->
         <link rel="stylesheet" href="{% static 'scss/style.css' %}">
+        <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+      />
     {% endblock %}
 
     {% block corejs %}    
@@ -29,6 +33,7 @@
 
     {% block extra_css %}
     <!-- CSS for plugins-->
+   
     {% endblock %}
     <title>Bibliomania {% if extra_title %} {{extra_title}} {% endif %}</title> <!-- Add custom titles for each view later -->
   </head>
@@ -63,22 +68,22 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item mr-3">
-                    <a class="nav-link" href="{% url 'products' %}"><i class="fas fa-book-open"></i></i> Books</a>
+                    <a class="nav-link" href="{% url 'products' %}">Books <i class="fas fa-book-open"></i></i></a>
                   </li>
                 <li class="nav-item mr-3">
-                <a class="nav-link" href="{% url 'shopping_bag' %}"><i class="fas fa-shopping-cart"></i>{% if  item_contents %}<span class="badge badge-pill badge-primary">{{item_contents|length}}</span>{% endif %}
-                  Shopping cart</a>
+                <a class="nav-link" href="{% url 'shopping_bag' %}">
+                  Shopping cart <i class="fas fa-shopping-cart"></i>{% if  item_contents %}<span class="badge badge-pill badge-primary animate__animated animate__pulse">{{item_contents|length}}</span>{% endif %}</a>
                 </li>
                 <li class="nav-item mr-3">
                     {% if request.user.is_authenticated %}
-                <a class="nav-link" href="{% url 'account_logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                <a class="nav-link" href="{% url 'account_logout' %}"> Logout <i class="fas fa-sign-out-alt"></i></a>
                     {% else %}
-                <a class="nav-link" href="{% url 'account_login' %}"><i class="fas fa-sign-in-alt"></i> Login</a>
+                <a class="nav-link" href="{% url 'account_login' %}"> Login <i class="fas fa-sign-in-alt"></i></a>
                     {% endif %}
                 </li>       
                 {% if request.user.is_authenticated %} 
                 <li class="nav-item mr-3">
-                    <a class="nav-link" href="{% url 'user_profile' %}"><i class="fas fa-id-badge"></i> My Profile</a>
+                    <a class="nav-link" href="{% url 'user_profile' %}"> My Profile<i class="fas fa-id-badge"></i></a>
                 </li>
                 {% endif %}
                 {% if request.user.is_superuser %}
@@ -86,9 +91,9 @@
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" id="adminDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-cogs"></i> Staff Toolkit</a>
                   <div class="dropdown-menu" aria-labelledby="adminDropdown">
-                    <a class="dropdown-item" href="{% url 'dashboard' %}"><i class="fas fa-chart-line"></i> Product dashboard</a>
-                    <a class="dropdown-item" href="{% url 'product-list' %}"><i class="fas fa-list"></i> Product list</a>
-                    <a class="dropdown-item" href="#newsPostModal" data-toggle="modal" data-target="#newsPostModal"><i class="fas fa-pen"></i> Add news item</a>
+                    <a class="dropdown-item" href="{% url 'dashboard' %}"> Product dashboard <i class="fas fa-chart-line"></i></a>
+                    <a class="dropdown-item" href="{% url 'product-list' %}"> Product list <i class="fas fa-list"></i></a>
+                    <a class="dropdown-item" href="#newsPostModal" data-toggle="modal" data-target="#newsPostModal"> Add news item <i class="fas fa-pen"></i></a>
                   </div>
                 </li>
                 {% endif %}
