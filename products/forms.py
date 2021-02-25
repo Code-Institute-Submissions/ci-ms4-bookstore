@@ -53,7 +53,6 @@ class ReviewForm(ModelForm):
         fields = ("score", "comment")
         exclude = ("product", "reviewer")
         verbose_name_plural = 'Reviews'
-        widgets = {'score': RadioSelect}
         
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
