@@ -5,11 +5,13 @@ together with the customization. */
 
 $main-txt: 'Roboto', sans-serif;
 $logo-txt: 'Dancing Script', cursive;
+$primary: #1a90ff;
 $secondary: #800101;
+$light: #e6f3ff;
 
 $theme-colors: (
-  "primary": #640180,
-  "danger": #ff4136
+  "primary": #1a90ff,
+  "danger": #ff4136,
 );
 
 html {
@@ -31,12 +33,22 @@ body {
 }
 
 #footer{
-    p{
+    p {
     font-size: 1rem;
+    }
+    a{
+        font-size: 1rem;
     }
 }
 .jumbotron{
     font-family: $logo-txt;
+}
+#profile-bg-img{
+    margin-top: 60px;
+    color: #ffffff;
+    background: url('../img/profile_jumbotron_img.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 #home-jumbotron-bg{
     margin-top: 60px;
@@ -185,3 +197,7 @@ td {
 /* We import at the end of the SCSS file, to override the themed-colours of bootstrap. */
 
 @import './imports';
+
+.btn-primary {
+    @include button-variant($primary, darken($primary, 7.5%), darken($primary, 10%), lighten($primary,5%), lighten($primary, 10%), darken($primary,30%));
+}

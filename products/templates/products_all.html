@@ -37,7 +37,7 @@
 </div>
   <div class="form-row">
       <div class="form-group col-md-6">
-        <label for="filter">Sort by: </label>
+        <label for="filter">Sort results by: </label>
         <select class="custom-select my-1 mr-sm-2" name="filter">        
           <option name="title">
             Title
@@ -68,7 +68,7 @@
         </select>
       </div>      
   </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-outline-primary">Submit</button>
     </div>
   </div>
 </div>  
@@ -92,19 +92,19 @@
               <strong>Genre: </strong>{{product.genre.title}}<br></p>
               <strong>Price: </strong>${{product.price}}<br>
               <br>
-            <a href="{% url 'product_info' product.id  %}" class="btn btn-primary">More Details</a>
+            <a href="{% url 'product_info' product.id  %}" class="btn btn-outline-primary">More Details</a>
             <br>
             <form class="form" method="POST" action="{% url 'add_to_bag' product_id=product.id %}">
               {% csrf_token %}
               <input type="hidden" value="1" name="quantity" min="1">
               <input type="hidden" name="redirect_url"  value="{{ request.path }}">
               <br>
-              <button class="btn btn-primary" type="submit">Add to bag!</button>
+              <button class="btn btn-outline-primary" type="submit">Add to bag!</button>
             </form>
             {% if request.user.is_superuser %} 
             <hr>
             <div class="admin-dropdown">
-              <button class="btn btn-primary "><i class="fas fa-cogs"></i> Admin options</button>
+              <button class="btn btn-outline-primary"><i class="fas fa-cogs"></i> Admin options</button>
               <div class="admin-dropdownContent">
                 <a href="{% url 'edit_product' pk=product.id %}"><i class="fas fa-edit"> Edit product</i></a>  
                 <a href="{% url 'delete_product' product_id=product.id %}"><i class="fas fa-trash-alt"></i> Delete product</a>      
@@ -148,10 +148,9 @@
 </div>
 <br>
 <div class="container-fluid">  
-  <div class="row justify-content-center">  
-    
+  <div class="row justify-content-center">      
     <nav>
-      <ul class="pagination pagination-sm" id="product-paginator">
+      <ul class="pagination pagination-lg" id="product-paginator">
         {% if products.has_previous %}
           <li class="page-item"><a class="page-link" href="?page={{products.previous_page_number}}"><i class="fas fa-backward"></i></a></li>
           {% else %}
@@ -173,8 +172,7 @@
           <li><a href="#" class="page-link disabled button big next"><i class="fas fa-step-forward"></i></a></li>
           {% endif %}
       </ul>
-    </nav>
-    
+    </nav>    
     </div>
   </div>
 </div>

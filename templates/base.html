@@ -68,32 +68,32 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item mr-3">
-                    <a class="nav-link" href="{% url 'products' %}">Books <i class="fas fa-book-open"></i></i></a>
+                    <a class="nav-link" href="{% url 'products' %}">Books <i class="fas fa-book-open ml-2"></i></i></a>
                   </li>
                 <li class="nav-item mr-3">
                 <a class="nav-link" href="{% url 'shopping_bag' %}">
-                  Shopping cart <i class="fas fa-shopping-cart"></i>{% if  item_contents %}<span class="badge badge-pill badge-primary animate__animated animate__bounce">{{item_contents|length}}</span>{% endif %}</a>
+                  Shopping cart <i class="fas fa-shopping-cart ml-2"></i>{% if  item_contents %}<span class="badge badge-pill badge-primary animate__animated animate__bounce">{{item_contents|length}}</span>{% endif %}</a>
                 </li>
                 <li class="nav-item mr-3">
                     {% if request.user.is_authenticated %}
-                <a class="nav-link" href="{% url 'account_logout' %}"> Logout <i class="fas fa-sign-out-alt"></i></a>
+                <a class="nav-link" href="{% url 'account_logout' %}"> Logout <i class="fas fa-sign-out-alt ml-2"></i></a>
                     {% else %}
                     <li class="nav-item mr-3">
-                <a class="nav-link" href="{% url 'account_login' %}"> Login <i class="fas fa-sign-in-alt"></i></a>
+                <a class="nav-link" href="{% url 'account_login' %}"> Login <i class="fas fa-sign-in-alt ml-2"></i></a>
               </li>
               <li class="nav-item mr-3">
-                <a class="nav-link" href="{% url 'account_signup' %}"> Register <i class="fas fa-user-plus"></i></a>
+                <a class="nav-link" href="{% url 'account_signup' %}"> Register <i class="fas fa-user-plus ml-2"></i></a>
                     {% endif %}
                 </li>       
                 {% if request.user.is_authenticated %} 
                 <li class="nav-item mr-3">
-                    <a class="nav-link" href="{% url 'user_profile' %}"> My Profile<i class="fas fa-id-badge"></i></a>
+                    <a class="nav-link" href="{% url 'user_profile' %}"> My Profile<i class="fas fa-id-badge ml-2"></i></a>
                 </li>
                 {% endif %}
                 {% if request.user.is_superuser %}
                 <!-- Admin interface through dropdown-nav -->
                 <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" id="adminDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-cogs"></i> Staff Toolkit</a>
+                  <a class="nav-link dropdown-toggle" id="adminDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Staff Toolkit <i class="fas fa-cogs ml-2"></i></a>
                   <div class="dropdown-menu" aria-labelledby="adminDropdown">
                     <a class="dropdown-item" href="{% url 'dashboard' %}"> Product dashboard <i class="fas fa-chart-line"></i></a>
                     <a class="dropdown-item" href="{% url 'product-list' %}"> Product list <i class="fas fa-list"></i></a>

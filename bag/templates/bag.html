@@ -2,16 +2,15 @@
 {% load static %}
 {% block content %}
 
-<h1>Shopping bag!</h1>
-
 {% if item_contents %}
+<h1>Shopping bag!</h1>
 <hr>
-<div class="table table-responsive">
+<div class="table table-sm table-responsive">
     <h6 class="text-center">Bag items total: {{ product_counter}}</h6>
     <table class="table table-borderless">
         <thead>
           <tr>
-            <th scope="col"><h4 class="text-left">Cover</h4></th>            
+            <th scope="col" class="d-none d-md-table-cell"><h4 class="text-left">Cover</h4></th>            
             <th scope="col"><h4 class="text-center">Title</h4></th>
             <th scope="col"><h4 class="text-center">Quantity</h4></th>
             <th scope="col"><h4 class="text-center">Remove</h4></th>
@@ -21,7 +20,7 @@
         <tbody>
          {% for item in item_contents %}
             <tr>
-            <td><img src="{{ item.product.cover.url }}" class="img-thumbnail"></th></td>
+            <td class="d-none d-sm-table-cell"><img src="{{ item.product.cover.url }}" class="img-thumbnail"></th></td>
             <td><a href="{% url 'product_info' product_id=item.product.id%}"><h6 class="text-center"> {{ item.product.title }}</h6></a></td>
             <td><h6 class="text-center">{{ item.quantity }}</h6></td>
             <form method="POST" action="{% url 'remove_from_bag' product_id=item.product.id %}">
@@ -53,7 +52,9 @@
 <hr>
 {% else %}
 
-<h2>Your bag is currently empty. </h2>
+  <h1>Shopping bag!</h1>
+  <br>
+  <h2>Your bag is currently empty. </h2>
 
 {% endif %}
 

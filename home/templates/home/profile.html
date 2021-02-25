@@ -3,14 +3,19 @@
 {% load static %}
 
 {% block content %}
-<div class="container-fluid">
-<h1 class="text-center">Welcome back, {{user}}</h1>
-</div>
+<div id="profile-bg-img" class="jumbotron animate__animated animate__fadeInRightBig">
+    <h1 class="display-4">Welcome back, {{user}}</h1>
+    <p class="lead">"A single dream is worth a thousand realities" - J.R.R Tolkien</p>
+    <hr class="my-4">
+    <p>Here you can revise the information we've saved about your standard shipping details, as well as track past orders!</p>
+    <p class="lead">
+      <a class="btn btn-primary btn-lg" href="{% url 'products' %}" role="button">Go back to shopping</a>
+    </p>
+  </div>
 <div class="container-fluid">
     <div class="row">
 <div class="col-md-6 col-sm-12">
 <h3 class="text-center">Your profile information: </h3>
-<br>
 {% if form.errors %}
     {% for field in form %}
         {% for error in field.errors %}
@@ -28,7 +33,7 @@
 <form class="form" method="POST">
 {% csrf_token %}
 <hr>
-<h6 class="text-center">Account information: </h6>
+<h3 class="text-center">Account information: </h6>
     <div class="row">
         <div class="col">
             {{user_form.username|as_crispy_field}}
@@ -45,15 +50,12 @@
     </div>
     <div class="row">
         <div class="container">
-        <button type="submit" class="btn btn-primary">Update profile</button>
+        <button type="submit" class="btn btn-outline-primary">Update profile</button>
         </div>
     </div>
     <hr>
-    <h6 class="text-center">Shipping details: </h6>
+    <h4 class="text-center">Shipping details: </h4>
     <div class="row">
-    <div class="col">
-    
-    </div>
     <div class="col">
     {{ form.default_phone_number|as_crispy_field}}
     </div>
@@ -69,14 +71,14 @@
     
     {{ form.default_country|as_crispy_field}}
 
-    <button type="submit" class="btn btn-primary">Update shipping details</button>
+    <button type="submit" class="btn btn-outline-primary">Update shipping details</button>
 </form>
 <hr>
 </div>
 
 <div class="col-md-6 col-sm-12">
-    <h3 class="text-center">Your orders: </h3>
-<br>
+    <h3 class="text-center">Your past orders: </h3>
+<hr>
 {% if orders %}
 
 {% for order in orders %}
@@ -85,7 +87,7 @@
     <div class="card">
       <div class="card-header" id="collapseOrderHeader-{{order.id}}">
         <h2 class="mb-0">
-          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOrder-{{order.id}}" aria-expanded="true" aria-controls="collapseOne">
+          <button class="btn btn-outline-link" type="button" data-toggle="collapse" data-target="#collapseOrder-{{order.id}}" aria-expanded="true" aria-controls="collapseOne">
             Order-ID: {{order}}  ({{ order.date }})
           </button>
         </h2>
