@@ -1,38 +1,49 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-{% if products.has_other_pages %} 
+
+{% if page_obj.has_other_pages %} 
 <div class="container-fluid">  
-    <div class="row justify-content-center">        
+    <div class="row justify-content-center">      
+    <span class="current">
+        <p>
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </p>
+    </span>
+    </div>
+</div>
+<div class="container-fluid">  
+    <div class="row justify-content-center">      
       <nav>
-        <ul class="pagination pagination-sm" id="product-paginator">
-          {% if products.has_previous %}
-            <li class="page-item"><a class="page-link" href="?page={{products.previous_page_number}}"><i class="fas fa-backward"></i></a></li>
+        <ul class="pagination pagination-lg" id="product-paginator">
+          {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{page_obj.previous_page_number}}"><i class="fas fa-backward"></i></a></li>
             {% else %}
             <li><a href="#" class="page-link" class="disabled button big previous"><i class="fas fa-step-backward"></i></a></li>
             {% endif %}
     
-            {% for i in products.paginator.page_range %}
+            {% for i in page_obj.paginator.page_range %}
               {% if products.number == i %}
-            <li class="page-item active"><a class="page-link" href="?page={{product.i}}">{{i}}</a></li>
+            <li class="page-item active"><a class="page-link" href="?page={{page_obj.i}}">{{i}}</a></li>
               {% else%}
             <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
             {% endif %}
             {% endfor %}
           
     
-            {% if products.has_next %}
-            <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}"><i class="fas fa-forward"></i></a></li>
+            {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}"><i class="fas fa-forward"></i></a></li>
             {% else %}
             <li><a href="#" class="page-link disabled button big next"><i class="fas fa-step-forward"></i></a></li>
             {% endif %}
         </ul>
-      </nav>
-      
+      </nav>    
       </div>
     </div>
   </div>
-  {% endif %}
+  <hr>
+</div>
+{% endif %}
 <div class="container">
         <div class="row">
             <div class="text-center">

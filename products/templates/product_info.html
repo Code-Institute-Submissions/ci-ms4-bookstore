@@ -90,43 +90,66 @@
           <h4>Comment by: {{reviews.0.reviewer}}</h4>
           <h5>Comment: {{reviews.0.comment}}</h5>
           <a data-toggle="modal" href="#reviewModal">Click here to view all comments</a>
+          <br>
+          <a data-toggle="modal" href="#addReviewModal">Click here to add your own comments!</a>          
         </div>
-        <!-- Modal for all reviews -->
-        <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                {% for item in reviews %}
-                <hr>
-                <h4>Comment by: {{item.reviewer}}</h4>
-                <h5>Comment: {{item.comment}}</h5>
-                <hr>
-                {% endfor %}
-              
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-              </div>
+      {% else %}
+        <span class="text-center"><p >No reviews with comments exist yet!  Why not <a data-toggle="modal" href="#addReviewModal">click here</a> and add one?</p></span>
+      {% endif%}
+      <!-- Modal for all reviews -->
+      <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">All reviews for {{product.title}}}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              {% for item in reviews %}
+              <hr>
+              <h4>Comment by: {{item.reviewer}}</h4>
+              <h5>Comment: {{item.comment}}</h5>
+              <hr>
+              {% endfor %}            
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
             </div>
           </div>
         </div>
       </div>
-      {% else %}
-        <span><h2 class="text-center">No reviews with comments exist yet!  Why not <a data-toggle="modal" href="#review-modal">click here</a> and add one?</h2></span>
-      {% endif%}
+      </div>
     </div>
   </div>
 </div>
 <div class="row no-gutters">
   <div class="container-fluid">
     <hr class="footer-separator">
+  </div>
+</div>
+<div class="modal fade" id="addReviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <form method="POST">
+      {% csrf_token %}
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Reviewing: {{product.title}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      {{form|crispy}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Submit review</button>
+      </div>
+    </div>
+  </form>
   </div>
 </div>
 {% endblock %}

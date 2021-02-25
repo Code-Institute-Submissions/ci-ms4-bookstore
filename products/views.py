@@ -249,7 +249,7 @@ class ProductListView(ListView, AdminStaffRequiredMixin):
 
     model = Product
     ordering = ['-author']
-    paginate_by = 50
+    paginate_by = 15
 
     def handle_no_permission(self):
         print("Not allowed!")
