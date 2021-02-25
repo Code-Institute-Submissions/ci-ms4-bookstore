@@ -3,7 +3,6 @@
 <!doctype html>
 <html lang="en">
   <head>
-
     {% block meta %}
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <meta charset="utf-8">
@@ -104,6 +103,8 @@
             </ul>
             <form method="GET" class="form-inline d-none d-md-block" action="{% url 'products' %}">
               <input class="form-control mr-sm-2"  name="q" type="text" placeholder="Search for books ..." aria-label="Search">
+              <!-- Defaulting navbar searches to title, for ease of use. -->
+              <input type="hidden" name="filter" value="title">
               <button class="btn btn-outline-dark my-2 my-sm-0" type="submit"><i class="fas fa-search"></i> Search</button>
             </form>
           </div>

@@ -3,7 +3,9 @@
 {% block content %}
 
 {% if item_contents %}
-<h1>Shopping bag!</h1>
+<div class="text-centered">
+<h1>Your shopping bag!</h1>
+</div>
 <hr>
 <div class="table table-sm table-responsive">
     <h6 class="text-center">Bag items total: {{ product_counter}}</h6>
@@ -51,11 +53,13 @@
 <a href="{% url 'checkout' %}" class="btn btn-primary">Go to checkout!</a>
 <hr>
 {% else %}
-
-  <h1>Shopping bag!</h1>
+<div class="container">
+  <div class="text-centered">
+  <h1>Your shopping bag!</h1>
   <br>
   <h2>Your bag is currently empty. </h2>
-
+  </div>
+</div>
 {% endif %}
 
 {% endblock %}
