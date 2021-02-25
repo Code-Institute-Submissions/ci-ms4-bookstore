@@ -6,7 +6,7 @@ together with the customization. */
 $main-txt: 'Roboto', sans-serif;
 $logo-txt: 'Dancing Script', cursive;
 $primary: #1a90ff;
-$secondary: #800101;
+$secondary: #3333cc;
 $light: #e6f3ff;
 
 $theme-colors: (
@@ -44,20 +44,31 @@ body {
     font-family: $logo-txt;
 }
 #profile-bg-img{
-    margin-top: 60px;
+    margin-top: 40px;
     color: #ffffff;
     background: url('../img/profile_jumbotron_img.jpg');
     background-repeat: no-repeat;
     background-size: cover;
 }
 #home-jumbotron-bg{
-    margin-top: 60px;
+    margin-top: 40px;
     color: #ffffff;
     background: url('../img/bookstore-jumbotron.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     padding: 15px;    
 
+}
+#products-jumbotron-bg{
+margin-top: 40px;
+color: #ffffff;
+background: url('../img/products_jumbotron_img.jpg');
+background-repeat: no-repeat;
+background-size: cover;
+
+        form{
+            font-family: $main-txt;
+        }
 }
 
 #home-jumbotron-bg p{

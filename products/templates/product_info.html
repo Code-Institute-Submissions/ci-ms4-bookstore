@@ -26,27 +26,6 @@
   </div>
 </div>
 <br>
-{% if series %}
-        <div class="row no-gutters">
-          <div class="container">
-            <h3 class="text-center">Other books in the same series...</h3>
-          </div>
-        </div>
-        <div class="row no-gutters">
-          <div class="container">
-            <!-- Uses the jQuery owl-carousel plugin instead of the bootstrap carousel, for better responsiveness. -->
-            <div class="owl-carousel owl-theme">
-                      {% for product in series %}
-                      <div class="item">
-                      <img class="img-thumbnail" src="{{product.cover.url}}" alt="{{product.title}}">
-                      <h5><a href="{% url 'product_info' product.id %}">{{product.title}}</a></h5>
-                    </div>
-                      {% endfor %}                       
-              </div>
-            </div>
-        </div>
-        <hr>
-        {% endif %}
 {% if request.user.is_superuser %}
 <hr>
 <div class="row no-gutters">
@@ -54,13 +33,12 @@
     <h3 class="text-center">Administrative tools for product: {{ product.title }} (<a href="{% url 'edit_product' pk=product.id %}"><i class="fas fa-edit"></i></a>  <a href="{% url 'delete_product' product_id=product.id %}"><i class="fas fa-trash-alt"></i></a>)</h3>
   </div>    
 </div>
-{% endif %}
-<hr>
+{% endif %} 
 <div class="container-fluid">
   <div class="row">  
     <div class="col-xs-12 col-sm-6">        
       <div class="product-desc-wrapper">
-        <img class="img-thumbnail rounded float-left" src="{{product.cover.url}}" alt="Cover">  
+        <img class="img-thumbnail m-4 float-left" src="{{product.cover.url}}" alt="Cover">  
         <h4 class="text-center"> Summary: </h4>
         <br>
         <p>{{product.description}}</p>
@@ -125,6 +103,24 @@
     </div>
   </div>
 </div>
+{% if series %}
+<div class="text-center">
+<h3 class="text-center">Other books in the same series...</h3>
+
+<div class="d-flex justify-content-center">
+            <!-- Uses the jQuery owl-carousel plugin instead of the bootstrap carousel, for better responsiveness. -->
+            <div class="owl-carousel owl-theme">
+                      {% for product in series %}
+                      <div class="item text-center">
+                      <img class="img-thumbnail" src="{{product.cover.url}}" alt="{{product.title}}">                      
+                      <a href="{% url 'product_info' product.id %}">{{product.title}}</a>
+                    </div>
+                    {% endfor %}                       
+              </div>
+          </div>
+      </div>        
+        <hr>
+{% endif %}
 <div class="row no-gutters">
   <div class="container-fluid">
     <hr class="footer-separator">
@@ -161,26 +157,21 @@
 
 <script type="text/javascript">
     $('.owl-carousel').owlCarousel({
-        loop:true,
+        loop: false,
         margin:10,
-        responsiveClass:true,
+        responsiveClass: true,
         responsive:{
-            0:{
+            400:{
                 items:1,
                 nav:true
             },
-            4:{
-                items:2,
-                nav:true
-            },
             600:{
-                items:4,
+                items:3,
                 nav:true
             },
             1000:{
-                items: 5,
+                items: 4,
                 nav:true,
-                loop:true
             }
         }
     });
