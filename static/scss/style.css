@@ -82,11 +82,7 @@ footer p {
 }
 
 /* Various styles for admin-interface dropdowns. */
-.admin-dropdown {
-  position: relative;
-  display: inline-block;
-}
-.admin-dropdown .admin-dropdownContent {
+.admin-dropdownContent {
   display: none;
   position: absolute;
   background-color: #f9f9f9;
@@ -94,35 +90,19 @@ footer p {
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
-.admin-dropdown .admin-dropdownContent a {
+.admin-dropdownContent a {
   color: black;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
 }
-.admin-dropdown .admin-dropdownContent:hover {
+.admin-dropdownContent a:hover {
   background-color: #f1f1f1;
 }
-.admin-dropdown:hover .admin-dropdownContent {
-  display: block;
+.admin-dropdownContent .admin-dropdown:hover {
+  background-color: #800101;
 }
-.admin-dropdown .admin-dropdownContent {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-}
-.admin-dropdown .admin-dropdownContent a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-.admin-dropdown .admin-dropdownContent a:hover {
-  background-color: #f1f1f1;
-}
+
 .navbar .navbar-brand {
   font-family: "Dancing Script", cursive;
   font-size: 2rem;

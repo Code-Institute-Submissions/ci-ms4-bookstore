@@ -75,6 +75,7 @@
 </form>
 </div>
   <hr>
+  {% if products %} 
   <div class="row no-gutters">  
         {% for product in products %}
       <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3  d-flex justify-content-center">
@@ -155,17 +156,14 @@
           <li class="page-item"><a class="page-link" href="?page={{products.previous_page_number}}"><i class="fas fa-backward"></i></a></li>
           {% else %}
           <li><a href="#" class="page-link" class="disabled button big previous"><i class="fas fa-step-backward"></i></a></li>
-          {% endif %}
-  
+          {% endif %}  
           {% for i in products.paginator.page_range %}
             {% if products.number == i %}
           <li class="page-item active"><a class="page-link" href="?page={{product.i}}">{{i}}</a></li>
             {% else%}
           <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
           {% endif %}
-          {% endfor %}
-        
-  
+          {% endfor %}       
           {% if products.has_next %}
           <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}"><i class="fas fa-forward"></i></a></li>
           {% else %}
@@ -178,6 +176,13 @@
 </div>
 {% endif %}
 <hr>
+{% else %}
+<div class="container">
+  <div class="text-centered">
+    <h2>We're sorry, but we didn't find any products from our library in your search! Please try another search term.</h2>
+  </div>
+</div>
+{% endif %}
 {% endblock %}
 
 {% block extra_js %}
