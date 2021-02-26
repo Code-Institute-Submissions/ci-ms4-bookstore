@@ -4,14 +4,15 @@
     let dataSetUpvote = []
     let dataSetDownvote = []
     let dataSetPrice = []
-
+    
 
 $(document).ready(() => {
     let ctx = document.getElementById("dashboardChart")
-    let PRODUCTS_URL = '/rest-api/products/'
-    let ORDERS_URL = '/rest-api/orders/'   
-    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    let PRODUCTS_URL = '/rest-api/products/'   
+    let previous = ''
+    let next = ''
 
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
     // Checkbox handler for all checkboxes involved in the chart-filters
 
@@ -33,11 +34,6 @@ $(document).ready(() => {
 
     const product_request = new Request(
         PRODUCTS_URL,
-        {headers: {'X-CSRFToken': csrftoken}}
-    );
-
-    const order_request = new Request(
-        ORDERS_URL,
         {headers: {'X-CSRFToken': csrftoken}}
     );
 
@@ -147,25 +143,5 @@ $(document).ready(() => {
         
         
     });
-
-
-    // Order time-axis chart cut for time, just kept it for after assessment so I can pick up the work after.
-    $('#orderAJAX').click(() =>{
-        fetch(order_request, {
-            method: 'GET',
-            mode: 'same-origin'})
-            .then(
-            response => response.json())
-            .then(data =>  {   
-                let dateResults = data.results
-
-                dateResults.forEach(result => {
-                    let date = moment(result.date)
-                    console.log(date)
-                    
-                });
-            });
-    });
-
 
 });
