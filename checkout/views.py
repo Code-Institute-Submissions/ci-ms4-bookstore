@@ -154,7 +154,8 @@ def checkout_success(request, order_id):
             user_profile_form = ProfileForm(profile_data, instance=profile)
             if user_profile_form.is_valid():
                 user_profile_form.save()
-        
+                
+    del request.session['bag']     
     context = {
         "order": order_id,
         "order_items":order_items,

@@ -1,6 +1,9 @@
 # Bibliomania - A Django Ecommerce Project
+(Image of the admin-dashboard)
+![Admin interface](static/img/README/admin-dashboard.png) 
+(Image of the main page, at standard iPad resolution)
+![Main page](static/img/README/ipad-main-page.png)
 
-![Admin interface](static/img/README/admin-dashboard.png) ![Main page](static/img/README/ipad-main-page.png)
 Bibliomania is a project written in Python Django, jQuery JavaScript, CSS preprocessed with SASS and plugs into the Stripe API for handling payment options. It includes libraries such as Bootstrap, Charts.JS to provide a frontend, while plugging into a PostresSQL database and integrating django-allauth and django-restAPI for REST API.
 
 The project is intended as a work-sample of how to write a scalable full-stack web-app for ecommerce services. In this case, I elected to make it a fantasy and science fiction bookstore, both for personal interest and because the tendency to produce books in that field as series provided a more interesting way to learn more about interrelated models in the database.
@@ -18,7 +21,7 @@ The project is intended as a work-sample of how to write a scalable full-stack w
 1)	As a returning visitor, I want easy-access to the content that matters to me. If I am browsing a book in a series, I want information on the series. If I’ve read an authors work and found it compelling, I want to know what else he’s made.
 2)	If I’ve registered on the site for ease, I want my opinion to matter. I want to see other users opinion on books presented and I also want to share my own experiences with a book.
 3)	As a returning visitor, I’d like the ability to see my previous purchases reflect on my profile and perhaps also the content that might interest me.
-o	Staff User Goals
+	Staff User Goals
 1)	As a member of staff, I want to know what the users think about our products. What products are reviewed well, what products are less popular.
 2)	As a member of staff, I want quick access to edit, add and remove the various models, without generalized admin-GUIs such as the Django admin-set.
 3)	As a member of staff, I want easy access to searching the database for users, orders and products so that I can swiftly assist customers who require information
@@ -26,29 +29,33 @@ o	Staff User Goals
 ## Design
 ### Colour Scheme
 
-	I decided to personalize the Bootstrap colours through editing it’s SCSS files and recompiling them as sass. My focus was on a light, accessible colour scheme, brightening the bootstrap "primary" into a light blue and changing the secondary colour from a gray to a darker shade of blue.
+I decided to personalize the Bootstrap colours through editing it’s SCSS files and recompiling them as sass. My focus was on a light, accessible colour scheme, brightening the bootstrap "primary" into a light blue and changing the secondary colour from a gray to a darker shade of blue.
 
 ### Typography	
-	Typographically, I elected a main serif font, for readability and clarity, and a secondary font to be applied more as a flourish for calls-to-action. The light cursive handwriting is used to enhance jumbotrons and logotypes, as it is more eye-drawing.
+
+Typographically, I elected a main serif font, for readability and clarity, and a secondary font to be applied more as a flourish for calls-to-action. The light cursive handwriting is used to enhance jumbotrons and logotypes, as it is more eye-drawing.
 
 ### Imagery
-	Outside of product covers, I decided to use mostly fair-use fantasy images for jumbotron backgrounds on landing pages. The cover images for products are fixed to 250px on all pages, in order to minimize pixilation and uneven carousel displays. A notice is fixed on the product-adding staff page, warning of using smaller images as well as links to free image-resizer browser software. 
+
+Outside of product covers, I decided to use mostly fair-use fantasy images for jumbotron backgrounds on landing pages. The cover images for products are fixed to 250px on all pages, in order to minimize pixilation and uneven carousel displays. A notice is fixed on the product-adding staff page, warning of using smaller images as well as links to free image-resizer browser software. 
 
 ### Model-layer
 
-	![Database relations](static/img/README/model-relations.jpg)
-	The model layer became slightly chaotic towards the end of the project and could have used a rework, but is submitted in this way because of lack of time. The relation-diagram above explains the connection between the models available in the database. Improvements would have included flagging genre and series as many-to-many fields and perhaps adding a new “UserTag” model to bridge the gap between product and genre series, allowing users to tag books, however this must be left to post-submission revisions.
+![Database relations](static/img/README/model-relations.jpg)
+
+The model layer became slightly chaotic towards the end of the project and could have used a rework, but is submitted in this way because of lack of time. The relation-diagram above explains the connection between the models available in the database. Improvements would have included flagging genre and series as many-to-many fields and perhaps adding a new “UserTag” model to bridge the gap between product and genre series, allowing users to tag books, however this must be left to post-submission revisions.
 
 ## Controller-layer
-	Primary concerns in the controller-layer was the inclusion of the Django-rest API library, as I wanted serialized JSON data available to the view-layer. I researched different ways of securing the endpoints, in the end settling for passing CSRF-tokens with requests as a means of accessing this data. Other matters within the controller layer were the inclusion of object-views for staff in paginated form, as well as a paginated product-library to decrease on load-times.
+
+Primary concerns in the controller-layer was the inclusion of the Django-rest API library, as I wanted serialized JSON data available to the view-layer. I researched different ways of securing the endpoints, in the end settling for passing CSRF-tokens with requests as a means of accessing this data. Other matters within the controller layer were the inclusion of object-views for staff in paginated form, as well as a paginated product-library to decrease on load-times.
 
 ## View-layer
-	The view-layer uses primarily Django-templated scripted for generating dynamic HTML, in all views. I’ve intermingled certain plugins, such as animate.css, charts.js and the OwlCarousel, for example using the carousels JavaScript to integrating template for-loops by django.
+
+The view-layer uses primarily Django-templated scripted for generating dynamic HTML, in all views. I’ve intermingled certain plugins, such as animate.css, charts.js and the OwlCarousel, for example using the carousels JavaScript to integrating template for-loops by django.
 
 # Technologies Used
 ## Languages Used
 Python(Django, Django-Rest-Framework), HTML-templating, JavaScript(JQuery), CSS(SASS)
-
 
 # Frameworks, Libraries & Programs Used
 1.	[Bootstrap 4.4.1](https://getbootstrap.com/docs/4.0/getting-started/introduction/): 
@@ -83,13 +90,13 @@ ii.	With customized views for products and orders, as well as related update-vie
 
 These steps were conducted manually by polling a group of friends, colleagues and family who were given admin-login and asked to accomplish certain tasks in the manner that seemed the most natural to them. This feedback was then included to improve functionality and usefulness, such as changes in font-size for readability, changes to navigation to make things clearer, the inclusion of CSS animations to draw attention and make it easier.
 
-•	Further Testing
-a.	Automated tests
+# Further Testing
+## Automated tests
 	Unfortunately, due to my day-job and other factors, I was not able to produce an extensive test-suite as I had hoped. Instead, a selection of tests will be included for each app, but I cannot hope to produce a truly thorough test for all use-cases with the time I have left before deadline.
 
 b.	Manual testing
 
-	Manual testing was a four-stage process.
+## Manual testing was a four-stage process.
 	
 	1) Producing a skeleton project. I tested locally myself while working on the database and controller models.
 	2) Deployment testing - After deploying to Heroku, I manually tested that configuration functioned properly on the Heroku environment. A few bugs were found
@@ -103,13 +110,13 @@ b.	Manual testing
 
 	CSS for style.css was amended after recompiling, to fix invalid styles such as references to "padding auto". Changes to faulty custom styles were changed, but I did not correct flags related to untouched bootstrap variables. Certain HTML elements were classed as invalid by the validator, but they were related to the crispy-field addon, therefore not my own code. Other than that, there were a few trailing tags to remove.
 
-Known Bugs
+# Known Bugs
 
 The current release has a few display-issues on screen-widths of <200px, where the button on the main jumbotron is moved outside the jumbotron and overlaps the carousel. There are however some features I was forced to remove, due to time constraints. 
 
 The original plan for the charts.js inclusion was to also draw charts for order-values and add pagination for the forms. This however had to be removed for time. I will revisit and re-add this in the future, because I consider it an important tool that would be useful for store-owners.
 
-Deployment:
+# Deployment:
 
 The app was deployed to Heroku in the following manner:
 
@@ -142,7 +149,7 @@ DATABASE_URL = URL for connecting to your database.
 
 4) Once you've configured these values correctly, press "Deploy". The deployment process will begin. During this initial deploy, the collect-static command will run to gather together all static files and upload them to S3. PLEASE NOTE: This command is ran every single deployment, which can result in you passing by the free-tier of use for S3 very quickly. It is highly recommended that you add the optional config-variable DISABLE_COLLECTSTATIC = 1 to your Heroku config-variables and when static files change, remove it temporarily.
 
-LOCAL COPY:
+## LOCAL COPY:
 
 I will defer to the wonderful documentation of the process [here](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository#cloning-a-repository-to-github-desktop), though I will also note that Github provides the simple solution of downloading repositories in .zip format.
 
@@ -150,4 +157,19 @@ Once a local folder with the code is downloaded, create and activate a virtual e
 
 Once the download completes, you can start the development server with the command of "py manage.py runserver" (If using windows, again I defer to the documentation for your operating system). 
 
-Credits:
+# Credits:
+
+
+## Code:
+
+Much like Flask, entering the world of Django has provided access to an immense amount of quality plugins. [Django Rest Framework](https://www.django-rest-framework.org/), [Crispy Forms](https://django-crispy-forms.readthedocs.io/en/latest/), [Django-Countries](https://pypi.org/project/django-countries/) are all examples of the wonderful Django eco-system of pluggable apps. When it comes to CSS, I couldn't have produced this without the inclusion of [SASS](https://sass-lang.com/) and the smooth, crisp animations are from [Animate.CSS](https://animate.style/). 
+
+## Media
+
+All cover-images are used under the statute of fair use. Cover images belong to their respective owners, I make no claim to them. Anyone who wishes a cover-image removed may use the site to request it be taken down and I will immediately comply.
+
+## Acknowledgements
+
+I'd like to credit the tutor team and the entire #full-stack-frameworks slack-channel for their helpful suggestions and providing a springboard for discussing solutions to problems.
+
+I'd like to credit my mentor Antonio Rodriguez for keeping me focused on the goal and providing practical suggestions and solutions.
