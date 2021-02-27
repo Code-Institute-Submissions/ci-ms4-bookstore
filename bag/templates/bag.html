@@ -3,10 +3,12 @@
 {% block content %}
 
 {% if item_contents %}
-<div class="text-centered">
-<h1>Your shopping bag!</h1>
+<div class="jumbotron jumbotron-fluid animate__animated animate__slideInDown" id="jumbotron-bg-shoppingbag">
+  <div class="container text-center">
+    <h1 class="display-4">Shopping bag</h1>
+    <p class="lead">Your items are below, press "Checkout" when you're ready to submit your order!</p>
+  </div>
 </div>
-<hr>
 <div class="table table-sm table-responsive">
     <h6 class="text-center">Bag items total: {{ product_counter}}</h6>
     <table class="table table-borderless">
@@ -53,8 +55,8 @@
 <a href="{% url 'checkout' %}" class="btn btn-primary">Go to checkout!</a>
 <hr>
 {% else %}
-<div class="jumbotron jumbotron-fluid" id="jumbotron-bg-shoppingbag">
-  <div class="container">
+<div class="jumbotron jumbotron-fluid animate__animated animate__slideInDown" id="jumbotron-bg-shoppingbag">
+  <div class="container text-center">
     <h1 class="display-4">Shopping bag</h1>
     <p class="lead">It seems your shopping bag empty! Don't worry, we can help with that. <a href="{% url 'products' %}">click here to see our list of products.</a></p>
   </div>
