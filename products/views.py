@@ -1,4 +1,5 @@
 from products.models import *
+from checkout.models import Order, OrderItem
 from django.urls import reverse_lazy
 from django.core.paginator import Paginator
 from .forms import AuthorForm, GenreForm, ProductForm, ReviewForm, SeriesForm
@@ -252,7 +253,6 @@ class ProductListView(ListView, AdminStaffRequiredMixin):
     paginate_by = 15
 
     def handle_no_permission(self):
-        print("Not allowed!")
         return redirect('home')
 
     def get_context_data(self, **kwargs):
@@ -294,3 +294,26 @@ class DeleteGenreView(DeleteView, AdminStaffRequiredMixin):
 class DeleteSeriesView(DeleteView, AdminStaffRequiredMixin):
     model = Series
     success_url = reverse_lazy('product-list')
+
+class OrderListView(ListView, AdminStaffRequiredMixin):
+    model = Order
+    ordering = ['-date']
+    paginate_by = 15
+
+    def handle_no_permission(self):
+        return redirect('home')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+class EditOrderView(UpdateView, AdminStaffRequiredMixin):
+    model = Order
+    success_url = reverse_lazy('product-list')
+    fields = ['email', 'user_id', 'full_name', 'phone_number', 'country', 'postcode', 'town_or_city', 'street_address1', 'street_address2', 'county', 'stripe_pid', 'grand_total']
+    template_name_suffix = '_update_form'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['related_items'] = OrderItem.objects.filter(order=self.object.id)
+        return context

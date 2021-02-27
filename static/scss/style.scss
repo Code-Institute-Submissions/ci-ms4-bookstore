@@ -5,13 +5,13 @@ together with the customization. */
 
 $main-txt: 'Roboto', sans-serif;
 $logo-txt: 'Dancing Script', cursive;
-$primary: #1a90ff;
-$secondary: #3333cc;
-$light: #e6f3ff;
+$primary: #0073e6;
+$secondary: #4da6ff;
+$light: #99ccff;
 
 $theme-colors: (
-  "primary": #1a90ff,
-  "danger": #ff4136,
+  "primary": #0073e6,
+  "danger": #4da6ff,
 );
 
 html {
@@ -57,18 +57,32 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     padding: 15px;    
+    height: 35vh;
 
 }
 #products-jumbotron-bg{
-margin-top: 40px;
-color: #ffffff;
-background: url('../img/products_jumbotron_img.jpg');
-background-repeat: no-repeat;
-background-size: cover;
+        margin-top: 40px;
+        color: #ffffff;
+        background: url('../img/products_jumbotron_img.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
 
         form{
             font-family: $main-txt;
         }
+}
+
+#jumbotron-bg-shoppingbag{
+    margin-top: 40px;
+    color: #ffffff;
+    font-size: 2.5rem;
+    height: 40vh;
+    background: url('../img/shopping_bag_empty_jumbotron.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    a{
+        color: #fff;
+    }
 }
 
 #home-jumbotron-bg p{
@@ -107,25 +121,31 @@ footer{
 
 /* Various styles for admin-interface dropdowns. */
 
-.admin-dropdownContent {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    a {
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-      }
-      a:hover {
-        background-color: #f1f1f1;
-    }
-    .admin-dropdown:hover {
-        background-color: $secondary;
-    }
+.admin-dropdown{
+    position: relative;
+    display: inline-block;
+
+    .admin-dropdownContent {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 140px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        padding: auto;
+        z-index: 1;
+        }
+        a {
+         color: $primary;           
+         padding: 1rem;
+         text-decoration: none;
+         display: block;
+        }
+        &:hover{
+            .admin-dropdownContent{
+                display: block;
+
+            }
+        }
 }
 
 .navbar{

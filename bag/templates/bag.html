@@ -53,11 +53,10 @@
 <a href="{% url 'checkout' %}" class="btn btn-primary">Go to checkout!</a>
 <hr>
 {% else %}
-<div class="container">
-  <div class="text-centered">
-  <h1>Your shopping bag!</h1>
-  <br>
-  <h2>Your bag is currently empty. </h2>
+<div class="jumbotron jumbotron-fluid" id="jumbotron-bg-shoppingbag">
+  <div class="container">
+    <h1 class="display-4">Shopping bag</h1>
+    <p class="lead">It seems your shopping bag empty! Don't worry, we can help with that. <a href="{% url 'products' %}">click here to see our list of products.</a></p>
   </div>
 </div>
 {% endif %}

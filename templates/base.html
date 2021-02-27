@@ -96,9 +96,10 @@
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" id="adminDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Staff Toolkit <i class="fas fa-cogs ml-2"></i></a>
                   <div class="dropdown-menu" aria-labelledby="adminDropdown">
-                    <a class="dropdown-item" href="{% url 'dashboard' %}"> Product dashboard <i class="fas fa-chart-line"></i></a>
-                    <a class="dropdown-item" href="{% url 'product-list' %}"> Product list <i class="fas fa-list"></i></a>
-                    <a class="dropdown-item" href="#newsPostModal" data-toggle="modal" data-target="#newsPostModal"> Add news item <i class="fas fa-pen"></i></a>
+                    <a class="dropdown-item" href="#newsPostModal" data-toggle="modal" data-target="#newsPostModal"> Add news <i class="fas fa-pen float-right"></i></a>
+                    <a class="dropdown-item" href="{% url 'dashboard' %}">Dashboard <i class="fas fa-chart-line float-right"></i></a>
+                    <a class="dropdown-item" href="{% url 'product-list' %}"> Product list <i class="fas fa-list float-right"></i></a>
+                    <a class="dropdown-item" href="{% url 'order-list' %}"> Order list <i class="fas fa-truck-loading float-right"></i></a>                    
                   </div>
                 </li>
                 {% endif %}

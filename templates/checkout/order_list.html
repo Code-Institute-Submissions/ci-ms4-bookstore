@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+{% if page_obj.has_other_pages %} 
+<div class="container-fluid">  
+    <div class="row justify-content-center">      
+    <span class="current">
+        <p>
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </p>
+    </span>
+    </div>
+</div>
+<div class="container-fluid">  
+    <div class="row justify-content-center">      
+      <nav>
+        <ul class="pagination pagination-lg" id="product-paginator">
+          {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{page_obj.previous_page_number}}"><i class="fas fa-backward"></i></a></li>
+            {% else %}
+            <li><a href="#" class="page-link" class="disabled button big previous"><i class="fas fa-step-backward"></i></a></li>
+            {% endif %}
+    
+            {% for i in page_obj.paginator.page_range %}
+              {% if products.number == i %}
+            <li class="page-item active"><a class="page-link" href="?page={{page_obj.i}}">{{i}}</a></li>
+              {% else%}
+            <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+            {% endif %}
+            {% endfor %}
+          
+    
+            {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}"><i class="fas fa-forward"></i></a></li>
+            {% else %}
+            <li><a href="#" class="page-link disabled button big next"><i class="fas fa-step-forward"></i></a></li>
+            {% endif %}
+        </ul>
+      </nav>    
+      </div>
+    </div>
+  </div>
+  <hr>
+</div>
+{% endif %}
+<div class="container">
+        <div class="row">
+            <div class="text-center">
+            <h1>Orders</h1>
+            <br>
+            <p>Please use this interface to interact with orders, if you need a reference. If you need to take a deeper look into the database, the Django admin-interface is available at <a href="/admin">this</a> link and access is granted to all staff-members.</p>
+
+        </div>
+            <table class="table table-hover" id="sortableTable">
+                <thead>
+                    <th>
+                       UUID <i class="fas fa-sort"></i>
+                    </th>
+                    <th>
+                       Email  <i class="fas fa-sort"></i>
+                    </th>
+                    <th>
+                        Date <i class="fas fa-sort"></i>
+                    </th>
+                    <th>
+                        Grand Total <i class="fas fa-sort"></i>
+                    </th>
+                    <th>
+                        User <i class="fas fa-sort"></i>         
+                    </th>
+                    <th class="no-sort">
+                        Edit
+                    </th>
+                </thead>
+                {% for order in object_list %}
+                <tr>
+                    <td>
+                        <a href="{% url 'edit_order' order.id  %}">{{order.order_number}}</a>
+                    </td>
+                    <td>
+                        <span>{{ order.email }} <i class="fas fa-envelope float-right"></i></span>
+                    </td>
+                    <td>
+                        <span>{{order.date}} <i class="fas fa-calendar-alt float-right"></i></span>
+                    </td>
+                    <td>
+                        ${{order.grand_total}}
+                    </td>
+                    <td>
+                        {{order.user_id }}
+                    </td>
+                    <td>
+                        <a href="{% url 'edit_order' order.id  %}"><i class="fas fa-edit"></i></a>
+                    </td>
+                </tr>
+                {% empty %}
+                {% endfor %}
+            </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/plugins/jquery.tablesort.min.js' %}"></script>
+<script>
+    $('#sortableTable').tablesort();
+</script>
+{% endblock %}
