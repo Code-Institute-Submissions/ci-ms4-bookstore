@@ -14,19 +14,31 @@ The project is intended as a work-sample of how to write a scalable full-stack w
 
 ### First Time Visitor Goals
 1)	As a first-time visitor, I want intuitive navigation and clear presentation of content
+
 2)	As a first-time visitor, I want an easy shopping process where I can complete a purchase in a secure and easy flow
+
 3)	As a first-time visitor, I want to be presented with the content I’m interested in as soon as I open the page
 
 ### Returning Visitor Goals
 1)	As a returning visitor, I want easy-access to the content that matters to me. If I am browsing a book in a series, I want information on the series. If I’ve read an authors work and found it compelling, I want to know what else he’s made.
+
 2)	If I’ve registered on the site for ease, I want my opinion to matter. I want to see other users opinion on books presented and I also want to share my own experiences with a book.
+
 3)	As a returning visitor, I’d like the ability to see my previous purchases reflect on my profile and perhaps also the content that might interest me.
+
 	Staff User Goals
+
 1)	As a member of staff, I want to know what the users think about our products. What products are reviewed well, what products are less popular.
+
 2)	As a member of staff, I want quick access to edit, add and remove the various models, without generalized admin-GUIs such as the Django admin-set.
+
 3)	As a member of staff, I want easy access to searching the database for users, orders and products so that I can swiftly assist customers who require information
 
 ## Design
+
+## Wireframes
+A PDF of  the project wireframes can be found [here](static/img/README/Code-Institute-Milestone-4-Bibliomania.pdf)
+
 ### Colour Scheme
 
 I decided to personalize the Bootstrap colours through editing it’s SCSS files and recompiling them as sass. My focus was on a light, accessible colour scheme, brightening the bootstrap "primary" into a light blue and changing the secondary colour from a gray to a darker shade of blue.
@@ -55,9 +67,11 @@ The view-layer uses primarily Django-templated scripted for generating dynamic H
 
 # Technologies Used
 ## Languages Used
+
 Python(Django, Django-Rest-Framework), HTML-templating, JavaScript(JQuery), CSS(SASS)
 
-# Frameworks, Libraries & Programs Used
+## Frameworks, Libraries & Programs Used
+
 1.	[Bootstrap 4.4.1](https://getbootstrap.com/docs/4.0/getting-started/introduction/): 
 	Bootstrap was used to assist with the responsiveness and styling of the website.
 2.	[SASS/CSS](https://sass-lang.com/)
@@ -75,6 +89,7 @@ Python(Django, Django-Rest-Framework), HTML-templating, JavaScript(JQuery), CSS(
 
 # Testing 
 ## Testing User Stories from User Experience (UX) Section
+
 	First Time Visitor Goals
 i.	Easy navigation through the flow of shopping is possible through unobtrusive reminders with links as well as standard navbar navigation to the shopping bag.
 ii.	As a first-time visitor, I am presented through the jumbotron with an immediate call-to-action to the products page.
@@ -92,11 +107,11 @@ These steps were conducted manually by polling a group of friends, colleagues an
 
 # Further Testing
 ## Automated tests
-	Unfortunately, due to my day-job and other factors, I was not able to produce an extensive test-suite as I had hoped. Instead, a selection of tests will be included for each app, but I cannot hope to produce a truly thorough test for all use-cases with the time I have left before deadline.
+	Unfortunately, due to my day-job and other factors, I was not able to produce an extensive test-suite as I had hoped. I cannot hope to produce a truly thorough test for all use-cases with the time I have left before deadline.
 
-b.	Manual testing
+## Manual testing
 
-## Manual testing was a four-stage process.
+ Manual testing was a four-stage process.
 	
 	1) Producing a skeleton project. I tested locally myself while working on the database and controller models.
 	2) Deployment testing - After deploying to Heroku, I manually tested that configuration functioned properly on the Heroku environment. A few bugs were found
@@ -125,31 +140,39 @@ The app was deployed to Heroku in the following manner:
 3) Set up config variables in Heroku. The following are required fields:
 
 SECRET_KEY = The Django secret key used to generate salt, CSRF values and other vital values. Do not ever let this be seen in your deployed files.
+
 DEVELOPMENT = Development can be any value, but preferably a bool - It is simply used to toggle debug mode on or off on the server. It is not recommended that it is ever used on your live server. Please note: The Development config value does not check for Development to be 'True' - It checks if DEVELOPMENT exists at all! Do not leave 
 it in your config when not actively debugging!
 
 MAIL_SERVER = Your email-providers SMTP server. Varies from providers.
+
 MAIL_PORT = The network-port of the SMTP service, dependant on the protocol and encryption used. Consult your email provider.
+
 MAIL_USERNAME = SMTP username
+
 MAIL_PASSWORD = SMTP password
 
 PORT = Network port you are running the Django app on.
 
 STRIPE_PUBLIC_KEY = Configuration value for Stripe, consult the Stripe manual  [here](https://stripe.com/docs)
+
 STRIPE_SECRET_KEY = Configuration value for Stripe, consult the Stripe manual  [here](https://stripe.com/docs)
+
 STRIPE_WH_SECRET = Configuration value for Stripe, consult the Stripe manual  [here](https://stripe.com/docs)
 
 You will also need to find some form of storage for static files. The current method uses Amazon AWS S3, configured to the following variables.
 
 AWS_ACCESS_KEY_ID = Configuration values for AWS S3, your static file storage. Please consult the documentation [here](https://docs.aws.amazon.com/s3/index.html)
+
 AWS_SECRET_ACCESS_KEY = Configuration values for AWS S3, your static file storage. Please consult the documentation [here](https://docs.aws.amazon.com/s3/index.html)
+
 USE_AWS = Configuration values for AWS S3, your static file storage. Please consult the documentation [here](https://docs.aws.amazon.com/s3/index.html)
 
 DATABASE_URL = URL for connecting to your database.
 
 4) Once you've configured these values correctly, press "Deploy". The deployment process will begin. During this initial deploy, the collect-static command will run to gather together all static files and upload them to S3. PLEASE NOTE: This command is ran every single deployment, which can result in you passing by the free-tier of use for S3 very quickly. It is highly recommended that you add the optional config-variable DISABLE_COLLECTSTATIC = 1 to your Heroku config-variables and when static files change, remove it temporarily.
 
-## LOCAL COPY:
+## INSTALLING A LOCAL COPY:
 
 I will defer to the wonderful documentation of the process [here](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository#cloning-a-repository-to-github-desktop), though I will also note that Github provides the simple solution of downloading repositories in .zip format.
 

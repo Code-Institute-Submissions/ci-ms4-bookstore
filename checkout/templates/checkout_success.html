@@ -1,8 +1,9 @@
 {% extends "base.html" %} {% load static %} 
 {% load crispy_forms_tags %} 
 {% block content %}
-<div class="row">
-  <div class="container-fluid text-center">  
+
+<div class="container-fluid">  
+    <div class="row  text-center">
     <hr>
     <h1>Your order with ID: {{order.order_number}} has been submitted!</h1><br>
     <p>Your order summary is below. A confirmation email will be sent to <strong>{{ order.email }}</strong>.</p>
@@ -12,7 +13,7 @@
 
 <div class="container-fluid">
   <div class="row">
-      <div class="col-md-4 col-xs-12" id="order-summary">
+      <div class="col-md-4 col-sm-12" id="order-summary">
           <h4>Order details: {{order.order_number}}: </h4>
           <hr>
           {% for item in order_items %}
@@ -22,7 +23,7 @@
            <hr>
           {% endfor %}
       </div>
-      <div class="col-md-4 col-xs-12" id="delivery-summary">
+      <div class="col-md-4 col-sm-12" id="delivery-summary">
         <h4>Deliver to: </h4>
         <hr>
         <h5>{{order.full_name}}</h5>
@@ -32,7 +33,7 @@
         <h5>{{order.county}}</h5>
         <hr>
       </div>
-      <div class="col-md-4 col-xs-12" id="billing-summary">
+      <div class="col-md-4 col-sm-12" id="billing-summary">
         <h4>Billing-details: </h4>
         <hr>
         <h5 >Delivery: ${{ delivery }}</h5><br>
