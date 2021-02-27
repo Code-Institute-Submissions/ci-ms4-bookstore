@@ -4,7 +4,6 @@
 {% csrf_token %}
 {% load crispy_forms_tags %}
 <hr>
-
 <div class="container-fluid">
   <div class="text-center">
     <h1>Charts</h1>
@@ -12,7 +11,6 @@
     <p>Use the interface below to visualize data from the store. Check the boxes of data you want to graph, then press the re-draw button. Mousing over bars reveals more details.</p>
   </div>
 </div>  
-</div>
 <br>
 <br>
 <div class="row">
@@ -32,13 +30,13 @@
     <div class="row">
       <div class="btn-group btn-group-toggle" data-toggle="button">
         <label class="btn btn-secondary">
-        <input type="checkbox" id="upvotesCheck" autocomplete="off"> 
+        <input type="checkbox" id="upvotesCheck"> 
         Upvotes</label>
       <label class="btn btn-secondary">
-        <input type="checkbox"id="downvotesCheck" autocomplete="off">
+        <input type="checkbox" id="downvotesCheck">
         Downvotes</label>
         <label class="btn btn-secondary">
-        <input type="checkbox" id="priceCheck" autocomplete="off">
+        <input type="checkbox" id="priceCheck">
          Price</label>
       </div>
     </div>
@@ -89,9 +87,7 @@
         </button>
       </div>
     </div>
-  </div>
 </div>
-
 <!-- Add Product modal -->
 <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModal" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -124,7 +120,7 @@
     <div class="modal-content">
       <form method="POST" action="{% url 'add_author' %}" enctype="multipart/form-data">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add new author</h5>
+        <h5 class="modal-title" id="addAuthorModal">Add new author</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -150,7 +146,7 @@
     <div class="modal-content">
       <form method="POST" action="{% url 'add_genre' %}" enctype="multipart/form-data">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add new genre</h5>
+        <h5 class="modal-title" id="addGenreTitle">Add new genre</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

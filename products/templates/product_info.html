@@ -76,11 +76,11 @@
         <span class="text-center"><p >No reviews with comments exist yet!  Why not <a data-toggle="modal" href="#addReviewModal">click here</a> and add one?</p></span>
       {% endif%}
       <!-- Modal for all reviews -->
-      <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel-{{item.id}}" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">All reviews for {{product.title}}}</h5>
+              <h5 class="modal-title" id="reviewModalLabel-{{item.id}}">All reviews for {{product.title}}}</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -101,7 +101,6 @@
       </div>
       </div>
     </div>
-  </div>
 </div>
 {% if series %}
 <div class="text-center">
@@ -132,7 +131,7 @@
       {% csrf_token %}
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Reviewing: {{product.title}}</h5>
+        <h5 class="modal-title" id="reviewModalLabelTitle-{{product.id}}">Reviewing: {{product.title}}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -155,7 +154,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.js" integrity="sha512-zO8oeHCxetPn1Hd9PdDleg5Tw1bAaP0YmNvPY8CwcRyUk7d7/+nyElmFrB6f7vg4f7Fv4sui1mcep8RIEShczg==" crossorigin="anonymous"></script>
 
-<script type="text/javascript">
+<script>
     $('.owl-carousel').owlCarousel({
         loop: false,
         margin:10,
@@ -179,7 +178,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.js" integrity="sha512-zO8oeHCxetPn1Hd9PdDleg5Tw1bAaP0YmNvPY8CwcRyUk7d7/+nyElmFrB6f7vg4f7Fv4sui1mcep8RIEShczg==" crossorigin="anonymous">
 </script>
-<script type="text/javascript" src="{% static 'js/plugins/moment.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/product_review.js' %}"></script>
+<script src="{% static 'js/plugins/moment.js' %}"></script>
+<script src="{% static 'js/product_review.js' %}"></script>
 
 {% endblock %}

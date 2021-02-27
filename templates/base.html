@@ -1,5 +1,4 @@
 {% load static %}
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -8,7 +7,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     {% endblock %}
-
+    <title>Bibliomania {% if extra_title %} {{extra_title}} {% endif %}</title>
     {% block extra_meta %}
     {% endblock %}
     {% block corecss %}
@@ -34,7 +33,6 @@
     <!-- CSS for plugins-->
    
     {% endblock %}
-    <title>Bibliomania {% if extra_title %} {{extra_title}} {% endif %}</title> <!-- Add custom titles for each view later -->
   </head>
   <body>
 
@@ -67,7 +65,7 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item mr-3">
-                    <a class="nav-link" href="{% url 'products' %}">Books <i class="fas fa-book-open ml-2"></i></i></a>
+                    <a class="nav-link" href="{% url 'products' %}">Books <i class="fas fa-book-open ml-2"></i></a>
                   </li>
                   {% if item_contents %}
                   <li class="nav-item mr-3">
@@ -140,7 +138,7 @@
     {% block postloadjs %}
     <!--  Activates the jQuery Owl-Carousel plugin, documentation available: https://owlcarousel2.github.io/OwlCarousel2/docs/started-welcome.html -->
     <script src="{% static 'js/plugins/owl.carousel.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
     {% endblock %}
 
     {% block extra_js %}

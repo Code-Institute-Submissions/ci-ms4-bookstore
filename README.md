@@ -96,5 +96,9 @@ b.	Manual testing
 	To my great fortune, I am good friends with a professional QA tester, who with gleeful abandoned tried multiple ways of breaking the models, controller and perform some XSS insertions on the app and I took his feedback on required security and changes to heart. This is the reason the database may have certain string-fields containing JavaScript or HTML entries.
 	4) Code-review: After my last mentor-meeting where we concluded all functionality required was present, I submitted the project for code-review in Slack. Some bugs were located: A problem was discovered with the fullscreen navbar, where it did not pass a required field for the handler. A hidden input was implemented, which used the same fallback as the filter on the product page. The admin dropdown had some minor issues after recompiling the SCSS, which was fixed. 
 
+	Before submission, code was validated using the [W3C CSS validator](https://jigsaw.w3.org/css-validator/), the [JS Hint Validator](https://jshint.com/) and the W3C HTML validator. Some errors were found in dashboard_charts.js and product_review.js. Warnings of unused variables were left unchecked, because the flag was falsely raised because of using the scoped "lets" variable declaration in an effort to modernize the syntax of the code to ES6 standards. Errors in syntax were corrected, except a second false flag that occured on line 33 of dashboard_charts.js - The >> operator is used to shift the operation into a valid int for RGBA values, switching to a single > operator causes all RGBA values to become faulty.
+
+	CSS for style.css was amended after recompiling, to fix invalid styles such as references to "padding auto". Changes to faulty custom styles were changed, but I did not correct flags related to untouched bootstrap variables.
+
 Known Bugs
 

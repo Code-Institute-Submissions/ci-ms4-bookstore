@@ -56,9 +56,8 @@ body {
     background: url('../img/bookstore-jumbotron.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    padding: 15px;    
-    height: 35vh;
-
+    padding: 5px;    
+    height: 40vh;
 }
 #products-jumbotron-bg{
         margin-top: 40px;
@@ -95,6 +94,7 @@ body {
 }
 
 footer{
+    z-index: 99999;
     margin-top: 5rem;
     font-size: 1rem;
     left: 0;
@@ -103,7 +103,7 @@ footer{
     width: 100%;
     position: fixed;
     p{
-        padding: 1.5rem;
+        padding: 0.75rem;
     }
 }
 
@@ -131,7 +131,7 @@ footer{
         background-color: #f9f9f9;
         min-width: 140px;
         box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        padding: auto;
+        padding: 0.75rem;
         z-index: 1;
         }
         a {

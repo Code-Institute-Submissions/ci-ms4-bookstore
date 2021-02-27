@@ -13,7 +13,6 @@
     <br>
     <p class="text-center font-italic">Please read through the summary below, fill in your delivery details and a valid credit or debit card. Our secure checkout system uses Stripe payment. If you run into problems, please click the envelope (<a href="#" data-toggle="modal" data-target="#support-modal"><i class="fas fa-envelope-open-text"></i></a>) to send a message to our support staff!</p>
     <hr />
-
     <!-- Support contact form. -->
     <div class="modal fade" id="support-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
@@ -36,8 +35,6 @@
         </div>
       </div>
     </div>
-  </div>
-</div>
 <!-- Summary based on the bag-app bag.html -->
 <!-- A conditional that is highly unlikely to ever trigger, but this handler is just in case as we do not want anyone to try to checkout with an empty bag. -->
 {% if item_contents %}
@@ -51,22 +48,22 @@
       <table class="table table-sm table-borderless">
         <thead>
           <tr>
-            <th scope="col"><h4 class="text-left">Cover</h4></th>
-            <th scope="col"><h4 class="text-center">Title</h4></th>
-            <th scope="col"><h4 class="text-center">Quantity</h4></th>
-            <th scope="col"><h4 class="text-center">Remove</h4></th>
-            <th scope="col"><h4 class="text-center">Price</h4></th>
+            <th scope="col" class="d-none d-md-table-cell text-left">Cover</th>
+            <th scope="col" class="text-center">Title</th>
+            <th scope="col" class="text-center">>Quantity</th>
+            <th scope="col" class="text-center">Remove</th>
+            <th scope="col" class="text-center">Price</th>
           </tr>
         </thead>
         <tbody>
           {% for item in item_contents %}
           <tr>
-            <th scope="row">
+            <td class="d-none d-sm-table-cell text-left">
               <img
                 src="{{ item.product.cover.url }}"
                 class="img-thumbnail img-fluid rounded text-left"
               />
-            </th>
+            </td>
             <td>
               <a href="{% url 'product_info' product_id=item.product.id%}"
                 ><h6 class="text-center">{{ item.product.title }}</h6></a
