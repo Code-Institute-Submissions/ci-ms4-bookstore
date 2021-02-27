@@ -20,7 +20,7 @@ $(document).ready(() => {
         let UPVOTES = data.upvote;
         let DOWNVOTES = data.downvote;
 
-  let ctx = document.getElementById("reviewChart")
+  let ctx = document.getElementById("reviewChart");
   let reviewChart = new Chart(ctx, {
     type: 'pie',
     data: {
@@ -42,6 +42,6 @@ $(document).ready(() => {
       cutoutPercentage: 25
   }
   });
-  reviewChart.update()
+  reviewChart.update();
     });
 });

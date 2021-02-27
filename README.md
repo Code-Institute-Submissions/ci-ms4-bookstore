@@ -82,7 +82,7 @@ These steps were conducted manually by polling a group of friends, colleagues an
 
 •	Further Testing
 a.	Automated tests
-	Unfortunately, due to my day-job and other factors, I was not able to produce an extensive test-suite as I had hoped. Instead, a selection of tests will be included for each app, but I cannot hope to produce a truly thorough test for all use-cases.
+	Unfortunately, due to my day-job and other factors, I was not able to produce an extensive test-suite as I had hoped. Instead, a selection of tests will be included for each app, but I cannot hope to produce a truly thorough test for all use-cases with the time I have left before deadline.
 
 b.	Manual testing
 
@@ -92,7 +92,9 @@ b.	Manual testing
 	2) Deployment testing - After deploying to Heroku, I manually tested that configuration functioned properly on the Heroku environment. A few bugs were found
 	during implementing webhooks, throwing error 500 which did not correctly log in Heroku's server-log - Amusingly, I instead found in my Stripe payment log that the failed webhook resulted in the entire 2700line debug HTML-page to Stripe as an error message! Once I found that, I could finish troubleshooting and get my webhooks up and running. During this period, I also elected to change my hosting-provider where I had previous ran the projects email and had to migrate to a new SMTP server and account.
 	3) This is where I involved friends, colleagues and family and set them loose. I would give each tester instructions like "Change this books cover" or "Save this new book" or "Complete a purchase using this credit card code" - I was mostly interested in their UX experience as they were of a wide-variety of tech-experience and ages, so I could get a better grip on how the users interacted with the page. Multiple display bugs were located with the responsiveness of the cover-images, due to the different sizes of source files. In order to provide consistency in all views, I applied a fixed height to the img-thumbnail class. In multiple views, where products are presented in table format, I elected to hide the display-field on smaller screens to opt for a better UX with information-presentation in mind.
-	4) Code-review: After my last mentor-meeting where we concluded all functionality required was present, I submitted the project for code-review in Slack. Some bugs were 
+
+	To my great fortune, I am good friends with a professional QA tester, who with gleeful abandoned tried multiple ways of breaking the models, controller and perform some XSS insertions on the app and I took his feedback on required security and changes to heart. This is the reason the database may have certain string-fields containing JavaScript or HTML entries.
+	4) Code-review: After my last mentor-meeting where we concluded all functionality required was present, I submitted the project for code-review in Slack. Some bugs were located: A problem was discovered with the fullscreen navbar, where it did not pass a required field for the handler. A hidden input was implemented, which used the same fallback as the filter on the product page. The admin dropdown had some minor issues after recompiling the SCSS, which was fixed. 
 
 Known Bugs
 

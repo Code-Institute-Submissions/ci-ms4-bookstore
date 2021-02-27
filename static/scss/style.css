@@ -136,8 +136,13 @@ footer p {
 }
 
 .img-thumbnail {
-  height: 300px !important;
+  max-height: 280px !important;
   width: auto !important;
+}
+
+/* Fixed height on owl-carousel wrappers */
+.item {
+  height: 300px !important;
 }
 
 .message-container {

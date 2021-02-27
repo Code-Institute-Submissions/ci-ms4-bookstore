@@ -1,32 +1,34 @@
     // Globally scoping these variables on initialization as empty arrays.
-
-    let labels = []
-    let dataSetUpvote = []
-    let dataSetDownvote = []
-    let dataSetPrice = []
+    $this = $(this);
+    let labels = [];
+    let dataSetUpvote = [];
+    let dataSetDownvote = [];
+    let dataSetPrice = [];
     
 
 $(document).ready(() => {
-    let ctx = document.getElementById("dashboardChart")
-    let PRODUCTS_URL = '/rest-api/products/'   
-    let previous = ''
-    let next = ''
+    let ctx = document.getElementById("dashboardChart");
+    let PRODUCTS_URL = '/rest-api/products/';
+    
+    // Currently unused and commented out as I plan to return to the project post-submission and enhance pagination of the script.
+    // let previous = '';
+    // let next = '';
 
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
     // Checkbox handler for all checkboxes involved in the chart-filters
 
     const checkboxHandler = () => {
-        $this = $(this)
+        
         $this.attr("checked", !$this.attr("checked"));    
     };
 
     $(":checkbox").change(() => {
-        checkboxHandler()
+        checkboxHandler();
     });
 
 
-    // Generates random rgba colors for the chart 
+    // Generates random rgba colors for the chart. Flags as invalid during validation for using the >> operator, however ">" would produce invalid RGBA values.
 
     const colRandom = () => Math.random() * 256 >> 0;
 
@@ -47,13 +49,13 @@ $(document).ready(() => {
         response => response.json())
         .then(data =>  {   
         
-        let fetchDataResult = data.results
+        let fetchDataResult = data.results;
 
         fetchDataResult.forEach(item => {
-            dataSetPrice.push(item.price)
-            dataSetUpvote.push(item.upvote)
-            dataSetDownvote.push(item.downvote)
-            labels.push(item.title)  
+            dataSetPrice.push(item.price);
+            dataSetUpvote.push(item.upvote);
+            dataSetDownvote.push(item.downvote);
+            labels.push(item.title);
         });
     });
 
@@ -114,32 +116,31 @@ $(document).ready(() => {
         // Conditional logic to check what datasets to draw.
 
         if ($('#upvotesCheck').prop('checked')) {
-            let colors = []
+            let colors = [];
 
             dataSetUpvote.forEach(item = () =>{
-                colors.push(`rgba(${colRandom()}, ${colRandom()}, ${colRandom()}, 0.5)`)
+                colors.push(`rgba(${colRandom()}, ${colRandom()}, ${colRandom()}, 0.5)`);
             });
             addDataSet(dashChart, '# of Upvotes', colors ,dataSetUpvote);
-        };
+        }
         if ($('#downvotesCheck').prop('checked')) {
-            let colors = []
+            let colors = [];
 
             dataSetDownvote.forEach(item = () =>{
-                colors.push(`rgba(${colRandom()}, ${colRandom()}, ${colRandom()}, 0.5)`)
+                colors.push(`rgba(${colRandom()}, ${colRandom()}, ${colRandom()}, 0.5)`);
             });
             addDataSet(dashChart, '# of Downvotes', colors ,dataSetDownvote);
-        };
-
+        }
         if ($('#priceCheck').prop('checked')) {
-            let colors = []
+            let colors = [];
 
             dataSetPrice.forEach(item = () =>{
-                colors.push(`rgba(${colRandom()}, ${colRandom()}, ${colRandom()}, 0.5)`)
+                colors.push(`rgba(${colRandom()}, ${colRandom()}, ${colRandom()}, 0.5)`);
             });
             addDataSet(dashChart, 'Item price ( In $ )', colors, dataSetPrice);
-        };
+        }
         
-        dashChart.update()
+        dashChart.update();
         
         
     });
