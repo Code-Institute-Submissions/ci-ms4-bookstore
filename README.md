@@ -8,7 +8,16 @@ Bibliomania is a project written in Python Django, jQuery JavaScript, CSS prepro
 
 The project is intended as a work-sample of how to write a scalable full-stack web-app for ecommerce services. In this case, I elected to make it a fantasy and science fiction bookstore, both for personal interest and because the tendency to produce books in that field as series provided a more interesting way to learn more about interrelated models in the database.
 
-# User Experience (UX)
+### Index:
+
+1) [User Experience](#1-User-Experience)
+2) [Design](#2-Design) 
+3) [Testing](#3-Testing)
+4) [Deployment](#4-Deployment)
+5) [Credits](#5-Credits)
+
+
+# 1-User-Experience (UX)
 
 ## User stories
 
@@ -34,9 +43,10 @@ The project is intended as a work-sample of how to write a scalable full-stack w
 
 3)	As a member of staff, I want easy access to searching the database for users, orders and products so that I can swiftly assist customers who require information
 
-## Design
+# 2-Design
 
 ## Wireframes
+
 A PDF of  the project wireframes can be found [here](static/img/README/Code-Institute-Milestone-4-Bibliomania.pdf)
 
 ### Colour Scheme
@@ -87,7 +97,7 @@ Python(Django, Django-Rest-Framework), HTML-templating, JavaScript(JQuery), CSS(
 6. [Django All-Auth](https://django-allauth.readthedocs.io/en/latest/overview.html) - A django plugin providing an easy-to-implement system of login and authentication options, including social media accounts and OAuth. Primarily used here for its included user-handling views, with the social accounts turned off.
 7. [Visual Studio Code](https://code.visualstudio.com/) - Visual Studio Code is the IDE I used to write the code, with [VENV](https://docs.python.org/3/library/venv.html) for establishing a virtual environment. While testing, I did briefly run a local MySQL database on a local-network Linux box, while figuring configuration out.
 
-# Testing 
+# 3-Testing 
 ## Testing User Stories from User Experience (UX) Section
 
 	First Time Visitor Goals
@@ -107,23 +117,27 @@ These steps were conducted manually by polling a group of friends, colleagues an
 
 # Further Testing
 ## Automated tests
-	Unfortunately, due to my day-job and other factors, I was not able to produce an extensive test-suite as I had hoped. I cannot hope to produce a truly thorough test for all use-cases with the time I have left before deadline.
+
+Unfortunately, due to my day-job and other factors, I was not able to produce an extensive test-suite as I had hoped. I cannot hope to produce a truly thorough test for all use-cases with the time I have left before deadline.
 
 ## Manual testing
 
  Manual testing was a four-stage process.
 	
-	1) Producing a skeleton project. I tested locally myself while working on the database and controller models.
-	2) Deployment testing - After deploying to Heroku, I manually tested that configuration functioned properly on the Heroku environment. A few bugs were found
-	during implementing webhooks, throwing error 500 which did not correctly log in Heroku's server-log - Amusingly, I instead found in my Stripe payment log that the failed webhook resulted in the entire 2700line debug HTML-page to Stripe as an error message! Once I found that, I could finish troubleshooting and get my webhooks up and running. During this period, I also elected to change my hosting-provider where I had previous ran the projects email and had to migrate to a new SMTP server and account.
-	3) This is where I involved friends, colleagues and family and set them loose. I would give each tester instructions like "Change this books cover" or "Save this new book" or "Complete a purchase using this credit card code" - I was mostly interested in their UX experience as they were of a wide-variety of tech-experience and ages, so I could get a better grip on how the users interacted with the page. Multiple display bugs were located with the responsiveness of the cover-images, due to the different sizes of source files. In order to provide consistency in all views, I applied a fixed height to the img-thumbnail class. In multiple views, where products are presented in table format, I elected to hide the display-field on smaller screens to opt for a better UX with information-presentation in mind.
+1) Producing a skeleton project. I tested locally myself while working on the database and controller models.
 
-	To my great fortune, I am good friends with a professional QA tester, who with gleeful abandoned tried multiple ways of breaking the models, controller and perform some XSS insertions on the app and I took his feedback on required security and changes to heart. This is the reason the database may have certain string-fields containing JavaScript or HTML entries.
-	4) Code-review: After my last mentor-meeting where we concluded all functionality required was present, I submitted the project for code-review in Slack. Some bugs were located: A problem was discovered with the fullscreen navbar, where it did not pass a required field for the handler. A hidden input was implemented, which used the same fallback as the filter on the product page. The admin dropdown had some minor issues after recompiling the SCSS, which was fixed. 
+2) Deployment testing - After deploying to Heroku, I manually tested that configuration functioned properly on the Heroku environment. A few bugs were found
+during implementing webhooks, throwing error 500 which did not correctly log in Heroku's server-log - Amusingly, I instead found in my Stripe payment log that the failed webhook resulted in the entire 2700line debug HTML-page to Stripe as an error message! Once I found that, I could finish troubleshooting and get my webhooks up and running. During this period, I also elected to change my hosting-provider where I had previous ran the projects email and had to migrate to a new SMTP server and account.
 
-	Before submission, code was validated using the [W3C CSS validator](https://jigsaw.w3.org/css-validator/), the [JS Hint Validator](https://jshint.com/) and the W3C HTML validator. Some errors were found in dashboard_charts.js and product_review.js. Warnings of unused variables were left unchecked, because the flag was falsely raised because of using the scoped "lets" variable declaration in an effort to modernize the syntax of the code to ES6 standards. Errors in syntax were corrected, except a second false flag that occured on line 33 of dashboard_charts.js - The >> operator is used to shift the operation into a valid int for RGBA values, switching to a single > operator causes all RGBA values to become faulty.
+3) This is where I involved friends, colleagues and family and set them loose. I would give each tester instructions like "Change this books cover" or "Save this new book" or "Complete a purchase using this credit card code" - I was mostly interested in their UX experience as they were of a wide-variety of tech-experience and ages, so I could get a better grip on how the users interacted with the page. Multiple display bugs were located with the responsiveness of the cover-images, due to the different sizes of source files. In order to provide consistency in all views, I applied a fixed height to the img-thumbnail class. In multiple views, where products are presented in table format, I elected to hide the display-field on smaller screens to opt for a better UX with information-presentation in mind.
 
-	CSS for style.css was amended after recompiling, to fix invalid styles such as references to "padding auto". Changes to faulty custom styles were changed, but I did not correct flags related to untouched bootstrap variables. Certain HTML elements were classed as invalid by the validator, but they were related to the crispy-field addon, therefore not my own code. Other than that, there were a few trailing tags to remove.
+To my great fortune, I am good friends with a professional QA tester, who with gleeful abandoned tried multiple ways of breaking the models, controller and perform some XSS insertions on the app and I took his feedback on required security and changes to heart. This is the reason the database may have certain string-fields containing JavaScript or HTML entries.
+
+4) Code-review: After my last mentor-meeting where we concluded all functionality required was present, I submitted the project for code-review in Slack. Some bugs were located: A problem was discovered with the fullscreen navbar, where it did not pass a required field for the handler. A hidden input was implemented, which used the same fallback as the filter on the product page. The admin dropdown had some minor issues after recompiling the SCSS, which was fixed. 
+
+Before submission, code was validated using the [W3C CSS validator](https://jigsaw.w3.org/css-validator/), the [JS Hint Validator](https://jshint.com/) and the W3C HTML validator. Some errors were found in dashboard_charts.js and product_review.js. Warnings of unused variables were left unchecked, because the flag was falsely raised because of using the scoped "lets" variable declaration in an effort to modernize the syntax of the code to ES6 standards. Errors in syntax were corrected, except a second false flag that occured on line 33 of dashboard_charts.js - The >> operator is used to shift the operation into a valid int for RGBA values, switching to a single > operator causes all RGBA values to become faulty.
+
+CSS for style.css was amended after recompiling, to fix invalid styles such as references to "padding auto". Changes to faulty custom styles were changed, but I did not correct flags related to untouched bootstrap variables. Certain HTML elements were classed as invalid by the validator, but they were related to the crispy-field addon, therefore not my own code. Other than that, there were a few trailing tags to remove.
 
 # Known Bugs
 
@@ -131,7 +145,7 @@ The current release has a few display-issues on screen-widths of <200px, where t
 
 The original plan for the charts.js inclusion was to also draw charts for order-values and add pagination for the forms. This however had to be removed for time. I will revisit and re-add this in the future, because I consider it an important tool that would be useful for store-owners.
 
-# Deployment:
+# 4 Deployment:
 
 The app was deployed to Heroku in the following manner:
 
@@ -180,12 +194,12 @@ Once a local folder with the code is downloaded, create and activate a virtual e
 
 Once the download completes, you can start the development server with the command of "py manage.py runserver" (If using windows, again I defer to the documentation for your operating system). 
 
-# Credits:
+# 5 Credits:
 
 
 ## Code:
 
-Much like Flask, entering the world of Django has provided access to an immense amount of quality plugins. [Django Rest Framework](https://www.django-rest-framework.org/), [Crispy Forms](https://django-crispy-forms.readthedocs.io/en/latest/), [Django-Countries](https://pypi.org/project/django-countries/) are all examples of the wonderful Django eco-system of pluggable apps. When it comes to CSS, I couldn't have produced this without the inclusion of [SASS](https://sass-lang.com/) and the smooth, crisp animations are from [Animate.CSS](https://animate.style/). 
+Much like Flask, entering the world of Django has provided access to an immense amount of quality plugins. [Django Rest Framework](https://www.django-rest-framework.org/), [Crispy Forms](https://django-crispy-forms.readthedocs.io/en/latest/), [Django-Countries](https://pypi.org/project/django-countries/) are all examples of the wonderful Django eco-system of pluggable apps. When it comes to CSS, I couldn't have produced this without the inclusion of [SASS](https://sass-lang.com/) and the smooth, crisp animations are from [Animate.CSS](https://animate.style/). A minor plugin but immensely useful was [tablesort](https://github.com/kylefox/jquery-tablesort), a tool for providing quick and reactive form-sorting.
 
 ## Media
 
