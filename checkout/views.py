@@ -142,7 +142,7 @@ def checkout_success(request, order_id):
         # Attach the user's profile to the order
         order_id.user_id = profile
         order_id.save()
-
+        del request.session['bag']     
         # Save the user's info, if the checkbox is ticked in checkout
         if save_info:
             profile_data = {
@@ -157,8 +157,12 @@ def checkout_success(request, order_id):
             user_profile_form = ProfileForm(profile_data, instance=profile)
             if user_profile_form.is_valid():
                 user_profile_form.save()
-                
-    del request.session['bag']     
+                               
+    try:
+        del request.session['bag']     
+    except KeyError:
+        pass
+
     context = {
         "order": order_id,
         "order_items":order_items,

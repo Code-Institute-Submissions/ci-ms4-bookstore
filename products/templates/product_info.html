@@ -110,7 +110,7 @@
             <!-- Uses the jQuery owl-carousel plugin instead of the bootstrap carousel, for better responsiveness. -->
             <div class="owl-carousel owl-theme">
                       {% for product in series %}
-                      <div class="item text-center">
+                      <div class="item">
                       <img class="img-thumbnail" src="{{product.cover.url}}" alt="{{product.title}}">                      
                       <a href="{% url 'product_info' product.id %}">{{product.title}}</a>
                     </div>
