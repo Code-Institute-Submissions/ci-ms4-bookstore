@@ -5,8 +5,11 @@ from django.contrib import messages
 # Create your views here.
 
 def shopping_bag(request):
-
-    return render(request, 'bag.html')
+    extra_title = "- Shopping Bag"
+    context = {
+    'extra_title': extra_title,
+    }
+    return render(request, 'bag.html', context)
 
 # View for handling adding items to the shopping bag
 

@@ -26,6 +26,7 @@ def products(request):
     genre = None
     # Unlike the others, paginate has a set starting value of 10 to fall back on.
     paginate = 10
+    extra_title = '- All Products'
     
 
     """
@@ -72,6 +73,7 @@ def products(request):
         "feature": feature,
         "series_filter": series,
         "search_term": query,
+        'extra_title': extra_title
     }
     
     return render(request, 'products_all.html', context)
@@ -81,6 +83,8 @@ def product_info(request, product_id):
 
     user = request.user
     product = get_object_or_404(Product, id=product_id)
+    extra_title = '- %s' % product.title
+
     if request.method == 'POST':
         # Post handler for user reviews, with instancing to keep unique reviews. Checks for a registered users review of this product, if not found instantiates one.
         try:
@@ -120,6 +124,7 @@ def product_info(request, product_id):
         "reviews": reviews,
         "series": series,
         "user": user,
+        "extra_title": extra_title
     }
 
     return render(request, 'product_info.html', context)
@@ -127,6 +132,7 @@ def product_info(request, product_id):
 @login_required
 def dashboard(request):
     user = request.user
+    extra_title = '- Staff dashboard'
     if request.method == 'POST':
         if user.is_superuser:            
             form = ProductForm(request.POST, request.FILES)
@@ -147,7 +153,8 @@ def dashboard(request):
     'product_form': ProductForm,
     'author_form': AuthorForm,
     'genre_form': GenreForm,
-    'series_form': SeriesForm
+    'series_form': SeriesForm,
+    'extra_title': extra_title
     }
     return render(request, 'dashboard.html', context)
 

@@ -34,7 +34,7 @@ def archive(request):
     # All items, sorted by date
     newsposts = NewsPost.objects.order_by('-time')
     form = NewsForm
-    extra_title = '- New archive'
+    extra_title = '- News archive'
 
     context = {
         'news': newsposts,
@@ -51,6 +51,7 @@ def user_profile(request):
     orders = Order.objects.filter(user_id=profile).order_by('-date')
     form = ProfileForm(instance=profile)
     user_form = UserForm(instance=user )
+    extra_title = '- Profile for:  %s  ' % user
 
     if request.method == 'POST':
         form = ProfileForm(instance=profile, data=request.POST)
@@ -73,6 +74,7 @@ def user_profile(request):
         'form':form,
         'user_form': user_form,
         'orders': orders,
+        'extra_title': extra_title,
     }
 
     return render(request, 'home/profile.html', context)

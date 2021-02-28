@@ -17,7 +17,7 @@ The project is intended as a work-sample of how to write a scalable full-stack w
 5) [Credits](#5-Credits)
 
 
-# 1-User-Experience (UX)
+# 1 User-Experience
 
 ## User stories
 
@@ -43,7 +43,7 @@ The project is intended as a work-sample of how to write a scalable full-stack w
 
 3)	As a member of staff, I want easy access to searching the database for users, orders and products so that I can swiftly assist customers who require information
 
-# 2-Design
+# 2 Design
 
 ## Wireframes
 
@@ -97,7 +97,7 @@ Python(Django, Django-Rest-Framework), HTML-templating, JavaScript(JQuery), CSS(
 6. [Django All-Auth](https://django-allauth.readthedocs.io/en/latest/overview.html) - A django plugin providing an easy-to-implement system of login and authentication options, including social media accounts and OAuth. Primarily used here for its included user-handling views, with the social accounts turned off.
 7. [Visual Studio Code](https://code.visualstudio.com/) - Visual Studio Code is the IDE I used to write the code, with [VENV](https://docs.python.org/3/library/venv.html) for establishing a virtual environment. While testing, I did briefly run a local MySQL database on a local-network Linux box, while figuring configuration out.
 
-# 3-Testing 
+# 3 Testing 
 ## Testing User Stories from User Experience (UX) Section
 
 	First Time Visitor Goals

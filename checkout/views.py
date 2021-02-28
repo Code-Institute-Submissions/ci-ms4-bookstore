@@ -37,6 +37,7 @@ def cache_checkout_data(request):
 def checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
+    extra_title = "- Checkout!"
 
     if request.method == 'POST':
         bag = request.session.get('bag', {})
@@ -125,6 +126,7 @@ def checkout(request):
         "form": order_form,
         'stripe_public_key': stripe_public_key,
         'client_secret': intent.client_secret,
+        'extra_title': extra_title,
     }
 
     return render(request, 'checkout.html', context)
@@ -133,6 +135,7 @@ def checkout_success(request, order_id):
     save_info = request.session.get('save_info')
     order_id = get_object_or_404(Order, order_number=order_id)
     order_items = OrderItem.objects.filter(order=order_id)
+    extra_title = "- Order placed!"
 
     if request.user.is_authenticated:
         profile = UserProfile.objects.get(user_id=request.user)
@@ -159,6 +162,7 @@ def checkout_success(request, order_id):
     context = {
         "order": order_id,
         "order_items":order_items,
+        'extra_title': extra_title
     }
 
     return render(request, 'checkout_success.html', context)
